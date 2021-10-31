@@ -1,5 +1,6 @@
 package dungeon;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class Player {
@@ -8,7 +9,8 @@ class Player {
   private List<Treasure> collectedTreasure;
 
   Player(int[] start) {
-
+    this.currentPosition = start;
+    this.collectedTreasure = new ArrayList<>();
   }
 
   public int[] getCurrentPosition() {
@@ -23,7 +25,7 @@ class Player {
     return collectedTreasure;
   }
 
-  public void updateCollectedTreasure(List<Treasure> newTreasure) {
-    this.collectedTreasure = newTreasure;
+  public void updateCollectedTreasure(List<Treasure> newTreasures) {
+    this.collectedTreasure.addAll(newTreasures);
   }
 }

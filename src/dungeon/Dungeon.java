@@ -16,6 +16,4 @@ public interface Dungeon {
 
   boolean hasReachedGoal();
 
-  Dungeon getLabyrinth();
-
 }
