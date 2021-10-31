@@ -29,17 +29,25 @@ public class DungeonImpl implements Dungeon {
     this.interconnectivity = interconnectivity;
     this.wrapping = wrapping;
     this.treasure = treasure;
+    this.edges = new HashSet<>();
+    this.dungeon = createDungeon();
+
     int[] start = new int[2];
     int[] end = new int[2];
     while ((end[0] - start[0]) + (end[1] - start[1]) < 5) {
-      start = pickStart();
-      end = pickEnd();
+      start = pickCave();
+      end = pickCave();
     }
-    this.start = pickStart();
-    this.end = pickEnd();
-    this.edges = new HashSet<>();
-    this.dungeon = createDungeon();
+
+    this.start = start;
+    this.end = end;
+
     this.player = new Player(this.start);
+    for (int row = 0; row < size[0]; row++) {
+      for (int col = 0; col < size[1]; col++) {
+        System.out.println(row + " " + col + " " + dungeon[row][col]);
+      }
+    }
   }
 
   private Cave[][] createDungeon() {
@@ -52,11 +60,7 @@ public class DungeonImpl implements Dungeon {
     }
 
     createPaths(dungeon);
-//    for (int row = 0; row < size[0]; row++) {
-//      for (int col = 0; col < size[1]; col++) {
-//        System.out.println(dungeon[row][col]);
-//      }
-//    }
+    setCaveNeighbours(dungeon);
     return dungeon;
   }
 
@@ -93,8 +97,58 @@ public class DungeonImpl implements Dungeon {
     }
 
     kruskals(potentialEdges, dungeon);
-
     //System.out.println(potentialEdges);
+  }
+
+  private void setCaveNeighbours(Cave[][] dungeon) {
+
+    // add neighbors for caves
+    for (int row = 0; row < size[0]; row++) {
+      for (int col = 0; col < size[1]; col++) {
+        Set<Direction> directions = new HashSet<>();
+        if (row != 0) {
+          Edge north = new Edge(dungeon[row][col], dungeon[row - 1][col]); // up
+          if (edges.contains(north)) {
+            directions.add(Direction.NORTH);
+          }
+        }
+        if (col != size[1] - 1) {
+          Edge east = new Edge(dungeon[row][col], dungeon[row][col + 1]); // right
+          if (edges.contains(east)) {
+            directions.add(Direction.EAST);
+          }
+        }
+        if (col != 0) {
+          Edge west = new Edge(dungeon[row][col], dungeon[row][col - 1]); // left
+          if (edges.contains(west)) {
+            directions.add(Direction.WEST);
+          }
+        }
+        if (row != size[0] - 1) {
+          Edge south = new Edge(dungeon[row][col], dungeon[row + 1][col]); // down
+          if (edges.contains(south)) {
+            directions.add(Direction.SOUTH);
+          }
+        }
+        dungeon[row][col].setOpenings(directions);
+      }
+    }
+    if (wrapping) {
+      for (int row = 0; row < size[0]; row++) {
+        Edge west = new Edge(dungeon[row][0], dungeon[row][size[1] - 1]); // left-right
+        if (edges.contains(west)) {
+          dungeon[row][0].setOpenings(Direction.WEST);
+          dungeon[row][size[1] - 1].setOpenings(Direction.EAST);
+        }
+      }
+      for (int col = 0; col < size[1]; col++) {
+        Edge north = new Edge(dungeon[0][col], dungeon[size[0] - 1][col]); // top-bottom
+        if (edges.contains(north)) {
+          dungeon[0][col].setOpenings(Direction.NORTH);
+          dungeon[size[0] - 1][col].setOpenings(Direction.SOUTH);
+        }
+      }
+    }
   }
 
   private void kruskals(List<Edge> potentialEdges, Cave[][] dungeon) {
@@ -109,8 +163,6 @@ public class DungeonImpl implements Dungeon {
       }
     }
 
-    //System.out.println("Sets: " + sets);
-
     Random rand = new Random();
     Set<Set<Cave>> newSetOfSets = new HashSet<>(sets);
     List<Edge> leftovers = new ArrayList<>();
@@ -118,7 +170,6 @@ public class DungeonImpl implements Dungeon {
     while (newSetOfSets.size() > 1) {
       int random = rand.nextInt(potentialEdges.size());
       Edge edge = potentialEdges.get(random);
-      //System.out.println(edge);
 
       Set<Cave> newSet = new HashSet<>();
 
@@ -137,33 +188,28 @@ public class DungeonImpl implements Dungeon {
         }
         if (newSet.contains(edge.getCave1()) && newSet.contains(edge.getCave2())) {
           newSetOfSets.add(newSet);
-          //System.out.println("new set " + newSet);
           potentialEdges.remove(edge);
           edges.add(edge);
           break;
         }
       }
       sets = new HashSet<>(newSetOfSets);
-      //System.out.println("New sets:" + newSetOfSets);
     }
 
     for (int i = 0; i < interconnectivity; i++) {
       edges.add(leftovers.get(rand.nextInt(leftovers.size())));
     }
-    //System.out.println("selected edges: " + edges.size() + edges);
+    System.out.println("selected edges: " + edges.size() + edges);
   }
 
-  private int[] pickStart() {
+  private int[] pickCave() {
     Random rand = new Random();
-    int row = rand.nextInt(size[0]);
-    int col = rand.nextInt(size[1]);
-    return new int[]{row, col};
-  }
-
-  private int[] pickEnd() {
-    Random rand = new Random();
-    int row = rand.nextInt(size[0]);
-    int col = rand.nextInt(size[1]);
+    int row = 0;
+    int col = 0;
+    while (dungeon[row][col].isTunnel()) {
+      row = rand.nextInt(size[0]);
+      col = rand.nextInt(size[1]);
+    }
     return new int[]{row, col};
   }
 
@@ -204,6 +250,49 @@ public class DungeonImpl implements Dungeon {
 
   @Override
   public String toString() {
-    return super.toString();
+    StringBuilder builder = new StringBuilder();
+    builder.append("   ");
+    for (int col = 0; col < size[1]; col++) {
+      if (dungeon[0][col].getOpenings().contains(Direction.NORTH)) {
+        builder.append("|   ");
+      } else {
+        builder.append("    ");
+      }
+    }
+    builder.append("\n");
+    for (int row = 0; row < size[0]; row++) {
+      if (dungeon[row][0].getOpenings().contains(Direction.WEST)) {
+        builder.append("---");
+      } else {
+        builder.append("   ");
+      }
+      for (int col = 0; col < size[1]; col++) {
+        if (row == start[0] && col == start[1]) {
+          builder.append("S");
+        } else if (row == end[0] && col == end[1]) {
+          builder.append("G");
+        } else {
+          builder.append("O");
+        }
+        if (dungeon[row][col].getOpenings().contains(Direction.EAST)) {
+          builder.append("---");
+        } else {
+          builder.append("   ");
+        }
+      }
+      builder.append("\n");
+      builder.append("   ");
+      for (int col = 0; col < size[1]; col++) {
+        if (dungeon[row][col].getOpenings().contains(Direction.SOUTH)) {
+          builder.append("|   ");
+        } else {
+          builder.append("    ");
+        }
+      }
+      builder.append("\n");
+    }
+
+    return builder.toString();
   }
+
 }
