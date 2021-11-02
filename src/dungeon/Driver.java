@@ -1,12 +1,52 @@
 package dungeon;
 
+import java.util.List;
+import java.util.Random;
+
 public class Driver {
 
   public static void main(String[] args) {
 
-    Dungeon dungeon = new DungeonImpl(new int[]{5, 5}, 3, true, 20);
-    System.out.println(dungeon);
+    if (args.length < 4) {
+      System.out.println(
+          "Please provide all valid arguments! row col interconnectivity wrapping treasure.");
+      System.exit(1);
+    }
 
+    System.out.println(
+        "*****Welcome to the Labyrinth! Navigate this maze while collecting"
+            + " treasures and trying to find the exit!*****\n");
+
+    System.out.println("Initializing dungeon and player...");
+
+    try {
+      Dungeon dungeon = new DungeonImpl(
+          new int[]{Integer.parseInt(args[0]), Integer.parseInt(args[1])},
+          Integer.parseInt(args[2]),
+          Boolean.parseBoolean(args[3]), Integer.parseInt(args[4]));
+
+      Random rand = new Random();
+
+      while (!dungeon.hasReachedGoal()) {
+        System.out.println(dungeon.printCurrentLocation());
+        dungeon.pickTreasure();
+        System.out.println(dungeon.printPlayerStatus());
+        List<Direction> possibleMoves = dungeon.getPossibleMoves();
+        Direction direction = possibleMoves.get(rand.nextInt(possibleMoves.size()));
+        System.out.println("You have chosen to move " + direction);
+        dungeon.movePlayer(direction);
+      }
+      System.out.println("\n\nHurray! You have found the exit of the dungeon and your status is: "
+          + dungeon.printPlayerStatus());
+
+      System.out.println(
+          "\n\nPrinting the dungeon at the end for testing and checking purposes only!!");
+      System.out.println(dungeon);
+    } catch (NumberFormatException e) {
+      System.out.println(
+          "Please provide all valid arguments! row col interconnectivity wrapping treasure.");
+      System.exit(1);
+    }
   }
-
 }
+

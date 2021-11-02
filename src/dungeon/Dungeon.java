@@ -1,5 +1,7 @@
 package dungeon;
 
+import java.util.List;
+
 public interface Dungeon {
 
   void movePlayer(Direction d);
@@ -14,6 +16,12 @@ public interface Dungeon {
 
   int[] getStart();
 
+  boolean isWrapping();
+
   boolean hasReachedGoal();
+
+  List<Direction> getPossibleMoves();
+
+  int[] getPlayerPosition();
 
 }

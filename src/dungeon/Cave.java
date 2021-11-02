@@ -1,21 +1,24 @@
 package dungeon;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 class Cave {
 
   private static int count = 0;
   private final int id;
-  private Set<Treasure> treasures;
-  private Set<Direction> directions;
+  private final List<Treasure> treasures;
+  private final Set<Direction> directions;
 
   Cave() {
     this.id = count++;
     this.directions = new HashSet<>();
+    this.treasures = new ArrayList<>();
   }
 
-  Set<Treasure> getTreasure() {
+  List<Treasure> getTreasure() {
     return treasures;
   }
 
@@ -35,6 +38,14 @@ class Cave {
     return directions.size() == 2;
   }
 
+  void setTreasures(List<Treasure> treasures) {
+    this.treasures.addAll(treasures);
+  }
+
+  void setTreasures(Treasure treasure) {
+    this.treasures.add(treasure);
+  }
+
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder();
@@ -43,7 +54,8 @@ class Cave {
     } else {
       builder.append("Cave");
     }
-    builder.append(id).append(directions);
+    builder.append(id).append(" ").append(directions).append(" ").append(treasures);
     return builder.toString();
   }
+
 }

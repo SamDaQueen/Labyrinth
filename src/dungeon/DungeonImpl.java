@@ -1,6 +1,10 @@
 package dungeon;
 
+import static java.lang.Math.abs;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -16,14 +20,20 @@ public class DungeonImpl implements Dungeon {
   private final int[] end;
   private final Cave[][] dungeon;
   private final Player player;
-  private Set<Edge> edges;
+  private final Set<Edge> edges;
 
   public DungeonImpl(int[] size, int interconnectivity, boolean wrapping, int treasure) {
+    if (size == null) {
+      throw new IllegalArgumentException("Size of the maze cannot be null!");
+    }
     if (size[0] < 4 || size[1] < 4) {
       throw new IllegalArgumentException("Size has to be minimum 4X4!");
     }
     if (treasure <= 0) {
       throw new IllegalArgumentException("Please provide positive value for % of treasure!");
+    }
+    if (interconnectivity < 0) {
+      throw new IllegalArgumentException("Please provide positive value for interconnectivity!");
     }
     this.size = size;
     this.interconnectivity = interconnectivity;
@@ -34,7 +44,7 @@ public class DungeonImpl implements Dungeon {
 
     int[] start = new int[2];
     int[] end = new int[2];
-    while ((end[0] - start[0]) + (end[1] - start[1]) < 5) {
+    while (abs(end[0] - start[0]) + abs(end[1] - start[1]) < 5) {
       start = pickCave();
       end = pickCave();
     }
@@ -42,12 +52,65 @@ public class DungeonImpl implements Dungeon {
     this.start = start;
     this.end = end;
 
-    this.player = new Player(this.start);
-    for (int row = 0; row < size[0]; row++) {
-      for (int col = 0; col < size[1]; col++) {
-        System.out.println(row + " " + col + " " + dungeon[row][col]);
+    setTreasureInCaves();
+
+    this.player = new Player(start[0], start[1]);
+
+  }
+
+  public DungeonImpl(int[] size, int interconnectivity, boolean wrapping, int treasure,
+      Cave[][] caves, int[] start, int[] end) {
+    this.dungeon = caves;
+    this.size = size;
+    this.wrapping = wrapping;
+    this.interconnectivity = interconnectivity;
+    this.treasure = treasure;
+    this.start = start;
+    this.end = end;
+    this.player = new Player(this.start[0], this.start[1]);
+    this.edges = new HashSet<>();
+  }
+
+  private void setTreasureInCaves() {
+
+    Set<Cave> withTreasure = new HashSet<>();
+    Random rand = new Random();
+
+    while (withTreasure.size() <= treasure * getNumberOfCaves() / 100) {
+      int row = rand.nextInt(size[0]);
+      int col = rand.nextInt(size[1]);
+      Cave cave = dungeon[row][col];
+      if (!cave.isTunnel()) {
+        if (!withTreasure.contains(cave)) {
+          List<Treasure> treasures = new ArrayList<>();
+          treasures.add(Treasure.DIAMOND);
+          for (int i = 0; i < rand.nextInt(5); i++) {
+            treasures.add(Treasure.RUBY);
+          }
+          for (int i = 0; i < rand.nextInt(5); i++) {
+            treasures.add(Treasure.DIAMOND);
+          }
+          for (int i = 0; i < rand.nextInt(5); i++) {
+            treasures.add(Treasure.SAPPHIRE);
+          }
+          dungeon[row][col].setTreasures(treasures);
+          withTreasure.add(cave);
+        }
       }
     }
+  }
+
+  @Override
+  public List<Direction> getPossibleMoves() {
+    return new ArrayList<>(
+        dungeon[player.getCurrentPosition()[0]][player.getCurrentPosition()[1]].getOpenings());
+  }
+
+  @Override
+  public int[] getPlayerPosition() {
+    return new int[]{
+        player.getCurrentPosition()[0], player.getCurrentPosition()[1]
+    };
   }
 
   private Cave[][] createDungeon() {
@@ -81,7 +144,7 @@ public class DungeonImpl implements Dungeon {
       potentialEdges.add(
           new Edge(dungeon[row][size[1] - 1], dungeon[row + 1][size[1] - 1])); // down
     }
-    for (int col = 0; col < size[0] - 1; col++) {
+    for (int col = 0; col < size[1] - 1; col++) {
       potentialEdges.add(
           new Edge(dungeon[size[0] - 1][col], dungeon[size[0] - 1][col + 1])); // right
     }
@@ -197,15 +260,19 @@ public class DungeonImpl implements Dungeon {
     }
 
     for (int i = 0; i < interconnectivity; i++) {
-      edges.add(leftovers.get(rand.nextInt(leftovers.size())));
+      if (leftovers.size() > 0) {
+        Edge left = leftovers.get(rand.nextInt(leftovers.size()));
+        edges.add(left);
+        leftovers.remove(left);
+      }
     }
-    System.out.println("selected edges: " + edges.size() + edges);
+    //System.out.println("selected edges: " + edges.size() + edges);
   }
 
   private int[] pickCave() {
     Random rand = new Random();
-    int row = 0;
-    int col = 0;
+    int row = rand.nextInt(size[0]);
+    int col = rand.nextInt(size[1]);
     while (dungeon[row][col].isTunnel()) {
       row = rand.nextInt(size[0]);
       col = rand.nextInt(size[1]);
@@ -215,22 +282,74 @@ public class DungeonImpl implements Dungeon {
 
   @Override
   public void movePlayer(Direction d) {
+    int[] current = player.getCurrentPosition();
+    if (!dungeon[current[0]][current[1]].getOpenings().contains(d)) {
+      throw new IllegalStateException("Move not possible!");
+    }
+    switch (d) {
+      case NORTH:
+        if (current[0] == 0) {
+          player.setCurrentPosition(size[0] - 1, current[1]);
+          break;
+        }
+        player.setCurrentPosition(current[0] - 1, current[1]);
+        break;
 
+      case EAST:
+        if (current[1] == size[1] - 1) {
+          player.setCurrentPosition(current[0], 0);
+          break;
+        }
+        player.setCurrentPosition(current[0], current[1] + 1);
+        break;
+
+      case WEST:
+        if (current[1] == 0) {
+          player.setCurrentPosition(current[0], size[1] - 1);
+          break;
+        }
+        player.setCurrentPosition(current[0], current[1] - 1);
+        break;
+
+      case SOUTH:
+        if (current[0] == size[0] - 1) {
+          player.setCurrentPosition(0, current[1]);
+          break;
+        }
+        player.setCurrentPosition(current[0] + 1, current[1]);
+        break;
+
+      default:
+        break;
+    }
   }
 
   @Override
   public String printPlayerStatus() {
-    return null;
+    StringBuilder builder = new StringBuilder();
+    List<Treasure> treasures = player.getCollectedTreasure();
+    builder.append("Player has collected ");
+    for (Treasure t : new HashSet<>(treasures)) {
+      builder.append(t).append("(").append(Collections.frequency(treasures, t)).append("), ");
+    }
+    builder.append(" with a score of ").append(player.getScore());
+    return builder.toString();
   }
 
   @Override
   public String printCurrentLocation() {
-    return null;
+    StringBuilder builder = new StringBuilder();
+    int row = player.getCurrentPosition()[0];
+    int col = player.getCurrentPosition()[1];
+    builder.append("Player is at location: [").append(row).append(",").append(col)
+        .append("] with possible moves and treasures: ").append(dungeon[row][col]);
+    return builder.toString();
   }
 
   @Override
   public void pickTreasure() {
-
+    player.updateCollectedTreasure(
+        dungeon[player.getCurrentPosition()[0]][player.getCurrentPosition()[1]].getTreasure());
   }
 
   @Override
@@ -241,6 +360,55 @@ public class DungeonImpl implements Dungeon {
   @Override
   public int[] getStart() {
     return start;
+  }
+
+  @Override
+  public boolean isWrapping() {
+    return wrapping;
+  }
+
+  int[] getEnd() {
+    return end;
+  }
+
+  int numberOfEdges() {
+    if (dungeon != null) {
+      return edges.size();
+    } else {
+      return 0;
+    }
+  }
+
+  int getNumberOfCaves() {
+    int counter = 0;
+    for (int row = 0; row < size[0]; row++) {
+      for (int col = 0; col < size[1]; col++) {
+        if (!dungeon[row][col].isTunnel()) {
+          counter++;
+        }
+      }
+    }
+    return counter;
+  }
+
+  int getCavesWithTreasures() {
+    int counter = 0;
+    for (int row = 0; row < size[0]; row++) {
+      for (int col = 0; col < size[1]; col++) {
+        if (dungeon[row][col].getTreasure().size() > 0) {
+          counter++;
+        }
+      }
+    }
+    return counter;
+  }
+
+  Set<Edge> getEdges() {
+    return new HashSet<>(edges);
+  }
+
+  Cave[][] getDungeon() {
+    return Arrays.copyOf(dungeon, 5);
   }
 
   @Override
@@ -270,7 +438,7 @@ public class DungeonImpl implements Dungeon {
         if (row == start[0] && col == start[1]) {
           builder.append("S");
         } else if (row == end[0] && col == end[1]) {
-          builder.append("G");
+          builder.append("X");
         } else {
           builder.append("O");
         }
@@ -291,6 +459,8 @@ public class DungeonImpl implements Dungeon {
       }
       builder.append("\n");
     }
+
+    builder.append(Arrays.toString(start)).append(" ").append(Arrays.toString(end));
 
     return builder.toString();
   }
