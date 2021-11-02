@@ -2,8 +2,16 @@ package dungeon;
 
 import java.util.Scanner;
 
+/**
+ * Driver class for generating sample runs of the dungeon model.
+ */
 public class Driver2 {
 
+  /**
+   * Main method for entry point to the program.
+   *
+   * @param args empty
+   */
   public static void main(String[] args) {
 
     System.out.println(

@@ -21,19 +21,18 @@ public class InternalTest {
   public void printDungeon() {
     dungeonFixed = new DungeonImpl(new int[]{5, 5}, 3, false, 20, getCaves(), new int[]{4, 3},
         new int[]{0, 1});
-    assertEquals("""
-                              \s
-           O---X   O---O---O  \s
-           |           |   |  \s
-           O---O   O---O---O  \s
-               |       |   |  \s
-           O   O---O---O---O  \s
-           |   |       |   |  \s
-           O---O---O   O   O  \s
-                   |   |      \s
-           O---O---O---S---O  \s
-                              \s
-        [4, 3] [0, 1]""", this.dungeonFixed.toString());
+    assertEquals("                       \n"
+                 + "   O---X   O---O---O   \n"
+                 + "   |           |   |   \n"
+                 + "   O---O   O---O---O   \n"
+                 + "       |       |   |   \n"
+                 + "   O   O---O---O---O   \n"
+                 + "   |   |       |   |   \n"
+                 + "   O---O---O   O   O   \n"
+                 + "           |   |       \n"
+                 + "   O---O---O---S---O   \n"
+                 + "                       \n"
+                 + "[4, 3] [0, 1]", this.dungeonFixed.toString());
   }
 
   @Test(expected = IllegalStateException.class)
@@ -74,8 +73,8 @@ public class InternalTest {
       assertTrue(
           abs(dungeon.getStart()[0] - dungeon.getEnd()[0]) + abs(
               dungeon.getStart()[1]
-                  - dungeon.getEnd()[1])
-              >= 5);
+              - dungeon.getEnd()[1])
+          >= 5);
     }
   }
 
@@ -170,7 +169,7 @@ public class InternalTest {
     dungeonFixed.movePlayer(Direction.NORTH);
     assertEquals(
         "Player is at location: [3,3] with possible moves and treasures: "
-            + "Tunnel [NORTH, SOUTH] [SAPPHIRE, SAPPHIRE, RUBY, DIAMOND]",
+        + "Tunnel [NORTH, SOUTH] [SAPPHIRE, SAPPHIRE, RUBY, DIAMOND]",
         dungeonFixed.printCurrentLocation());
   }
 

@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
 
+/**
+ * Test class for validating the external working of the dungeon model.
+ */
 public class DungeonTest {
 
   private Dungeon dungeon;

@@ -3,8 +3,16 @@ package dungeon;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Driver class for generating sample runs of the dungeon model.
+ */
 public class Driver {
 
+  /**
+   * Main method for entry point to the program.
+   *
+   * @param args accepts the row, col, interconnectivity, wrapping, and treasure
+   */
   public static void main(String[] args) {
 
     if (args.length < 4) {
