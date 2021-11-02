@@ -2,26 +2,81 @@ package dungeon;
 
 import java.util.List;
 
+/**
+ * The dungeon interface represents a maze with caves and tunnels. Caves can have treasures. A
+ * player can move around the dungeon to find the exit as well as collect the treasure along the
+ * way.
+ */
 public interface Dungeon {
 
+  /**
+   * Moves the player in the given direction from among NORTH, EAST, SOUTH, WEST.
+   *
+   * @param d the direction
+   */
   void movePlayer(Direction d);
 
+  /**
+   * Print the player status including the treasure that the player has collected and the score.
+   *
+   * @return printable string
+   */
   String printPlayerStatus();
 
+  /**
+   * Print the details about the current location of the player such as possible moves and treasure
+   * in the current location.
+   *
+   * @return printable string
+   */
   String printCurrentLocation();
 
+  /**
+   * Provides the player the functionality to pick up the treasure in the current location.
+   */
   void pickTreasure();
 
+  /**
+   * Returns the size of the dungeon as an int array.
+   *
+   * @return the size
+   */
   int[] getSize();
 
+  /**
+   * Returns the start point of the dungeon as an int array.
+   *
+   * @return the starting location
+   */
   int[] getStart();
 
+  /**
+   * Returns the current position of the player as an int array.
+   *
+   * @return the current location
+   */
+  int[] getPlayerPosition();
+
+
+  /**
+   * Return true if the dungeon is wrapping.
+   *
+   * @return true if wrapping
+   */
   boolean isWrapping();
 
+  /**
+   * Return true if the player has reached the exit.
+   *
+   * @return true if exit reached
+   */
   boolean hasReachedGoal();
 
+  /**
+   * Gets a list of possible moves from the current location for the player to choose from.
+   *
+   * @return available moves
+   */
   List<Direction> getPossibleMoves();
-
-  int[] getPlayerPosition();
 
 }

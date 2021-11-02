@@ -1,5 +1,8 @@
 package dungeon;
 
+/**
+ * An edge represented as two caves. Edge from A to B is equivalent to edge from B to A.
+ */
 class Edge {
 
   private final Cave cave1;

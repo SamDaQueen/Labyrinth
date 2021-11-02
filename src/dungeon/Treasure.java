@@ -1,6 +1,10 @@
 package dungeon;
 
-public enum Treasure {
+/**
+ * Enumeration for the three possible treasures in our dungeon along with the scores that they give
+ * the player if picked.
+ */
+enum Treasure {
   DIAMOND(10),
   RUBY(20),
   SAPPHIRE(30);
@@ -11,7 +15,7 @@ public enum Treasure {
     this.value = value;
   }
 
-  public int getValue() {
+  int getValue() {
     return value;
   }
 }

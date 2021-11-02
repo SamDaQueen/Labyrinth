@@ -4,32 +4,46 @@ import static java.lang.Math.abs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * Implementation of the Dungeon interface represented as the size, degree of interconnectivity,
+ * whether the dungeon is wrapping or not, the percentage of caves with treasure, starting and
+ * ending positions, 2-D array of Caves as the nodes of the dungeon, the player, and the edges
+ * between the caves.
+ */
 public class DungeonImpl implements Dungeon {
 
   private final int[] size;
   private final int interconnectivity;
   private final boolean wrapping;
-  private final int treasure;
+  private final int percentageOfCavesWithTreasure;
   private final int[] start;
   private final int[] end;
   private final Cave[][] dungeon;
   private final Player player;
   private final Set<Edge> edges;
 
-  public DungeonImpl(int[] size, int interconnectivity, boolean wrapping, int treasure) {
+  /**
+   * Constructs a new Dungeon object.
+   *
+   * @param size                          the size
+   * @param interconnectivity             the degree of interconnectivity
+   * @param wrapping                      whether it is wrapping
+   * @param percentageOfCavesWithTreasure percentage of caves with treasure
+   */
+  public DungeonImpl(int[] size, int interconnectivity, boolean wrapping,
+      int percentageOfCavesWithTreasure) {
     if (size == null) {
       throw new IllegalArgumentException("Size of the maze cannot be null!");
     }
     if (size[0] < 4 || size[1] < 4) {
       throw new IllegalArgumentException("Size has to be minimum 4X4!");
     }
-    if (treasure <= 0) {
+    if (percentageOfCavesWithTreasure <= 0) {
       throw new IllegalArgumentException("Please provide positive value for % of treasure!");
     }
     if (interconnectivity < 0) {
@@ -38,7 +52,7 @@ public class DungeonImpl implements Dungeon {
     this.size = size;
     this.interconnectivity = interconnectivity;
     this.wrapping = wrapping;
-    this.treasure = treasure;
+    this.percentageOfCavesWithTreasure = percentageOfCavesWithTreasure;
     this.edges = new HashSet<>();
     this.dungeon = createDungeon();
 
@@ -58,13 +72,25 @@ public class DungeonImpl implements Dungeon {
 
   }
 
-  public DungeonImpl(int[] size, int interconnectivity, boolean wrapping, int treasure,
+  /**
+   * Alternate constructor to generate dungeon with the given 2-D array. Used for testing.
+   *
+   * @param size                          the size
+   * @param interconnectivity             the degree of interconnectivity
+   * @param wrapping                      whether it is wrapping
+   * @param percentageOfCavesWithTreasure percentage of caves with treasure
+   * @param caves                         2-D array of Caves
+   * @param start                         the starting node
+   * @param end                           the ending node
+   */
+  public DungeonImpl(int[] size, int interconnectivity, boolean wrapping,
+      int percentageOfCavesWithTreasure,
       Cave[][] caves, int[] start, int[] end) {
     this.dungeon = caves;
     this.size = size;
     this.wrapping = wrapping;
     this.interconnectivity = interconnectivity;
-    this.treasure = treasure;
+    this.percentageOfCavesWithTreasure = percentageOfCavesWithTreasure;
     this.start = start;
     this.end = end;
     this.player = new Player(this.start[0], this.start[1]);
@@ -72,15 +98,14 @@ public class DungeonImpl implements Dungeon {
   }
 
   private void setTreasureInCaves() {
-
     Set<Cave> withTreasure = new HashSet<>();
+    List<Cave> caves = getCaves();
     Random rand = new Random();
 
-    while (withTreasure.size() <= treasure * getNumberOfCaves() / 100) {
-      int row = rand.nextInt(size[0]);
-      int col = rand.nextInt(size[1]);
-      Cave cave = dungeon[row][col];
-      if (!cave.isTunnel()) {
+    while (withTreasure.size() <= percentageOfCavesWithTreasure * getNumberOfCaves() / 100) {
+      if (caves.size() > 0) {
+        int choose = rand.nextInt(caves.size());
+        Cave cave = caves.get(choose);
         if (!withTreasure.contains(cave)) {
           List<Treasure> treasures = new ArrayList<>();
           treasures.add(Treasure.DIAMOND);
@@ -93,11 +118,26 @@ public class DungeonImpl implements Dungeon {
           for (int i = 0; i < rand.nextInt(5); i++) {
             treasures.add(Treasure.SAPPHIRE);
           }
-          dungeon[row][col].setTreasures(treasures);
+          cave.setTreasures(treasures);
           withTreasure.add(cave);
+          caves.remove(cave);
+        }
+      } else {
+        break;
+      }
+    }
+  }
+
+  private List<Cave> getCaves() {
+    List<Cave> caves = new ArrayList<>();
+    for (int i = 0; i < size[0]; i++) {
+      for (int j = 0; j < size[1]; j++) {
+        if (!dungeon[i][j].isTunnel()) {
+          caves.add(dungeon[i][j]);
         }
       }
     }
+    return caves;
   }
 
   @Override
@@ -160,7 +200,6 @@ public class DungeonImpl implements Dungeon {
     }
 
     kruskals(potentialEdges, dungeon);
-    //System.out.println(potentialEdges);
   }
 
   private void setCaveNeighbours(Cave[][] dungeon) {
@@ -266,7 +305,6 @@ public class DungeonImpl implements Dungeon {
         leftovers.remove(left);
       }
     }
-    //System.out.println("selected edges: " + edges.size() + edges);
   }
 
   private int[] pickCave() {
@@ -326,14 +364,7 @@ public class DungeonImpl implements Dungeon {
 
   @Override
   public String printPlayerStatus() {
-    StringBuilder builder = new StringBuilder();
-    List<Treasure> treasures = player.getCollectedTreasure();
-    builder.append("Player has collected ");
-    for (Treasure t : new HashSet<>(treasures)) {
-      builder.append(t).append("(").append(Collections.frequency(treasures, t)).append("), ");
-    }
-    builder.append(" with a score of ").append(player.getScore());
-    return builder.toString();
+    return player.toString();
   }
 
   @Override
@@ -367,49 +398,6 @@ public class DungeonImpl implements Dungeon {
     return wrapping;
   }
 
-  int[] getEnd() {
-    return end;
-  }
-
-  int numberOfEdges() {
-    if (dungeon != null) {
-      return edges.size();
-    } else {
-      return 0;
-    }
-  }
-
-  int getNumberOfCaves() {
-    int counter = 0;
-    for (int row = 0; row < size[0]; row++) {
-      for (int col = 0; col < size[1]; col++) {
-        if (!dungeon[row][col].isTunnel()) {
-          counter++;
-        }
-      }
-    }
-    return counter;
-  }
-
-  int getCavesWithTreasures() {
-    int counter = 0;
-    for (int row = 0; row < size[0]; row++) {
-      for (int col = 0; col < size[1]; col++) {
-        if (dungeon[row][col].getTreasure().size() > 0) {
-          counter++;
-        }
-      }
-    }
-    return counter;
-  }
-
-  Set<Edge> getEdges() {
-    return new HashSet<>(edges);
-  }
-
-  Cave[][] getDungeon() {
-    return Arrays.copyOf(dungeon, 5);
-  }
 
   @Override
   public boolean hasReachedGoal() {
@@ -463,6 +451,71 @@ public class DungeonImpl implements Dungeon {
     builder.append(Arrays.toString(start)).append(" ").append(Arrays.toString(end));
 
     return builder.toString();
+  }
+
+  /**
+   * Package-private method for asserting the ending location.
+   *
+   * @return the end as int array
+   */
+  int[] getEnd() {
+    return end;
+  }
+
+  /**
+   * Package-private method for getting the number of edges in the dungeon.
+   *
+   * @return number of edges
+   */
+  int numberOfEdges() {
+    if (dungeon != null) {
+      return edges.size();
+    } else {
+      return 0;
+    }
+  }
+
+  /**
+   * Package-private method for getting the number of caves in the dungeon.
+   *
+   * @return number of caves
+   */
+  int getNumberOfCaves() {
+    int counter = 0;
+    for (int row = 0; row < size[0]; row++) {
+      for (int col = 0; col < size[1]; col++) {
+        if (!dungeon[row][col].isTunnel()) {
+          counter++;
+        }
+      }
+    }
+    return counter;
+  }
+
+  /**
+   * Package-private method for getting the number of caves containing treasure.
+   *
+   * @return number of caves with treasure
+   */
+  int getCavesWithTreasures() {
+    int counter = 0;
+    for (int row = 0; row < size[0]; row++) {
+      for (int col = 0; col < size[1]; col++) {
+        if (dungeon[row][col].getTreasure().size() > 0) {
+          counter++;
+        }
+      }
+    }
+    return counter;
+  }
+
+  /**
+   * Package-private method for getting the 2-D array of the caves in the dungeon.
+   *
+   * @return copy of caves
+   */
+  Cave[][] getDungeon() {
+    return Arrays.copyOf(dungeon, size[0]);
   }
 
 }
