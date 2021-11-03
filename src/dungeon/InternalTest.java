@@ -1,6 +1,5 @@
 package dungeon;
 
-import static java.lang.Math.E;
 import static java.lang.Math.abs;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

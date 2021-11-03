@@ -22,10 +22,8 @@
 
    - The Dungeon.jar file can be found in the /res directory.
    - To run it, type "java -jar Dungeon.jar <height> <width> <interconnectivity> <isWrapping> <percentage of caves with treasure>" on the terminal within the directory.  For example, "java -jar Dungeon.jar 5 5 3 true 25".
-   - The DungeonInput.jar file can be found in the /res directory.
-   - To run it, type "java -jar DungeonInput.jar" on the terminal within the directory.
-
-4. **How to Use the Program**: The program will select moves for the player and move it in the dungeon while collecting treasure. The DungeonInput accepts user input for the moves. The moves can be given to the program as numbers 1.NORTH 2.EAST 3.SOUTH 4.WEST.
+   
+4. **How to Use the Program**: The program will select moves for the player and move it in the dungeon while collecting treasure. The DungeonInput (Driver2: could not be included in res due to size constraint) accepts user input for the moves. The moves can be given to the program as numbers 1.NORTH 2.EAST 3.SOUTH 4.WEST.
 
 5. **Description of Example:**
 

@@ -98,6 +98,8 @@ public class DungeonTest {
   @Test
   public void testLargeDungeon() {
     dungeon = new DungeonImpl(new int[]{50, 50}, 30, true, 50);
+    assertEquals(50, dungeon.getSize()[0]);
+    assertEquals(50, dungeon.getSize()[1]);
   }
 
   @Test
