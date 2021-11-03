@@ -1,0 +1,824 @@
+
+*****Welcome to the Labyrinth! Navigate this maze while collecting treasures and trying to find the exit!*****
+
+Initializing dungeon and player...
+Player is at location: [4,3] with possible moves and treasures: Cave23 [NORTH, EAST, SOUTH, WEST] []
+Player has collected  with a score of 0
+You have chosen to move NORTH
+Player is at location: [3,3] with possible moves and treasures: Cave18 [NORTH, EAST, SOUTH, WEST] []
+Player has collected  with a score of 0
+You have chosen to move SOUTH
+Player is at location: [4,3] with possible moves and treasures: Cave23 [NORTH, EAST, SOUTH, WEST] []
+Player has collected  with a score of 0
+You have chosen to move NORTH
+Player is at location: [3,3] with possible moves and treasures: Cave18 [NORTH, EAST, SOUTH, WEST] []
+Player has collected  with a score of 0
+You have chosen to move WEST
+Player is at location: [3,2] with possible moves and treasures: Cave17 [NORTH, EAST, SOUTH] []
+Player has collected  with a score of 0
+You have chosen to move SOUTH
+Player is at location: [4,2] with possible moves and treasures: Cave22 [NORTH, EAST, SOUTH, WEST] []
+Player has collected  with a score of 0
+You have chosen to move SOUTH
+Player is at location: [5,2] with possible moves and treasures: Tunnel27 [NORTH, EAST] []
+Player has collected  with a score of 0
+You have chosen to move NORTH
+Player is at location: [4,2] with possible moves and treasures: Cave22 [NORTH, EAST, SOUTH, WEST] []
+Player has collected  with a score of 0
+You have chosen to move SOUTH
+Player is at location: [5,2] with possible moves and treasures: Tunnel27 [NORTH, EAST] []
+Player has collected  with a score of 0
+You have chosen to move EAST
+Player is at location: [5,3] with possible moves and treasures: Cave28 [NORTH, EAST, WEST] []
+Player has collected  with a score of 0
+You have chosen to move EAST
+Player is at location: [5,4] with possible moves and treasures: Cave29 [WEST] [DIAMOND, RUBY, RUBY, RUBY, SAPPHIRE]
+Player has collected RUBY(3), SAPPHIRE(1), DIAMOND(1),  with a score of 100
+You have chosen to move WEST
+Player is at location: [5,3] with possible moves and treasures: Cave28 [NORTH, EAST, WEST] []
+Player has collected RUBY(3), SAPPHIRE(1), DIAMOND(1),  with a score of 100
+You have chosen to move NORTH
+Player is at location: [4,3] with possible moves and treasures: Cave23 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(3), SAPPHIRE(1), DIAMOND(1),  with a score of 100
+You have chosen to move SOUTH
+Player is at location: [5,3] with possible moves and treasures: Cave28 [NORTH, EAST, WEST] []
+Player has collected RUBY(3), SAPPHIRE(1), DIAMOND(1),  with a score of 100
+You have chosen to move EAST
+Player is at location: [5,4] with possible moves and treasures: Cave29 [WEST] [DIAMOND, RUBY, RUBY, RUBY, SAPPHIRE]
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [5,3] with possible moves and treasures: Cave28 [NORTH, EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [5,2] with possible moves and treasures: Tunnel27 [NORTH, EAST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [4,2] with possible moves and treasures: Cave22 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [4,3] with possible moves and treasures: Cave23 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [4,4] with possible moves and treasures: Cave24 [WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [4,3] with possible moves and treasures: Cave23 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [3,3] with possible moves and treasures: Cave18 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [4,3] with possible moves and treasures: Cave23 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [3,3] with possible moves and treasures: Cave18 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [3,2] with possible moves and treasures: Cave17 [NORTH, EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [3,3] with possible moves and treasures: Cave18 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [4,3] with possible moves and treasures: Cave23 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [5,3] with possible moves and treasures: Cave28 [NORTH, EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [5,2] with possible moves and treasures: Tunnel27 [NORTH, EAST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [4,2] with possible moves and treasures: Cave22 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [4,3] with possible moves and treasures: Cave23 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [3,3] with possible moves and treasures: Cave18 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [2,3] with possible moves and treasures: Cave13 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,4] with possible moves and treasures: Cave14 [WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,3] with possible moves and treasures: Cave13 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,4] with possible moves and treasures: Cave14 [WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,3] with possible moves and treasures: Cave13 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [3,3] with possible moves and treasures: Cave18 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [3,4] with possible moves and treasures: Cave19 [WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [3,3] with possible moves and treasures: Cave18 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [4,3] with possible moves and treasures: Cave23 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [4,2] with possible moves and treasures: Cave22 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [5,2] with possible moves and treasures: Tunnel27 [NORTH, EAST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [5,3] with possible moves and treasures: Cave28 [NORTH, EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [4,3] with possible moves and treasures: Cave23 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [4,4] with possible moves and treasures: Cave24 [WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [4,3] with possible moves and treasures: Cave23 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [3,3] with possible moves and treasures: Cave18 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [3,2] with possible moves and treasures: Cave17 [NORTH, EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [4,2] with possible moves and treasures: Cave22 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [4,3] with possible moves and treasures: Cave23 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [4,4] with possible moves and treasures: Cave24 [WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [4,3] with possible moves and treasures: Cave23 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [4,4] with possible moves and treasures: Cave24 [WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [4,3] with possible moves and treasures: Cave23 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [3,3] with possible moves and treasures: Cave18 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [4,3] with possible moves and treasures: Cave23 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [5,3] with possible moves and treasures: Cave28 [NORTH, EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [5,2] with possible moves and treasures: Tunnel27 [NORTH, EAST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [5,3] with possible moves and treasures: Cave28 [NORTH, EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [4,3] with possible moves and treasures: Cave23 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [3,3] with possible moves and treasures: Cave18 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [2,3] with possible moves and treasures: Cave13 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,4] with possible moves and treasures: Cave14 [WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,3] with possible moves and treasures: Cave13 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,4] with possible moves and treasures: Cave14 [WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,3] with possible moves and treasures: Cave13 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [3,3] with possible moves and treasures: Cave18 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [2,3] with possible moves and treasures: Cave13 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,4] with possible moves and treasures: Cave14 [WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,3] with possible moves and treasures: Cave13 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,4] with possible moves and treasures: Cave14 [WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,3] with possible moves and treasures: Cave13 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,2] with possible moves and treasures: Cave12 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,1] with possible moves and treasures: Tunnel6 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,1] with possible moves and treasures: Tunnel6 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [2,2] with possible moves and treasures: Cave12 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [2,2] with possible moves and treasures: Cave12 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [1,1] with possible moves and treasures: Tunnel6 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,3] with possible moves and treasures: Cave8 [NORTH, EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,4] with possible moves and treasures: Tunnel9 [NORTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [0,4] with possible moves and treasures: Tunnel4 [SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [0,3] with possible moves and treasures: Cave3 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [0,4] with possible moves and treasures: Tunnel4 [SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [0,3] with possible moves and treasures: Cave3 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [0,2] with possible moves and treasures: Tunnel2 [EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [0,1] with possible moves and treasures: Tunnel1 [EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [0,2] with possible moves and treasures: Tunnel2 [EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [0,3] with possible moves and treasures: Cave3 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [0,4] with possible moves and treasures: Tunnel4 [SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [1,4] with possible moves and treasures: Tunnel9 [NORTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,3] with possible moves and treasures: Cave8 [NORTH, EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,1] with possible moves and treasures: Tunnel6 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,2] with possible moves and treasures: Cave12 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [3,2] with possible moves and treasures: Cave17 [NORTH, EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [3,3] with possible moves and treasures: Cave18 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [2,3] with possible moves and treasures: Cave13 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,2] with possible moves and treasures: Cave12 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,1] with possible moves and treasures: Tunnel6 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,1] with possible moves and treasures: Tunnel6 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [3,1] with possible moves and treasures: Cave16 [NORTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,2] with possible moves and treasures: Cave12 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,3] with possible moves and treasures: Cave13 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,4] with possible moves and treasures: Cave14 [WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,3] with possible moves and treasures: Cave13 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,2] with possible moves and treasures: Cave12 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,3] with possible moves and treasures: Cave8 [NORTH, EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,4] with possible moves and treasures: Tunnel9 [NORTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,3] with possible moves and treasures: Cave8 [NORTH, EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,1] with possible moves and treasures: Tunnel6 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,3] with possible moves and treasures: Cave8 [NORTH, EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,3] with possible moves and treasures: Cave8 [NORTH, EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,1] with possible moves and treasures: Tunnel6 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,2] with possible moves and treasures: Cave12 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [3,1] with possible moves and treasures: Cave16 [NORTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,0] with possible moves and treasures: Tunnel10 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [1,1] with possible moves and treasures: Tunnel6 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,0] with possible moves and treasures: Tunnel10 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [3,1] with possible moves and treasures: Cave16 [NORTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,0] with possible moves and treasures: Tunnel10 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [3,1] with possible moves and treasures: Cave16 [NORTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,0] with possible moves and treasures: Tunnel10 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [3,0] with possible moves and treasures: Tunnel15 [NORTH, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [4,0] with possible moves and treasures: Cave20 [NORTH, EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [4,1] with possible moves and treasures: Cave21 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [4,2] with possible moves and treasures: Cave22 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [4,1] with possible moves and treasures: Cave21 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [4,0] with possible moves and treasures: Cave20 [NORTH, EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [3,0] with possible moves and treasures: Tunnel15 [NORTH, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [2,0] with possible moves and treasures: Tunnel10 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,0] with possible moves and treasures: Tunnel10 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [3,0] with possible moves and treasures: Tunnel15 [NORTH, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [4,0] with possible moves and treasures: Cave20 [NORTH, EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [5,0] with possible moves and treasures: Cave25 [NORTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [4,0] with possible moves and treasures: Cave20 [NORTH, EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [3,0] with possible moves and treasures: Tunnel15 [NORTH, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [2,0] with possible moves and treasures: Tunnel10 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [3,0] with possible moves and treasures: Tunnel15 [NORTH, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [2,0] with possible moves and treasures: Tunnel10 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [3,0] with possible moves and treasures: Tunnel15 [NORTH, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [2,0] with possible moves and treasures: Tunnel10 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,0] with possible moves and treasures: Tunnel10 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,2] with possible moves and treasures: Cave12 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,3] with possible moves and treasures: Cave13 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,2] with possible moves and treasures: Cave12 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,1] with possible moves and treasures: Tunnel6 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [1,1] with possible moves and treasures: Tunnel6 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [2,2] with possible moves and treasures: Cave12 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [3,2] with possible moves and treasures: Cave17 [NORTH, EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [2,2] with possible moves and treasures: Cave12 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,3] with possible moves and treasures: Cave8 [NORTH, EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [0,3] with possible moves and treasures: Cave3 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [0,4] with possible moves and treasures: Tunnel4 [SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [1,4] with possible moves and treasures: Tunnel9 [NORTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,3] with possible moves and treasures: Cave8 [NORTH, EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,1] with possible moves and treasures: Tunnel6 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,0] with possible moves and treasures: Tunnel10 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,0] with possible moves and treasures: Tunnel10 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,0] with possible moves and treasures: Tunnel10 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,0] with possible moves and treasures: Tunnel10 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,0] with possible moves and treasures: Tunnel10 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [3,0] with possible moves and treasures: Tunnel15 [NORTH, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [4,0] with possible moves and treasures: Cave20 [NORTH, EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [4,1] with possible moves and treasures: Cave21 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [4,2] with possible moves and treasures: Cave22 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [4,1] with possible moves and treasures: Cave21 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [4,0] with possible moves and treasures: Cave20 [NORTH, EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [5,0] with possible moves and treasures: Cave25 [NORTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [4,0] with possible moves and treasures: Cave20 [NORTH, EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [4,1] with possible moves and treasures: Cave21 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [4,2] with possible moves and treasures: Cave22 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [4,1] with possible moves and treasures: Cave21 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [4,0] with possible moves and treasures: Cave20 [NORTH, EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [3,0] with possible moves and treasures: Tunnel15 [NORTH, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [2,0] with possible moves and treasures: Tunnel10 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [3,0] with possible moves and treasures: Tunnel15 [NORTH, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [2,0] with possible moves and treasures: Tunnel10 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [3,1] with possible moves and treasures: Cave16 [NORTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [1,1] with possible moves and treasures: Tunnel6 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [1,1] with possible moves and treasures: Tunnel6 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,0] with possible moves and treasures: Tunnel10 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,2] with possible moves and treasures: Cave12 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [2,3] with possible moves and treasures: Cave13 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [3,3] with possible moves and treasures: Cave18 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [4,3] with possible moves and treasures: Cave23 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [4,2] with possible moves and treasures: Cave22 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [3,2] with possible moves and treasures: Cave17 [NORTH, EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [3,3] with possible moves and treasures: Cave18 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [3,4] with possible moves and treasures: Cave19 [WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [3,3] with possible moves and treasures: Cave18 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [3,4] with possible moves and treasures: Cave19 [WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [3,3] with possible moves and treasures: Cave18 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [3,4] with possible moves and treasures: Cave19 [WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [3,3] with possible moves and treasures: Cave18 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [3,2] with possible moves and treasures: Cave17 [NORTH, EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [2,2] with possible moves and treasures: Cave12 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [2,1] with possible moves and treasures: Cave11 [NORTH, EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [1,1] with possible moves and treasures: Tunnel6 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,3] with possible moves and treasures: Cave8 [NORTH, EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,4] with possible moves and treasures: Tunnel9 [NORTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,3] with possible moves and treasures: Cave8 [NORTH, EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,4] with possible moves and treasures: Tunnel9 [NORTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [0,4] with possible moves and treasures: Tunnel4 [SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [1,4] with possible moves and treasures: Tunnel9 [NORTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [0,4] with possible moves and treasures: Tunnel4 [SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+Player is at location: [1,4] with possible moves and treasures: Tunnel9 [NORTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,3] with possible moves and treasures: Cave8 [NORTH, EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,2] with possible moves and treasures: Cave7 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,3] with possible moves and treasures: Cave8 [NORTH, EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [1,4] with possible moves and treasures: Tunnel9 [NORTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [1,3] with possible moves and treasures: Cave8 [NORTH, EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move NORTH
+Player is at location: [0,3] with possible moves and treasures: Cave3 [EAST, SOUTH, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [0,2] with possible moves and treasures: Tunnel2 [EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [0,1] with possible moves and treasures: Tunnel1 [EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [0,0] with possible moves and treasures: Tunnel0 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [0,1] with possible moves and treasures: Tunnel1 [EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [0,2] with possible moves and treasures: Tunnel2 [EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [0,1] with possible moves and treasures: Tunnel1 [EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [0,0] with possible moves and treasures: Tunnel0 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move EAST
+Player is at location: [0,1] with possible moves and treasures: Tunnel1 [EAST, WEST] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move WEST
+Player is at location: [0,0] with possible moves and treasures: Tunnel0 [EAST, SOUTH] []
+Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+You have chosen to move SOUTH
+
+
+Hurray! You have found the exit of the dungeon and your status is: Player has collected RUBY(6), SAPPHIRE(2), DIAMOND(2),  with a score of 200
+
+
+Printing the dungeon at the end for testing and checking purposes only!!
+                       
+   O---O---O---O---O   
+   |           |   |   
+   X   O---O---O---O   
+       |   |           
+   O---O---O---O---O   
+   |   |   |   |       
+   O   O   O---O---O   
+   |       |   |       
+   O---O---O---S---O   
+   |   |   |   |       
+   O   O   O---O---O   
+                       
+[4, 3] [1, 0]
+
+Process finished with exit code 0

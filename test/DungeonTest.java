@@ -7,6 +7,7 @@ import dungeon.Dungeon;
 import dungeon.DungeonImpl;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import org.junit.Test;
 
 /**
@@ -39,6 +40,68 @@ public class DungeonTest {
   @Test(expected = IllegalArgumentException.class)
   public void nullSize() {
     dungeon = new DungeonImpl(null, 5, true, -15);
+  }
+
+  @Test
+  public void testSingleRow() {
+    dungeon = new DungeonImpl(new int[]{1, 6}, 3, false, 20);
+    Random rand = new Random();
+    while (!dungeon.hasReachedGoal()) {
+      dungeon.pickTreasure();
+      List<Direction> possibleMoves = dungeon.getPossibleMoves();
+      Direction direction = possibleMoves.get(rand.nextInt(possibleMoves.size()));
+      dungeon.movePlayer(direction);
+    }
+    System.out.println(dungeon);
+    assertTrue(dungeon.hasReachedGoal());
+  }
+
+  @Test
+  public void testSingleCol() {
+    dungeon = new DungeonImpl(new int[]{6, 1}, 0, true, 20);
+    Random rand = new Random();
+    while (!dungeon.hasReachedGoal()) {
+      dungeon.pickTreasure();
+      List<Direction> possibleMoves = dungeon.getPossibleMoves();
+      Direction direction = possibleMoves.get(rand.nextInt(possibleMoves.size()));
+      dungeon.movePlayer(direction);
+    }
+    System.out.println(dungeon);
+    assertTrue(dungeon.hasReachedGoal());
+  }
+
+  @Test
+  public void smallestDungeon() {
+    dungeon = new DungeonImpl(new int[]{3, 4}, 0, false, 20);
+    Random rand = new Random();
+    while (!dungeon.hasReachedGoal()) {
+      dungeon.pickTreasure();
+      List<Direction> possibleMoves = dungeon.getPossibleMoves();
+      Direction direction = possibleMoves.get(rand.nextInt(possibleMoves.size()));
+      dungeon.movePlayer(direction);
+    }
+    System.out.println(dungeon);
+    assertTrue(dungeon.hasReachedGoal());
+  }
+
+  @Test
+  public void smallestDungeon2() {
+    dungeon = new DungeonImpl(new int[]{4, 3}, 0, false, 20);
+    Random rand = new Random();
+    while (!dungeon.hasReachedGoal()) {
+      dungeon.pickTreasure();
+      List<Direction> possibleMoves = dungeon.getPossibleMoves();
+      Direction direction = possibleMoves.get(rand.nextInt(possibleMoves.size()));
+      dungeon.movePlayer(direction);
+    }
+    System.out.println(dungeon);
+    assertTrue(dungeon.hasReachedGoal());
+  }
+
+
+  @Test
+  public void testLargeDungeon()  {
+    dungeon = new DungeonImpl(new int[]{50, 50}, 30, true, 50);
   }
 
   @Test

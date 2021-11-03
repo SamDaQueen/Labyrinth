@@ -20,7 +20,7 @@ public class DungeonImpl implements Dungeon {
   private final int[] size;
   private final int interconnectivity;
   private final boolean wrapping;
-  private final int percentageOfCavesWithTreasure;
+  private final int perOfCavesWTreasure;
   private final int[] start;
   private final int[] end;
   private final Cave[][] dungeon;
@@ -30,20 +30,20 @@ public class DungeonImpl implements Dungeon {
   /**
    * Constructs a new Dungeon object.
    *
-   * @param size                          the size
-   * @param interconnectivity             the degree of interconnectivity
-   * @param wrapping                      whether it is wrapping
-   * @param percentageOfCavesWithTreasure percentage of caves with treasure
+   * @param size                the size
+   * @param interconnectivity   the degree of interconnectivity
+   * @param wrapping            whether it is wrapping
+   * @param perOfCavesWTreasure percentage of caves with treasure
    */
   public DungeonImpl(int[] size, int interconnectivity, boolean wrapping,
-      int percentageOfCavesWithTreasure) {
+      int perOfCavesWTreasure) {
     if (size == null) {
       throw new IllegalArgumentException("Size of the maze cannot be null!");
     }
-    if (size[0] < 4 || size[1] < 4) {
-      throw new IllegalArgumentException("Size has to be minimum 4X4!");
+    if (size[0] + size[1] < 7) {
+      throw new IllegalArgumentException("Size too small!");
     }
-    if (percentageOfCavesWithTreasure <= 0) {
+    if (perOfCavesWTreasure <= 0) {
       throw new IllegalArgumentException("Please provide positive value for % of treasure!");
     }
     if (interconnectivity < 0) {
@@ -52,7 +52,7 @@ public class DungeonImpl implements Dungeon {
     this.size = size;
     this.interconnectivity = interconnectivity;
     this.wrapping = wrapping;
-    this.percentageOfCavesWithTreasure = percentageOfCavesWithTreasure;
+    this.perOfCavesWTreasure = perOfCavesWTreasure;
     this.edges = new HashSet<>();
     this.dungeon = createDungeon();
 
@@ -75,22 +75,22 @@ public class DungeonImpl implements Dungeon {
   /**
    * Alternate constructor to generate dungeon with the given 2-D array. Used for testing.
    *
-   * @param size                          the size
-   * @param interconnectivity             the degree of interconnectivity
-   * @param wrapping                      whether it is wrapping
-   * @param percentageOfCavesWithTreasure percentage of caves with treasure
-   * @param caves                         2-D array of Caves
-   * @param start                         the starting node
-   * @param end                           the ending node
+   * @param size                the size
+   * @param interconnectivity   the degree of interconnectivity
+   * @param wrapping            whether it is wrapping
+   * @param perOfCavesWTreasure percentage of caves with treasure
+   * @param caves               2-D array of Caves
+   * @param start               the starting node
+   * @param end                 the ending node
    */
   public DungeonImpl(int[] size, int interconnectivity, boolean wrapping,
-      int percentageOfCavesWithTreasure,
+      int perOfCavesWTreasure,
       Cave[][] caves, int[] start, int[] end) {
     this.dungeon = caves;
     this.size = size;
     this.wrapping = wrapping;
     this.interconnectivity = interconnectivity;
-    this.percentageOfCavesWithTreasure = percentageOfCavesWithTreasure;
+    this.perOfCavesWTreasure = perOfCavesWTreasure;
     this.start = start;
     this.end = end;
     this.player = new Player(this.start[0], this.start[1]);
@@ -102,7 +102,7 @@ public class DungeonImpl implements Dungeon {
     List<Cave> caves = getCaves();
     Random rand = new Random();
 
-    while (withTreasure.size() <= percentageOfCavesWithTreasure * getNumberOfCaves() / 100) {
+    while (withTreasure.size() <= perOfCavesWTreasure * getNumberOfCaves() / 100) {
       if (caves.size() > 0) {
         int choose = rand.nextInt(caves.size());
         Cave cave = caves.get(choose);
@@ -138,19 +138,6 @@ public class DungeonImpl implements Dungeon {
       }
     }
     return caves;
-  }
-
-  @Override
-  public List<Direction> getPossibleMoves() {
-    return new ArrayList<>(
-        dungeon[player.getCurrentPosition()[0]][player.getCurrentPosition()[1]].getOpenings());
-  }
-
-  @Override
-  public int[] getPlayerPosition() {
-    return new int[]{
-        player.getCurrentPosition()[0], player.getCurrentPosition()[1]
-    };
   }
 
   private Cave[][] createDungeon() {
@@ -319,6 +306,19 @@ public class DungeonImpl implements Dungeon {
   }
 
   @Override
+  public List<Direction> getPossibleMoves() {
+    return new ArrayList<>(
+        dungeon[player.getCurrentPosition()[0]][player.getCurrentPosition()[1]].getOpenings());
+  }
+
+  @Override
+  public int[] getPlayerPosition() {
+    return new int[]{
+        player.getCurrentPosition()[0], player.getCurrentPosition()[1]
+    };
+  }
+
+  @Override
   public void movePlayer(Direction d) {
     int[] current = player.getCurrentPosition();
     if (!dungeon[current[0]][current[1]].getOpenings().contains(d)) {
@@ -467,7 +467,7 @@ public class DungeonImpl implements Dungeon {
    *
    * @return number of edges
    */
-  int numberOfEdges() {
+  int getNumberOfEdges() {
     if (dungeon != null) {
       return edges.size();
     } else {
@@ -497,7 +497,7 @@ public class DungeonImpl implements Dungeon {
    *
    * @return number of caves with treasure
    */
-  int getCavesWithTreasures() {
+  int getNumberOfCavesWithTreasures() {
     int counter = 0;
     for (int row = 0; row < size[0]; row++) {
       for (int col = 0; col < size[1]; col++) {

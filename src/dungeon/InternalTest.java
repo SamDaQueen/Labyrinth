@@ -16,7 +16,6 @@ public class InternalTest {
   private DungeonImpl dungeon;
   private DungeonImpl dungeonFixed;
 
-
   @Test
   public void printDungeon() {
     dungeonFixed = new DungeonImpl(new int[]{5, 5}, 3, false, 20, getCaves(), new int[]{4, 3},
@@ -81,23 +80,23 @@ public class InternalTest {
   @Test
   public void checkInterconnectivity() {
     dungeon = new DungeonImpl(new int[]{5, 5}, 3, true, 20);
-    assertEquals(dungeon.numberOfEdges(), 25 + 3 - 1);
+    assertEquals(dungeon.getNumberOfEdges(), 25 + 3 - 1);
 
     dungeon = new DungeonImpl(new int[]{5, 5}, 5, true, 20);
-    assertEquals(dungeon.numberOfEdges(), 25 + 5 - 1);
+    assertEquals(dungeon.getNumberOfEdges(), 25 + 5 - 1);
 
     dungeon = new DungeonImpl(new int[]{6, 6}, 0, true, 20);
-    assertEquals(dungeon.numberOfEdges(), 36 - 1);
+    assertEquals(dungeon.getNumberOfEdges(), 36 - 1);
   }
 
   @Test
   public void numberOfTreasureCaves() {
     for (int i = 0; i < 100; i++) {
       dungeon = new DungeonImpl(new int[]{5, 5}, 3, true, 20);
-      assertTrue(dungeon.getCavesWithTreasures() > 20L * dungeon.getNumberOfCaves() / 100);
+      assertTrue(dungeon.getNumberOfCavesWithTreasures() > 20L * dungeon.getNumberOfCaves() / 100);
 
       dungeon = new DungeonImpl(new int[]{6, 7}, 3, false, 30);
-      assertTrue(dungeon.getCavesWithTreasures() > 30L * dungeon.getNumberOfCaves() / 100);
+      assertTrue(dungeon.getNumberOfCavesWithTreasures() > 30L * dungeon.getNumberOfCaves() / 100);
     }
   }
 
@@ -204,6 +203,60 @@ public class InternalTest {
       dungeon = new DungeonImpl(new int[]{5, 6}, 0, false, 20);
       assertFalse(dungeon.getDungeon()[dungeon.getEnd()[0]][dungeon.getEnd()[1]].isTunnel());
     }
+  }
+
+  @Test
+  public void downToUp() {
+    Cave[][] caves = getCaves();
+    makeWrapping(caves);
+    dungeonFixed = new DungeonImpl(new int[]{5, 5}, 0, true, 20, caves, new int[]{4, 3},
+        new int[]{0, 1});
+    dungeonFixed.movePlayer(Direction.WEST);
+    dungeonFixed.movePlayer(Direction.SOUTH);
+    assertEquals(0, dungeonFixed.getPlayerPosition()[0]);
+  }
+
+  @Test
+  public void upToDown() {
+    Cave[][] caves = getCaves();
+    makeWrapping(caves);
+    dungeonFixed = new DungeonImpl(new int[]{5, 5}, 0, true, 20, caves, new int[]{4, 3},
+        new int[]{0, 1});
+    dungeonFixed.movePlayer(Direction.NORTH);
+    dungeonFixed.movePlayer(Direction.NORTH);
+    dungeonFixed.movePlayer(Direction.NORTH);
+    dungeonFixed.movePlayer(Direction.NORTH);
+    dungeonFixed.movePlayer(Direction.WEST);
+    dungeonFixed.movePlayer(Direction.NORTH);
+    assertEquals(4, dungeonFixed.getPlayerPosition()[0]);
+  }
+
+  @Test
+  public void leftToRight() {
+    Cave[][] caves = getCaves();
+    makeWrapping(caves);
+    dungeonFixed = new DungeonImpl(new int[]{5, 5}, 0, true, 20, caves, new int[]{4, 3},
+        new int[]{0, 1});
+    dungeonFixed.movePlayer(Direction.WEST);
+    dungeonFixed.movePlayer(Direction.NORTH);
+    dungeonFixed.movePlayer(Direction.WEST);
+    dungeonFixed.movePlayer(Direction.WEST);
+    dungeonFixed.movePlayer(Direction.WEST);
+    assertEquals(4, dungeonFixed.getPlayerPosition()[1]);
+  }
+
+  @Test
+  public void rightToLeft() {
+    Cave[][] caves = getCaves();
+    makeWrapping(caves);
+    dungeonFixed = new DungeonImpl(new int[]{5, 5}, 0, true, 20, caves, new int[]{4, 3},
+        new int[]{0, 1});
+    dungeonFixed.movePlayer(Direction.NORTH);
+    dungeonFixed.movePlayer(Direction.NORTH);
+    dungeonFixed.movePlayer(Direction.EAST);
+    dungeonFixed.movePlayer(Direction.SOUTH);
+    dungeonFixed.movePlayer(Direction.EAST);
+    assertEquals(0, dungeonFixed.getPlayerPosition()[1]);
   }
 
   private Cave[][] getCaves() {
@@ -318,6 +371,24 @@ public class InternalTest {
     caves[4][4].setTreasures(Treasure.SAPPHIRE);
 
     return caves;
+  }
+
+  private void makeWrapping(Cave[][] caves) {
+    caves[0][0].setOpenings(Direction.NORTH);
+    caves[0][0].setOpenings(Direction.WEST);
+    caves[0][1].setOpenings(Direction.NORTH);
+    caves[0][2].setOpenings(Direction.NORTH);
+    caves[0][4].setOpenings(Direction.EAST);
+
+    caves[1][0].setOpenings(Direction.WEST);
+    caves[1][4].setOpenings(Direction.EAST);
+
+    caves[3][0].setOpenings(Direction.WEST);
+    caves[3][4].setOpenings(Direction.EAST);
+
+    caves[4][0].setOpenings(Direction.SOUTH);
+    caves[4][1].setOpenings(Direction.SOUTH);
+    caves[4][2].setOpenings(Direction.SOUTH);
   }
 
   private boolean checkWrapping(Cave[][] cave) {
