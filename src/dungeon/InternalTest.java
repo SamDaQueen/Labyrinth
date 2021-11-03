@@ -1,5 +1,6 @@
 package dungeon;
 
+import static java.lang.Math.E;
 import static java.lang.Math.abs;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -18,8 +19,7 @@ public class InternalTest {
 
   @Test
   public void printDungeon() {
-    dungeonFixed = new DungeonImpl(new int[]{5, 5}, 3, false, 20, getCaves(), new int[]{4, 3},
-        new int[]{0, 1});
+    dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
     assertEquals("                       \n"
                  + "   O---X   O---O---O   \n"
                  + "   |           |   |   \n"
@@ -36,23 +36,20 @@ public class InternalTest {
 
   @Test(expected = IllegalStateException.class)
   public void invalidMove() {
-    dungeonFixed = new DungeonImpl(new int[]{5, 5}, 6, false, 20, getCaves(), new int[]{4, 3},
-        new int[]{0, 1});
+    dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
     dungeonFixed.movePlayer(Direction.SOUTH);
   }
 
   @Test
   public void getEnd() {
-    dungeonFixed = new DungeonImpl(new int[]{5, 5}, 6, false, 20, getCaves(), new int[]{4, 3},
-        new int[]{0, 1});
+    dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
     assertEquals(0, dungeonFixed.getEnd()[0]);
     assertEquals(1, dungeonFixed.getEnd()[1]);
   }
 
   @Test
   public void hasReachedGoal() {
-    dungeonFixed = new DungeonImpl(new int[]{5, 5}, 6, false, 20, getCaves(), new int[]{4, 3},
-        new int[]{0, 1});
+    dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
     dungeonFixed.movePlayer(Direction.WEST);
     dungeonFixed.movePlayer(Direction.NORTH);
     dungeonFixed.movePlayer(Direction.WEST);
@@ -82,8 +79,8 @@ public class InternalTest {
     dungeon = new DungeonImpl(new int[]{5, 5}, 3, true, 20);
     assertEquals(dungeon.getNumberOfEdges(), 25 + 3 - 1);
 
-    dungeon = new DungeonImpl(new int[]{5, 5}, 5, true, 20);
-    assertEquals(dungeon.getNumberOfEdges(), 25 + 5 - 1);
+    dungeon = new DungeonImpl(new int[]{5, 5}, 2, false, 20);
+    assertEquals(dungeon.getNumberOfEdges(), 25 + 2 - 1);
 
     dungeon = new DungeonImpl(new int[]{6, 6}, 0, true, 20);
     assertEquals(dungeon.getNumberOfEdges(), 36 - 1);
@@ -149,10 +146,9 @@ public class InternalTest {
 
   @Test
   public void printPlayerStatus() {
-    dungeonFixed = new DungeonImpl(new int[]{5, 5}, 3, false, 20, getCaves(), new int[]{4, 3},
-        new int[]{0, 1});
+    dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
     assertEquals("Player has collected with a score of 0", dungeonFixed.printPlayerStatus());
-    dungeonFixed.movePlayer(Direction.NORTH);
+    dungeonFixed.movePlayer(Direction.WEST);
     dungeonFixed.pickTreasure();
     assertEquals("Player has collected DIAMOND(1), RUBY(1), SAPPHIRE(2), with a score of 90",
         dungeonFixed.printPlayerStatus());
@@ -160,22 +156,25 @@ public class InternalTest {
 
   @Test
   public void printCurrentLocation() {
-    dungeonFixed = new DungeonImpl(new int[]{5, 5}, 6, false, 20, getCaves(), new int[]{4, 3},
-        new int[]{0, 1});
+    dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
     assertEquals(
         "Player is at location: [4,3] with possible moves and treasures: Cave [NORTH, EAST, WEST] []",
         dungeonFixed.printCurrentLocation());
-    dungeonFixed.movePlayer(Direction.NORTH);
+    dungeonFixed.movePlayer(Direction.EAST);
     assertEquals(
-        "Player is at location: [3,3] with possible moves and treasures: "
-        + "Tunnel [NORTH, SOUTH] [SAPPHIRE, SAPPHIRE, RUBY, DIAMOND]",
+        "Player is at location: [4,4] with possible moves and treasures: Cave [WEST] [RUBY, RUBY, SAPPHIRE]",
         dungeonFixed.printCurrentLocation());
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void tunnelTreasure() {
+    dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
+    dungeonFixed.getDungeon()[4][1].setTreasures(Treasure.RUBY);
   }
 
   @Test
   public void pickTreasure() {
-    dungeonFixed = new DungeonImpl(new int[]{5, 5}, 3, false, 20, getCaves(), new int[]{4, 3},
-        new int[]{0, 1});
+    dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
     dungeonFixed.movePlayer(Direction.EAST);
     dungeonFixed.pickTreasure();
     assertEquals("Player has collected RUBY(2), SAPPHIRE(1), with a score of 70",
@@ -184,8 +183,7 @@ public class InternalTest {
 
   @Test
   public void numberOfCaves() {
-    dungeonFixed = new DungeonImpl(new int[]{5, 5}, 3, false, 20, getCaves(), new int[]{4, 3},
-        new int[]{0, 1});
+    dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
     assertEquals(16, dungeonFixed.getNumberOfCaves());
   }
 
@@ -206,11 +204,85 @@ public class InternalTest {
   }
 
   @Test
+  public void traversal() {
+    Cave[][] caves = new Cave[3][4];
+    for (int row = 0; row < 3; row++) {
+      for (int col = 0; col < 4; col++) {
+        caves[row][col] = new Cave();
+      }
+    }
+
+    caves[0][0].setOpenings(Direction.EAST);
+    caves[0][1].setOpenings(Direction.WEST);
+    caves[0][1].setOpenings(Direction.EAST);
+    caves[0][2].setOpenings(Direction.WEST);
+    caves[0][2].setOpenings(Direction.EAST);
+    caves[0][3].setOpenings(Direction.WEST);
+    caves[0][3].setOpenings(Direction.SOUTH);
+
+    caves[1][0].setOpenings(Direction.EAST);
+    caves[1][0].setOpenings(Direction.SOUTH);
+    caves[1][1].setOpenings(Direction.WEST);
+    caves[1][1].setOpenings(Direction.EAST);
+    caves[1][2].setOpenings(Direction.WEST);
+    caves[1][2].setOpenings(Direction.EAST);
+    caves[1][3].setOpenings(Direction.NORTH);
+    caves[1][3].setOpenings(Direction.WEST);
+
+    caves[2][0].setOpenings(Direction.NORTH);
+    caves[2][0].setOpenings(Direction.EAST);
+    caves[2][1].setOpenings(Direction.WEST);
+    caves[2][1].setOpenings(Direction.EAST);
+    caves[2][2].setOpenings(Direction.EAST);
+    caves[2][2].setOpenings(Direction.WEST);
+    caves[2][3].setOpenings(Direction.WEST);
+
+    dungeon = new DungeonImpl(caves, new int[]{0, 0}, new int[]{2, 3});
+
+    assertEquals(0, dungeon.getPlayerPosition()[0]);
+    assertEquals(0, dungeon.getPlayerPosition()[1]);
+    dungeon.movePlayer(Direction.EAST);
+    assertEquals(0, dungeon.getPlayerPosition()[0]);
+    assertEquals(1, dungeon.getPlayerPosition()[1]);
+    dungeon.movePlayer(Direction.EAST);
+    assertEquals(0, dungeon.getPlayerPosition()[0]);
+    assertEquals(2, dungeon.getPlayerPosition()[1]);
+    dungeon.movePlayer(Direction.EAST);
+    assertEquals(0, dungeon.getPlayerPosition()[0]);
+    assertEquals(3, dungeon.getPlayerPosition()[1]);
+    dungeon.movePlayer(Direction.SOUTH);
+    assertEquals(1, dungeon.getPlayerPosition()[0]);
+    assertEquals(3, dungeon.getPlayerPosition()[1]);
+    dungeon.movePlayer(Direction.WEST);
+    assertEquals(1, dungeon.getPlayerPosition()[0]);
+    assertEquals(2, dungeon.getPlayerPosition()[1]);
+    dungeon.movePlayer(Direction.WEST);
+    assertEquals(1, dungeon.getPlayerPosition()[0]);
+    assertEquals(1, dungeon.getPlayerPosition()[1]);
+    dungeon.movePlayer(Direction.WEST);
+    assertEquals(1, dungeon.getPlayerPosition()[0]);
+    assertEquals(0, dungeon.getPlayerPosition()[1]);
+    dungeon.movePlayer(Direction.SOUTH);
+    assertEquals(2, dungeon.getPlayerPosition()[0]);
+    assertEquals(0, dungeon.getPlayerPosition()[1]);
+    dungeon.movePlayer(Direction.EAST);
+    assertEquals(2, dungeon.getPlayerPosition()[0]);
+    assertEquals(1, dungeon.getPlayerPosition()[1]);
+    dungeon.movePlayer(Direction.EAST);
+    assertEquals(2, dungeon.getPlayerPosition()[0]);
+    assertEquals(2, dungeon.getPlayerPosition()[1]);
+    dungeon.movePlayer(Direction.EAST);
+    assertEquals(2, dungeon.getPlayerPosition()[0]);
+    assertEquals(3, dungeon.getPlayerPosition()[1]);
+
+    assertTrue(dungeon.hasReachedGoal());
+  }
+
+  @Test
   public void downToUp() {
     Cave[][] caves = getCaves();
     makeWrapping(caves);
-    dungeonFixed = new DungeonImpl(new int[]{5, 5}, 0, true, 20, caves, new int[]{4, 3},
-        new int[]{0, 1});
+    dungeonFixed = new DungeonImpl(caves, new int[]{4, 3}, new int[]{0, 1});
     dungeonFixed.movePlayer(Direction.WEST);
     dungeonFixed.movePlayer(Direction.SOUTH);
     assertEquals(0, dungeonFixed.getPlayerPosition()[0]);
@@ -220,8 +292,7 @@ public class InternalTest {
   public void upToDown() {
     Cave[][] caves = getCaves();
     makeWrapping(caves);
-    dungeonFixed = new DungeonImpl(new int[]{5, 5}, 0, true, 20, caves, new int[]{4, 3},
-        new int[]{0, 1});
+    dungeonFixed = new DungeonImpl(caves, new int[]{4, 3}, new int[]{0, 1});
     dungeonFixed.movePlayer(Direction.NORTH);
     dungeonFixed.movePlayer(Direction.NORTH);
     dungeonFixed.movePlayer(Direction.NORTH);
@@ -235,8 +306,7 @@ public class InternalTest {
   public void leftToRight() {
     Cave[][] caves = getCaves();
     makeWrapping(caves);
-    dungeonFixed = new DungeonImpl(new int[]{5, 5}, 0, true, 20, caves, new int[]{4, 3},
-        new int[]{0, 1});
+    dungeonFixed = new DungeonImpl(caves, new int[]{4, 3}, new int[]{0, 1});
     dungeonFixed.movePlayer(Direction.WEST);
     dungeonFixed.movePlayer(Direction.NORTH);
     dungeonFixed.movePlayer(Direction.WEST);
@@ -249,14 +319,31 @@ public class InternalTest {
   public void rightToLeft() {
     Cave[][] caves = getCaves();
     makeWrapping(caves);
-    dungeonFixed = new DungeonImpl(new int[]{5, 5}, 0, true, 20, caves, new int[]{4, 3},
-        new int[]{0, 1});
+    dungeonFixed = new DungeonImpl(caves, new int[]{4, 3}, new int[]{0, 1});
     dungeonFixed.movePlayer(Direction.NORTH);
     dungeonFixed.movePlayer(Direction.NORTH);
     dungeonFixed.movePlayer(Direction.EAST);
     dungeonFixed.movePlayer(Direction.SOUTH);
     dungeonFixed.movePlayer(Direction.EAST);
     assertEquals(0, dungeonFixed.getPlayerPosition()[1]);
+  }
+
+  @Test
+  public void allDirections() {
+    dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
+
+    dungeonFixed.movePlayer(Direction.NORTH);
+    dungeonFixed.movePlayer(Direction.NORTH);
+    dungeonFixed.movePlayer(Direction.WEST);
+    dungeonFixed.movePlayer(Direction.EAST);
+    dungeonFixed.movePlayer(Direction.EAST);
+    dungeonFixed.movePlayer(Direction.WEST);
+    dungeonFixed.movePlayer(Direction.SOUTH);
+    dungeonFixed.movePlayer(Direction.NORTH);
+    dungeonFixed.movePlayer(Direction.NORTH);
+    dungeonFixed.movePlayer(Direction.SOUTH);
+    assertEquals(2, dungeonFixed.getPlayerPosition()[0]);
+    assertEquals(3, dungeonFixed.getPlayerPosition()[1]);
   }
 
   private Cave[][] getCaves() {
@@ -272,10 +359,10 @@ public class InternalTest {
     // row 0
     caves[0][0].setOpenings(Direction.EAST);
     caves[0][0].setOpenings(Direction.SOUTH);
-    caves[0][0].setTreasures(Treasure.RUBY);
-    caves[0][0].setTreasures(Treasure.DIAMOND);
 
     caves[0][1].setOpenings(Direction.WEST);
+    caves[0][1].setTreasures(Treasure.RUBY);
+    caves[0][1].setTreasures(Treasure.DIAMOND);
 
     caves[0][2].setOpenings(Direction.EAST);
 
@@ -340,12 +427,13 @@ public class InternalTest {
 
     caves[3][3].setOpenings(Direction.NORTH);
     caves[3][3].setOpenings(Direction.SOUTH);
-    caves[3][3].setTreasures(Treasure.SAPPHIRE);
-    caves[3][3].setTreasures(Treasure.SAPPHIRE);
-    caves[3][3].setTreasures(Treasure.RUBY);
-    caves[3][3].setTreasures(Treasure.DIAMOND);
 
     caves[3][4].setOpenings(Direction.NORTH);
+    caves[3][4].setTreasures(Treasure.SAPPHIRE);
+    caves[3][4].setTreasures(Treasure.SAPPHIRE);
+    caves[3][4].setTreasures(Treasure.RUBY);
+    caves[3][4].setTreasures(Treasure.DIAMOND);
+    caves[3][4].setTreasures(Treasure.DIAMOND);
 
     // row 4
     caves[4][0].setOpenings(Direction.EAST);

@@ -43,10 +43,16 @@ class Cave {
   }
 
   void setTreasures(List<Treasure> treasures) {
+    if (isTunnel()) {
+      throw new IllegalStateException("Treasure cannot be added to tunnels!");
+    }
     this.treasures.addAll(treasures);
   }
 
   void setTreasures(Treasure treasure) {
+    if (isTunnel()) {
+      throw new IllegalStateException("Treasure cannot be added to tunnels!");
+    }
     this.treasures.add(treasure);
   }
 

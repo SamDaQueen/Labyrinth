@@ -100,5 +100,5 @@
    - *Lesson: Interfaces*. (The Java™ Tutorials > Collections) from https://docs.oracle.com/javase/tutorial/collections/interfaces/index.html. 
    - *HashMap and treemap in Java*. GeeksforGeeks. (2018, December 11) from https://www.geeksforgeeks.org/hashmap-treemap-java/. 
    - Fejér, A. *Command-line arguments in Java*. Baeldung (2020, April 27) from https://www.baeldung.com/java-command-line-arguments. 
-
+   - Hasija, A. (2021, September 10). *Dijsktra's algorithm*. GeeksforGeeks from https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/. 
 

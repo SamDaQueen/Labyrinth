@@ -75,22 +75,16 @@ public class DungeonImpl implements Dungeon {
   /**
    * Alternate constructor to generate dungeon with the given 2-D array. Used for testing.
    *
-   * @param size                the size
-   * @param interconnectivity   the degree of interconnectivity
-   * @param wrapping            whether it is wrapping
-   * @param perOfCavesWTreasure percentage of caves with treasure
-   * @param caves               2-D array of Caves
-   * @param start               the starting node
-   * @param end                 the ending node
+   * @param caves 2-D array of Caves
+   * @param start the starting node
+   * @param end   the ending node
    */
-  public DungeonImpl(int[] size, int interconnectivity, boolean wrapping,
-      int perOfCavesWTreasure,
-      Cave[][] caves, int[] start, int[] end) {
+  public DungeonImpl(Cave[][] caves, int[] start, int[] end) {
     this.dungeon = caves;
-    this.size = size;
-    this.wrapping = wrapping;
-    this.interconnectivity = interconnectivity;
-    this.perOfCavesWTreasure = perOfCavesWTreasure;
+    this.size = new int[]{caves.length, caves[0].length};
+    this.wrapping = false;
+    this.interconnectivity = 0;
+    this.perOfCavesWTreasure = 20;
     this.start = start;
     this.end = end;
     this.player = new Player(this.start[0], this.start[1]);
