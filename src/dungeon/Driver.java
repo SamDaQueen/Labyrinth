@@ -31,7 +31,7 @@ public class Driver {
       Dungeon dungeon = new DungeonImpl(
           new int[]{Integer.parseInt(args[0]), Integer.parseInt(args[1])},
           Integer.parseInt(args[2]),
-          Boolean.parseBoolean(args[3]), Integer.parseInt(args[4]));
+          Boolean.parseBoolean(args[3]), Integer.parseInt(args[4]), 1);
 
       Random rand = new Random();
 

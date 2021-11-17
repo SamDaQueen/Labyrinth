@@ -23,6 +23,7 @@ public class DungeonImpl implements Dungeon {
   private final int perOfCavesWTreasure;
   private final int[] start;
   private final int[] end;
+  private final int difficulty;
   private final Cave[][] dungeon;
   private final Player player;
   private final Set<Edge> edges;
@@ -34,9 +35,10 @@ public class DungeonImpl implements Dungeon {
    * @param interconnectivity   the degree of interconnectivity
    * @param wrapping            whether it is wrapping
    * @param perOfCavesWTreasure percentage of caves with treasure
+   * @param difficulty          number of Otyugh
    */
   public DungeonImpl(int[] size, int interconnectivity, boolean wrapping,
-      int perOfCavesWTreasure) {
+      int perOfCavesWTreasure, int difficulty) {
     if (size == null) {
       throw new IllegalArgumentException("Size of the maze cannot be null!");
     }
@@ -49,10 +51,14 @@ public class DungeonImpl implements Dungeon {
     if (interconnectivity < 0) {
       throw new IllegalArgumentException("Please provide positive value for interconnectivity!");
     }
+    if (difficulty < 1) {
+      throw new IllegalArgumentException("There must be at least one Otyugh!");
+    }
     this.size = size;
     this.interconnectivity = interconnectivity;
     this.wrapping = wrapping;
     this.perOfCavesWTreasure = perOfCavesWTreasure;
+    this.difficulty = difficulty;
     this.edges = new HashSet<>();
     this.dungeon = createDungeon();
 
@@ -67,8 +73,16 @@ public class DungeonImpl implements Dungeon {
     this.end = end;
 
     setTreasureInCaves();
+    setMonstersInCaves();
+    setArrows();
 
     this.player = new Player(start[0], start[1]);
+
+    for (int row = 0; row < size[0]; row++) {
+      for (int col = 0; col < size[1]; col++) {
+        System.out.println(dungeon[row][col]);
+      }
+    }
 
   }
 
@@ -89,6 +103,7 @@ public class DungeonImpl implements Dungeon {
     this.end = end;
     this.player = new Player(this.start[0], this.start[1]);
     this.edges = new HashSet<>();
+    this.difficulty = 1;
   }
 
   private void setTreasureInCaves() {
@@ -118,6 +133,45 @@ public class DungeonImpl implements Dungeon {
         }
       } else {
         break;
+      }
+    }
+  }
+
+  private void setMonstersInCaves() {
+    Set<Cave> withMonster = new HashSet<>();
+    List<Cave> caves = getCaves();
+    Random rand = new Random();
+
+    dungeon[end[0]][end[1]].addOtyugh();
+    caves.remove(dungeon[end[0]][end[1]]);
+    withMonster.add(dungeon[end[0]][end[1]]);
+
+    while (withMonster.size() < Math.min(difficulty, getNumberOfCaves() - 1)) {
+      if (caves.size() > 0) {
+        int choose = rand.nextInt(caves.size());
+        Cave cave = caves.get(choose);
+        if (!withMonster.contains(cave)) {
+          cave.addOtyugh();
+          withMonster.add(cave);
+          caves.remove(cave);
+        }
+      } else {
+        break;
+      }
+    }
+  }
+
+  private void setArrows() {
+    Set<Cave> withArrows = new HashSet<>();
+    Random rand = new Random();
+
+    while (withArrows.size() <= perOfCavesWTreasure * size[0] * size[1] / 100) {
+      int row = rand.nextInt(size[0]);
+      int col = rand.nextInt(size[1]);
+      if (!withArrows.contains(dungeon[row][col])) {
+        int arrows = rand.nextInt(3);
+        dungeon[row][col].setArrows(arrows + 1);
+        withArrows.add(dungeon[row][col]);
       }
     }
   }
@@ -421,6 +475,8 @@ public class DungeonImpl implements Dungeon {
           builder.append("S");
         } else if (row == end[0] && col == end[1]) {
           builder.append("X");
+        } else if (dungeon[row][col].getOtyugh() != null) {
+          builder.append("M");
         } else {
           builder.append("O");
         }

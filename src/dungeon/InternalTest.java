@@ -64,7 +64,7 @@ public class InternalTest {
   @Test
   public void checkMinimumPath() {
     for (int i = 0; i < 1000; i++) {
-      dungeon = new DungeonImpl(new int[]{5, 6}, 3, true, 20);
+      dungeon = new DungeonImpl(new int[]{5, 6}, 3, true, 20, 1);
       assertTrue(
           abs(dungeon.getStart()[0] - dungeon.getEnd()[0]) + abs(
               dungeon.getStart()[1]
@@ -75,34 +75,34 @@ public class InternalTest {
 
   @Test
   public void checkInterconnectivity() {
-    dungeon = new DungeonImpl(new int[]{5, 5}, 3, true, 20);
+    dungeon = new DungeonImpl(new int[]{5, 5}, 3, true, 20, 1);
     assertEquals(dungeon.getNumberOfEdges(), 25 + 3 - 1);
 
-    dungeon = new DungeonImpl(new int[]{5, 5}, 2, false, 20);
+    dungeon = new DungeonImpl(new int[]{5, 5}, 2, false, 20, 1);
     assertEquals(dungeon.getNumberOfEdges(), 25 + 2 - 1);
 
-    dungeon = new DungeonImpl(new int[]{6, 6}, 0, true, 20);
+    dungeon = new DungeonImpl(new int[]{6, 6}, 0, true, 20, 1);
     assertEquals(dungeon.getNumberOfEdges(), 36 - 1);
   }
 
   @Test
   public void numberOfTreasureCaves() {
     for (int i = 0; i < 100; i++) {
-      dungeon = new DungeonImpl(new int[]{5, 5}, 3, true, 20);
+      dungeon = new DungeonImpl(new int[]{5, 5}, 3, true, 20, 1);
       assertTrue(dungeon.getNumberOfCavesWithTreasures() > 20L * dungeon.getNumberOfCaves() / 100);
 
-      dungeon = new DungeonImpl(new int[]{6, 7}, 3, false, 30);
+      dungeon = new DungeonImpl(new int[]{6, 7}, 3, false, 30, 1);
       assertTrue(dungeon.getNumberOfCavesWithTreasures() > 30L * dungeon.getNumberOfCaves() / 100);
     }
   }
 
   @Test
   public void testWrapping() {
-    dungeon = new DungeonImpl(new int[]{5, 5}, 0, true, 20);
+    dungeon = new DungeonImpl(new int[]{5, 5}, 0, true, 20, 1);
     Cave[][] cave = dungeon.getDungeon();
     assertTrue(checkWrapping(cave));
 
-    dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 20);
+    dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 20, 1);
     cave = dungeon.getDungeon();
     assertFalse(checkWrapping(cave));
   }
@@ -112,7 +112,7 @@ public class InternalTest {
     boolean diamond = false;
     boolean ruby = false;
     boolean sapphire = false;
-    dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 25);
+    dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 25, 1);
     for (int row = 0; row < 5; row++) {
       for (int col = 0; col < 5; col++) {
         if (dungeon.getDungeon()[row][col].getTreasure().contains(Treasure.RUBY)) {
@@ -129,7 +129,7 @@ public class InternalTest {
 
   @Test
   public void allTreasure() {
-    dungeon = new DungeonImpl(new int[]{6, 7}, 0, false, 100);
+    dungeon = new DungeonImpl(new int[]{6, 7}, 0, false, 100, 1);
     boolean all = true;
     for (int row = 0; row < 5; row++) {
       for (int col = 0; col < 5; col++) {
@@ -191,7 +191,7 @@ public class InternalTest {
   @Test
   public void startAtCave() {
     for (int i = 0; i < 100; i++) {
-      dungeon = new DungeonImpl(new int[]{8, 7}, 0, true, 20);
+      dungeon = new DungeonImpl(new int[]{8, 7}, 0, true, 20, 1);
       assertFalse(dungeon.getDungeon()[dungeon.getStart()[0]][dungeon.getStart()[1]].isTunnel());
     }
   }
@@ -199,7 +199,7 @@ public class InternalTest {
   @Test
   public void endAtCave() {
     for (int i = 0; i < 100; i++) {
-      dungeon = new DungeonImpl(new int[]{5, 6}, 0, false, 20);
+      dungeon = new DungeonImpl(new int[]{5, 6}, 0, false, 20, 1);
       assertFalse(dungeon.getDungeon()[dungeon.getEnd()[0]][dungeon.getEnd()[1]].isTunnel());
     }
   }

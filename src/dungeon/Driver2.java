@@ -20,7 +20,7 @@ public class Driver2 {
 
     System.out.println("Initializing dungeon and player...");
 
-    Dungeon dungeon = new DungeonImpl(new int[]{5, 5}, 3, false, 20);
+    Dungeon dungeon = new DungeonImpl(new int[]{5, 5}, 3, false, 20, 1);
 
     System.out.println(
         "\n\nPrinting the dungeon for testing and checking purposes only!!");

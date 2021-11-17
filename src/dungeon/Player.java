@@ -15,6 +15,7 @@ class Player {
   private final int[] currentPosition;
   private final List<Treasure> collectedTreasure;
   private int score;
+  private int arrows;
 
   Player(int row, int col) {
     this.currentPosition = new int[2];
@@ -22,6 +23,7 @@ class Player {
     this.currentPosition[1] = col;
     this.collectedTreasure = new ArrayList<>();
     this.score = 0;
+    this.arrows = 3;
   }
 
   int[] getCurrentPosition() {
@@ -38,6 +40,14 @@ class Player {
     for (Treasure t : newTreasures) {
       score += t.getValue();
     }
+  }
+
+  public int getArrows() {
+    return arrows;
+  }
+
+  public void addArrow(int arrows) {
+    this.arrows += arrows;
   }
 
   @Override

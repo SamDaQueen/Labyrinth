@@ -19,32 +19,32 @@ public class DungeonTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void invalidSize() {
-    dungeon = new DungeonImpl(new int[]{2, 3}, 8, true, 30);
+    dungeon = new DungeonImpl(new int[]{2, 3}, 8, true, 30, 1);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void negativeSize() {
-    dungeon = new DungeonImpl(new int[]{-1, -3}, 8, true, 30);
+    dungeon = new DungeonImpl(new int[]{-1, -3}, 8, true, 30, 1);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void negativeInterconnectivity() {
-    dungeon = new DungeonImpl(new int[]{5, 5}, -3, true, 30);
+    dungeon = new DungeonImpl(new int[]{5, 5}, -3, true, 30, 1);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void negativeTreasure() {
-    dungeon = new DungeonImpl(new int[]{5, 5}, 5, true, -15);
+    dungeon = new DungeonImpl(new int[]{5, 5}, 5, true, -15, 1);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void nullSize() {
-    dungeon = new DungeonImpl(null, 5, true, -15);
+    dungeon = new DungeonImpl(null, 5, true, -15, 1);
   }
 
   @Test
   public void testSingleRow() {
-    Dungeon rowDungeon = new DungeonImpl(new int[]{1, 6}, 3, false, 20);
+    Dungeon rowDungeon = new DungeonImpl(new int[]{1, 6}, 3, false, 20, 1);
     Random rand = new Random();
     while (!rowDungeon.hasReachedGoal()) {
       rowDungeon.pickTreasure();
@@ -57,7 +57,7 @@ public class DungeonTest {
 
   @Test
   public void testSingleCol() {
-    Dungeon colDungeon = new DungeonImpl(new int[]{6, 1}, 0, false, 20);
+    Dungeon colDungeon = new DungeonImpl(new int[]{6, 1}, 0, false, 20, 1);
     Random rand = new Random();
     while (!colDungeon.hasReachedGoal()) {
       colDungeon.pickTreasure();
@@ -70,7 +70,7 @@ public class DungeonTest {
 
   @Test
   public void smallestDungeon() {
-    dungeon = new DungeonImpl(new int[]{3, 4}, 0, false, 10);
+    dungeon = new DungeonImpl(new int[]{3, 4}, 0, false, 10, 1);
     Random rand = new Random();
     while (!dungeon.hasReachedGoal()) {
       dungeon.pickTreasure();
@@ -83,7 +83,7 @@ public class DungeonTest {
 
   @Test
   public void smallestDungeon2() {
-    dungeon = new DungeonImpl(new int[]{4, 3}, 0, false, 20);
+    dungeon = new DungeonImpl(new int[]{4, 3}, 0, false, 20, 1);
     Random rand = new Random();
     while (!dungeon.hasReachedGoal()) {
       dungeon.pickTreasure();
@@ -97,14 +97,14 @@ public class DungeonTest {
 
   @Test
   public void testLargeDungeon() {
-    dungeon = new DungeonImpl(new int[]{50, 50}, 30, true, 50);
+    dungeon = new DungeonImpl(new int[]{50, 50}, 30, true, 50, 1);
     assertEquals(50, dungeon.getSize()[0]);
     assertEquals(50, dungeon.getSize()[1]);
   }
 
   @Test
   public void movePlayer() {
-    dungeon = new DungeonImpl(new int[]{5, 5}, 3, false, 20);
+    dungeon = new DungeonImpl(new int[]{5, 5}, 3, false, 20, 1);
     int[] start = dungeon.getStart();
     List<Direction> directions = dungeon.getPossibleMoves();
     dungeon.movePlayer(directions.get(0));
@@ -121,11 +121,11 @@ public class DungeonTest {
 
   @Test
   public void getSize() {
-    dungeon = new DungeonImpl(new int[]{5, 5}, 3, true, 20);
+    dungeon = new DungeonImpl(new int[]{5, 5}, 3, true, 20, 1);
     assertEquals(5, dungeon.getSize()[0]);
     assertEquals(5, dungeon.getSize()[1]);
 
-    dungeon = new DungeonImpl(new int[]{20, 30}, 3, true, 20);
+    dungeon = new DungeonImpl(new int[]{20, 30}, 3, true, 20, 1);
     assertEquals(20, dungeon.getSize()[0]);
     assertEquals(30, dungeon.getSize()[1]);
   }
@@ -133,7 +133,7 @@ public class DungeonTest {
   @Test
   public void getStart() {
     for (int i = 0; i < 20; i++) {
-      dungeon = new DungeonImpl(new int[]{25, 30}, 5, true, 20);
+      dungeon = new DungeonImpl(new int[]{25, 30}, 5, true, 20, 1);
       assertTrue(dungeon.getStart()[0] >= 0);
       assertTrue(dungeon.getStart()[0] <= 25);
       assertTrue(dungeon.getStart()[1] >= 0);
@@ -143,19 +143,19 @@ public class DungeonTest {
 
   @Test
   public void isWrapping() {
-    dungeon = new DungeonImpl(new int[]{5, 5}, 3, true, 20);
+    dungeon = new DungeonImpl(new int[]{5, 5}, 3, true, 20, 1);
     assertTrue(dungeon.isWrapping());
-    dungeon = new DungeonImpl(new int[]{5, 5}, 3, false, 20);
+    dungeon = new DungeonImpl(new int[]{5, 5}, 3, false, 20, 1);
     assertFalse(dungeon.isWrapping());
-    dungeon = new DungeonImpl(new int[]{10, 12}, 3, true, 20);
+    dungeon = new DungeonImpl(new int[]{10, 12}, 3, true, 20, 1);
     assertTrue(dungeon.isWrapping());
-    dungeon = new DungeonImpl(new int[]{6, 8}, 3, false, 20);
+    dungeon = new DungeonImpl(new int[]{6, 8}, 3, false, 20, 1);
     assertFalse(dungeon.isWrapping());
   }
 
   @Test
   public void initialPlayerPosition() {
-    dungeon = new DungeonImpl(new int[]{5, 5}, 0, true, 50);
+    dungeon = new DungeonImpl(new int[]{5, 5}, 0, true, 50, 1);
     String location = dungeon.printCurrentLocation();
     String size = dungeon.printCurrentLocation()
         .substring(location.indexOf(":") + 3, location.indexOf("w") - 2);
