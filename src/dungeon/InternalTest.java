@@ -157,11 +157,13 @@ public class InternalTest {
   public void printCurrentLocation() {
     dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
     assertEquals(
-        "Player is at location: [4,3] with possible moves and treasures: Cave [NORTH, EAST, WEST] []",
+        "Player is at location: [4,3] with possible moves and treasures:"
+        + " Cave [NORTH, EAST, WEST] []",
         dungeonFixed.printCurrentLocation());
     dungeonFixed.movePlayer(Direction.EAST);
     assertEquals(
-        "Player is at location: [4,4] with possible moves and treasures: Cave [WEST] [RUBY, RUBY, SAPPHIRE]",
+        "Player is at location: [4,4] with possible moves and treasures:"
+        + " Cave [WEST] [RUBY, RUBY, SAPPHIRE]",
         dungeonFixed.printCurrentLocation());
   }
 
