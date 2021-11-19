@@ -9,26 +9,11 @@ public class OtyughTest {
   @Test(expected = IllegalArgumentException.class)
   public void invalidOtyugh() {
     dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 20, 0);
-    System.out.println(dungeon);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void negativeOtyugh() {
     dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 20, -5);
-    System.out.println(dungeon);
-  }
-
-  @Test
-  public void singleOtyugh() {
-    dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 20, 1);
-    System.out.println(dungeon);
-  }
-
-  @Test
-  public void maxOtyugh() {
-    dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 20, 50);
-    System.out.println(dungeon);
-    System.out.println(dungeon.getSmell(new int[]{1,1}));
   }
 
 

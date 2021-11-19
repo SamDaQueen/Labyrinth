@@ -706,4 +706,13 @@ public class DungeonImpl implements Dungeon {
     return Arrays.copyOf(dungeon, size[0]);
   }
 
+  /**
+   * Package-private method for getting a copy of the player.
+   *
+   * @return copy of player
+   */
+  Player getPlayer() {
+    return new Player(player);
+  }
+
 }
