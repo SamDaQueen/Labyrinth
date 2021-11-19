@@ -8,8 +8,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
- * Test class for validating the internal working of the package-private classes and methods that do
- * not need to be exposed to the user.
+ * Test class for validating the internal working of the package-private classes and methods that do not need to be
+ * exposed to the user.
  */
 public class InternalTest {
 
@@ -28,9 +28,8 @@ public class InternalTest {
                  + "   |   |       |   |   \n"
                  + "   O---O---O   O   O   \n"
                  + "           |   |       \n"
-                 + "   O---O---O---S---O   \n"
-                 + "                       \n"
-                 + "[4, 3] [0, 1]", this.dungeonFixed.toString());
+                 + "   O---O---O---P---O   \n"
+                 + "                       \n", this.dungeonFixed.toString());
   }
 
   @Test(expected = IllegalStateException.class)
@@ -128,28 +127,12 @@ public class InternalTest {
   }
 
   @Test
-  public void allTreasure() {
-    dungeon = new DungeonImpl(new int[]{6, 7}, 0, false, 100, 1);
-    boolean all = true;
-    for (int row = 0; row < 5; row++) {
-      for (int col = 0; col < 5; col++) {
-        if (!dungeon.getDungeon()[row][col].isTunnel()) {
-          if (dungeon.getDungeon()[row][col].getTreasure().size() == 0) {
-            all = false;
-          }
-        }
-      }
-    }
-    assertTrue(all);
-  }
-
-  @Test
   public void printPlayerStatus() {
     dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
-    assertEquals("Player has collected with a score of 0", dungeonFixed.printPlayerStatus());
+    assertEquals("Player has collected with a score of 0 and has 3 arrows.\n", dungeonFixed.printPlayerStatus());
     dungeonFixed.movePlayer(Direction.WEST);
     dungeonFixed.pickTreasure();
-    assertEquals("Player has collected DIAMOND(1), RUBY(1), SAPPHIRE(2), with a score of 90",
+    assertEquals("Player has collected DIAMOND(1), RUBY(1), SAPPHIRE(2), with a score of 90 and has 3 arrows.\n",
         dungeonFixed.printPlayerStatus());
   }
 
@@ -157,13 +140,13 @@ public class InternalTest {
   public void printCurrentLocation() {
     dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
     assertEquals(
-        "Player is at location: [4,3] with possible moves and treasures:"
-        + " Cave [NORTH, EAST, WEST] []",
+        "Player is at location: [4,3]: Cave Available directions: [NORTH, EAST, WEST] Treasures: []"
+        + " Arrows: 0 \n",
         dungeonFixed.printCurrentLocation());
     dungeonFixed.movePlayer(Direction.EAST);
     assertEquals(
-        "Player is at location: [4,4] with possible moves and treasures:"
-        + " Cave [WEST] [RUBY, RUBY, SAPPHIRE]",
+        "Player is at location: [4,4]: Cave Available directions: [WEST] Treasures: [RUBY, RUBY, SAPPHIRE]"
+        + " Arrows: 0 \n",
         dungeonFixed.printCurrentLocation());
   }
 
@@ -178,7 +161,7 @@ public class InternalTest {
     dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
     dungeonFixed.movePlayer(Direction.EAST);
     dungeonFixed.pickTreasure();
-    assertEquals("Player has collected RUBY(2), SAPPHIRE(1), with a score of 70",
+    assertEquals("Player has collected RUBY(2), SAPPHIRE(1), with a score of 70 and has 3 arrows.\n",
         dungeonFixed.printPlayerStatus());
   }
 
@@ -347,6 +330,44 @@ public class InternalTest {
     assertEquals(3, dungeonFixed.getPos()[1]);
   }
 
+
+  private void makeWrapping(Cave[][] caves) {
+    caves[0][0].setOpenings(Direction.NORTH);
+    caves[0][0].setOpenings(Direction.WEST);
+    caves[0][1].setOpenings(Direction.NORTH);
+    caves[0][2].setOpenings(Direction.NORTH);
+    caves[0][4].setOpenings(Direction.EAST);
+
+    caves[1][0].setOpenings(Direction.WEST);
+    caves[1][4].setOpenings(Direction.EAST);
+
+    caves[3][0].setOpenings(Direction.WEST);
+    caves[3][4].setOpenings(Direction.EAST);
+
+    caves[4][0].setOpenings(Direction.SOUTH);
+    caves[4][1].setOpenings(Direction.SOUTH);
+    caves[4][2].setOpenings(Direction.SOUTH);
+  }
+
+  private boolean checkWrapping(Cave[][] cave) {
+    boolean wrapping = false;
+    for (int row = 0; row < 5; row++) {
+      if (cave[row][0].getOpenings().contains(Direction.WEST)) {
+        wrapping = true;
+        break;
+      }
+    }
+    if (!wrapping) {
+      for (int col = 0; col < 5; col++) {
+        if (cave[0][col].getOpenings().contains(Direction.NORTH)) {
+          wrapping = true;
+          break;
+        }
+      }
+    }
+    return wrapping;
+  }
+
   private Cave[][] getCaves() {
     Cave[][] caves = new Cave[5][5];
     for (int row = 0; row < 5; row++) {
@@ -462,40 +483,4 @@ public class InternalTest {
     return caves;
   }
 
-  private void makeWrapping(Cave[][] caves) {
-    caves[0][0].setOpenings(Direction.NORTH);
-    caves[0][0].setOpenings(Direction.WEST);
-    caves[0][1].setOpenings(Direction.NORTH);
-    caves[0][2].setOpenings(Direction.NORTH);
-    caves[0][4].setOpenings(Direction.EAST);
-
-    caves[1][0].setOpenings(Direction.WEST);
-    caves[1][4].setOpenings(Direction.EAST);
-
-    caves[3][0].setOpenings(Direction.WEST);
-    caves[3][4].setOpenings(Direction.EAST);
-
-    caves[4][0].setOpenings(Direction.SOUTH);
-    caves[4][1].setOpenings(Direction.SOUTH);
-    caves[4][2].setOpenings(Direction.SOUTH);
-  }
-
-  private boolean checkWrapping(Cave[][] cave) {
-    boolean wrapping = false;
-    for (int row = 0; row < 5; row++) {
-      if (cave[row][0].getOpenings().contains(Direction.WEST)) {
-        wrapping = true;
-        break;
-      }
-    }
-    if (!wrapping) {
-      for (int col = 0; col < 5; col++) {
-        if (cave[0][col].getOpenings().contains(Direction.NORTH)) {
-          wrapping = true;
-          break;
-        }
-      }
-    }
-    return wrapping;
-  }
 }

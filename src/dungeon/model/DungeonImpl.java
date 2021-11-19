@@ -10,10 +10,9 @@ import java.util.Random;
 import java.util.Set;
 
 /**
- * Implementation of the Dungeon interface represented as the size, degree of interconnectivity,
- * whether the dungeon is wrapping or not, the percentage of caves with treasure, starting and
- * ending positions, 2-D array of Caves as the nodes of the dungeon, the player, and the edges
- * between the caves.
+ * Implementation of the Dungeon interface represented as the size, degree of interconnectivity, whether the dungeon is
+ * wrapping or not, the percentage of caves with treasure, starting and ending positions, 2-D array of Caves as the
+ * nodes of the dungeon, the player, and the edges between the caves.
  */
 public class DungeonImpl implements Dungeon {
 
@@ -104,6 +103,29 @@ public class DungeonImpl implements Dungeon {
     this.player = new Player(this.start[0], this.start[1]);
     this.edges = new HashSet<>();
     this.difficulty = 1;
+  }
+
+  /**
+   * Alternate constructor to get fixed dungeon.
+   */
+  public DungeonImpl() {
+    Cave[][] caves = getFixedDungeon();
+    this.dungeon = caves;
+    this.size = new int[]{4, 4};
+    this.wrapping = false;
+    this.interconnectivity = 0;
+    this.perOfCavesWTreasure = 30;
+    this.start = new int[]{0, 1};
+    this.end = new int[]{3, 3};
+    this.player = new Player(0, 1);
+    this.edges = new HashSet<>();
+    this.difficulty = 5;
+
+//    for (int row = 0; row < size[0]; row++) {
+//      for (int col = 0; col < size[1]; col++) {
+//        System.out.println(dungeon[row][col]);
+//      }
+//    }
   }
 
   private void setTreasureInCaves() {
@@ -428,6 +450,10 @@ public class DungeonImpl implements Dungeon {
 
   @Override
   public int shoot(Direction direction, int steps) {
+    if (steps < 1 || steps > 5) {
+      throw new IllegalStateException(
+          "You aren't Artemis here!! Please give a shooting distance between 1 and 5");
+    }
     if (player.getArrows() < 1) {
       throw new IllegalStateException(
           "No arrows to shoot!! Should we throw you at the Otyugh instead??");
@@ -439,15 +465,14 @@ public class DungeonImpl implements Dungeon {
       return 0;
     } else {
       arrowPos = getNextCave(pos, direction);
-      steps--;
+      if (!dungeon[arrowPos[0]][arrowPos[1]].isTunnel()) {
+        steps--;
+      }
       while (steps > 0) {
-        if (!dungeon[arrowPos[0]][arrowPos[1]].isTunnel()) {
-          steps--;
-        }
         List<Direction> directionList = new ArrayList<>(
             dungeon[arrowPos[0]][arrowPos[1]].getOpenings());
         if (dungeon[arrowPos[0]][arrowPos[1]].isTunnel()) {
-          directionList.remove(direction);
+          directionList.remove(direction.invert(direction));
           direction = directionList.get(0);
         } else {
           if (!directionList.contains(direction)) {
@@ -455,7 +480,9 @@ public class DungeonImpl implements Dungeon {
           }
         }
         arrowPos = getNextCave(arrowPos, direction);
-
+        if (!dungeon[arrowPos[0]][arrowPos[1]].isTunnel()) {
+          steps--;
+        }
       }
       if (dungeon[arrowPos[0]][arrowPos[1]].hasOtyugh() && steps == 0) {
         dungeon[arrowPos[0]][arrowPos[1]].shootOtyugh();
@@ -717,5 +744,88 @@ public class DungeonImpl implements Dungeon {
   Player getPlayer() {
     return new Player(player);
   }
+
+  private Cave[][] getFixedDungeon() {
+    Cave[][] caves = new Cave[4][4];
+    for (int row = 0; row < 4; row++) {
+      for (int col = 0; col < 4; col++) {
+        caves[row][col] = new Cave();
+      }
+    }
+
+    // Create edges
+
+    // row 0
+    caves[0][0].setOpenings(Direction.SOUTH);
+    caves[0][0].addOtyugh();
+    caves[0][0].setArrows(2);
+
+    caves[0][1].setOpenings(Direction.EAST);
+
+    caves[0][2].setOpenings(Direction.EAST);
+    caves[0][2].setOpenings(Direction.WEST);
+    caves[0][2].setArrows(1);
+
+    caves[0][3].setOpenings(Direction.WEST);
+    caves[0][3].setOpenings(Direction.SOUTH);
+
+    // row 1
+    caves[1][0].setOpenings(Direction.NORTH);
+    caves[1][0].setOpenings(Direction.EAST);
+    caves[1][0].setOpenings(Direction.SOUTH);
+    caves[1][0].addOtyugh();
+
+    caves[1][1].setOpenings(Direction.WEST);
+    caves[1][1].setOpenings(Direction.EAST);
+
+    caves[1][2].setOpenings(Direction.EAST);
+    caves[1][2].setOpenings(Direction.WEST);
+    caves[1][2].setOpenings(Direction.SOUTH);
+    caves[1][2].addOtyugh();
+
+    caves[1][3].setOpenings(Direction.NORTH);
+    caves[1][3].setOpenings(Direction.WEST);
+    caves[1][3].setArrows(2);
+
+    // row 2
+    caves[2][0].setOpenings(Direction.NORTH);
+    caves[2][0].setOpenings(Direction.SOUTH);
+    caves[2][0].setArrows(3);
+
+    caves[2][1].setOpenings(Direction.EAST);
+
+    caves[2][2].setOpenings(Direction.NORTH);
+    caves[2][2].setOpenings(Direction.SOUTH);
+    caves[2][2].setOpenings(Direction.WEST);
+    caves[2][2].setOpenings(Direction.EAST);
+    caves[2][2].setTreasures(Treasure.RUBY);
+    caves[2][2].setTreasures(Treasure.SAPPHIRE);
+    caves[2][2].setTreasures(Treasure.DIAMOND);
+
+    caves[2][3].setOpenings(Direction.WEST);
+    caves[2][3].setTreasures(Treasure.RUBY);
+    caves[2][3].setTreasures(Treasure.DIAMOND);
+
+    // row 3
+    caves[3][0].setOpenings(Direction.NORTH);
+
+    caves[3][1].setOpenings(Direction.EAST);
+
+    caves[3][2].setOpenings(Direction.WEST);
+    caves[3][2].setOpenings(Direction.EAST);
+    caves[3][2].setOpenings(Direction.NORTH);
+    caves[3][2].setArrows(3);
+    caves[3][1].addOtyugh();
+    caves[3][2].setTreasures(Treasure.DIAMOND);
+    caves[3][2].setTreasures(Treasure.DIAMOND);
+    caves[3][2].setTreasures(Treasure.RUBY);
+    caves[3][2].setTreasures(Treasure.RUBY);
+
+    caves[3][3].setOpenings(Direction.WEST);
+    caves[3][3].addOtyugh();
+
+    return caves;
+  }
+
 
 }

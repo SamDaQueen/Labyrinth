@@ -105,7 +105,7 @@ public interface Dungeon {
    *
    * @param direction the direction
    * @param steps     the distance
-   * @return whether an Otyugh was hit
+   * @return whether an Otyugh was hit, 0 if no hit, 1 if first hit, 2 if second hit
    */
   int shoot(Direction direction, int steps);
 }

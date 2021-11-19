@@ -47,10 +47,6 @@ public class Shoot implements Controller {
     if (model == null) {
       throw new IllegalArgumentException("Model cannot be null");
     }
-    if (steps > 5) {
-      throw new IllegalStateException(
-          "You aren't cupid here!! Please give a shooting distance of max 5");
-    }
     try {
       int shot = model.shoot(direction, steps);
       if (shot == 0) {

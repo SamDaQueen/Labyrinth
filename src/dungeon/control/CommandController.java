@@ -5,11 +5,12 @@ import dungeon.control.commands.Pick;
 import dungeon.control.commands.Shoot;
 import dungeon.model.Dungeon;
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * A command controller class for running the game based on the commands given by the user and
- * executing them accordingly. Has Readable and Appendable for the input and output.
+ * A command controller class for running the game based on the commands given by the user and executing them
+ * accordingly. Has Readable and Appendable for the input and output.
  */
 public class CommandController implements Controller {
 
@@ -42,7 +43,6 @@ public class CommandController implements Controller {
     try {
       while (!(model.hasReachedGoal() || model.playerDead())) {
         out.append("\n\n");
-        out.append(model.toString());
         out.append(model.printPlayerStatus());
         out.append(model.printCurrentLocation());
         if (model.getSmell(new int[]{model.getPos()[0], model.getPos()[1]}) == 1) {
@@ -57,37 +57,40 @@ public class CommandController implements Controller {
         if (!scan.hasNext()) {
           break;
         }
-
-        String in = scan.next();
-        switch (in) {
-          case "q":
-          case "quit":
-            out.append("You have given up and chose to quit. Good bye!!");
-            return;
-          case "move":
-            cmd = new Move(scan.next());
-            out.append("You are brave and attempt to advance in the dungeon... ");
-            break;
-          case "pick":
-            cmd = new Pick();
-            out.append("This will add a fine addition to your collection... ");
-            break;
-          case "shoot":
-            cmd = new Shoot(scan.next(), scan.nextInt());
-            out.append("You have attempted to slay an Otyugh... ");
-            break;
-          default:
-            out.append("Unknown command!");
-            break;
-        }
-        if (cmd != null) {
-          try {
-            cmd.execute(model, out);
-          } catch (IllegalStateException ise) {
-            out.append(ise.getMessage());
-            continue;
+        try {
+          String in = scan.next();
+          switch (in) {
+            case "q":
+            case "quit":
+              out.append("You have given up and chose to quit. Good bye!!");
+              return;
+            case "move":
+              cmd = new Move(scan.next());
+              out.append("You are brave and attempt to advance in the dungeon... ");
+              break;
+            case "pick":
+              cmd = new Pick();
+              out.append("This will add a fine addition to your collection... ");
+              break;
+            case "shoot":
+              cmd = new Shoot(scan.next(), scan.nextInt());
+              out.append("You have attempted to slay an Otyugh... ");
+              break;
+            default:
+              out.append("Unknown command!");
+              break;
           }
-          cmd = null;
+          if (cmd != null) {
+            try {
+              cmd.execute(model, out);
+            } catch (IllegalStateException ise) {
+              out.append(ise.getMessage());
+              continue;
+            }
+            cmd = null;
+          }
+        } catch (InputMismatchException ime) {
+          out.append("\nInvalid input!");
         }
       }
 
