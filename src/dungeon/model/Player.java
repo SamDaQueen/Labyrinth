@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Class for representing a player navigating through the dungeon. A player is represented as its
- * current position, the treasure it has collected so far, and the total score so far.
+ * Class for representing a player navigating through the dungeon. A player is represented as its current position, the
+ * treasure it has collected so far, and the total score so far.
  */
 class Player {
 
@@ -74,6 +74,10 @@ class Player {
     for (Treasure t : newTreasures) {
       score += t.getValue();
     }
+  }
+
+  List<Treasure> getCollectedTreasure() {
+    return new ArrayList<>(collectedTreasure);
   }
 
   /**

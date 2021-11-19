@@ -533,14 +533,14 @@ public class ControllerTest {
 
   @Test
   public void zeroDistance() {
-    in = new StringReader("shoot west 10");
+    in = new StringReader("shoot west 0");
     new CommandController(in).execute(model, out);
     assertTrue(out.toString().contains("You aren't Artemis here!! Please give a shooting distance between 1 and 5"));
   }
 
   @Test
   public void negativeDistance() {
-    in = new StringReader("shoot west 10");
+    in = new StringReader("shoot west -10");
     new CommandController(in).execute(model, out);
     assertTrue(out.toString().contains("You aren't Artemis here!! Please give a shooting distance between 1 and 5"));
   }

@@ -5,6 +5,7 @@ import org.junit.Test;
 public class OtyughTest {
 
   private Dungeon dungeon;
+  private DungeonImpl dungeon2;
 
   @Test(expected = IllegalArgumentException.class)
   public void invalidOtyugh() {
@@ -15,6 +16,5 @@ public class OtyughTest {
   public void negativeOtyugh() {
     dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 20, -5);
   }
-
 
 }
