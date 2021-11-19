@@ -18,6 +18,12 @@ class Player {
   private int arrows;
   private boolean alive;
 
+  /**
+   * Constructor for creating an instance of the Player.
+   *
+   * @param row the current row where the player is
+   * @param col the current column where the player is
+   */
   Player(int row, int col) {
     this.currentPosition = new int[2];
     this.currentPosition[0] = row;
@@ -28,15 +34,31 @@ class Player {
     this.alive = true;
   }
 
+  /**
+   * Get the current position of the player in the dungeon.
+   *
+   * @return [row, col]
+   */
   int[] getCurrentPosition() {
     return currentPosition;
   }
 
+  /**
+   * Update the current position of the player
+   *
+   * @param row the new roe
+   * @param col the new col
+   */
   void setCurrentPosition(int row, int col) {
     this.currentPosition[0] = row;
     this.currentPosition[1] = col;
   }
 
+  /**
+   * Update the treasure owned by the player when the pick command is executed.
+   *
+   * @param newTreasures list of the new treasures.
+   */
   void updateCollectedTreasure(List<Treasure> newTreasures) {
     this.collectedTreasure.addAll(newTreasures);
     for (Treasure t : newTreasures) {
@@ -44,18 +66,47 @@ class Player {
     }
   }
 
+  /**
+   * Get the number of arrows owned by the player
+   *
+   * @return number of arrows
+   */
   int getArrows() {
     return arrows;
   }
 
+  /**
+   * Use one arrow and reduce the number by 1.
+   */
   void useArrow() {
     if (arrows > 0) {
       arrows--;
     }
   }
 
+  /**
+   * Add arrows to the player's inventory when the pick command is used.
+   *
+   * @param arrows the number of arrows received
+   */
   void addArrow(int arrows) {
     this.arrows += arrows;
+  }
+
+  /**
+   * Check whether the player was eaten by the Otyugh or is still alive.
+   *
+   * @return true if player still alive
+   */
+  public boolean isAlive() {
+    return alive;
+  }
+
+  /**
+   * Kill the player and set the boolean alive to false.
+   */
+  public void kill() {
+    this.alive = false;
   }
 
   @Override
@@ -72,13 +123,5 @@ class Player {
     builder.append("with a score of ").append(score);
     builder.append(" and has ").append(arrows).append(" arrows.\n");
     return builder.toString();
-  }
-
-  public boolean isAlive() {
-    return alive;
-  }
-
-  public void kill() {
-    this.alive = false;
   }
 }

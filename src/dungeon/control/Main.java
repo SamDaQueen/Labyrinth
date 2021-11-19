@@ -4,8 +4,16 @@ import dungeon.model.Dungeon;
 import dungeon.model.DungeonImpl;
 import java.io.InputStreamReader;
 
+/**
+ * Main class for implementing the Model-Controller design for the Dungeon Model.
+ */
 public class Main {
 
+  /**
+   * The main method to act as the driver
+   *
+   * @param args command line arguments
+   */
   public static void main(String[] args) {
 
     if (args.length < 5) {

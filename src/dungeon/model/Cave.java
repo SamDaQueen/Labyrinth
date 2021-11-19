@@ -19,6 +19,9 @@ class Cave {
   private Otyugh otyugh;
   private int arrows;
 
+  /**
+   * Constructor for creating a new instance of the Cave class.
+   */
   Cave() {
     this.directions = new HashSet<>();
     this.treasures = new ArrayList<>();
@@ -26,33 +29,34 @@ class Cave {
     arrows = 0;
   }
 
+  /**
+   * Get the list of treasures present in the cave.
+   *
+   * @return
+   */
   List<Treasure> getTreasure() {
     return treasures;
   }
 
-  Set<Direction> getOpenings() {
-    return directions;
-  }
-
-  void setOpenings(Set<Direction> directions) {
-    this.directions.addAll(directions);
-  }
-
-  void setOpenings(Direction direction) {
-    this.directions.add(direction);
-  }
-
-  boolean isTunnel() {
-    return directions.size() == 2;
-  }
-
-  void setTreasures(List<Treasure> treasures) {
+  /**
+   * Add the list of treasures to the cave.
+   *
+   * @param treasures treasures to add
+   * @throws IllegalStateException if the current location is a tunnel
+   */
+  void setTreasures(List<Treasure> treasures) throws IllegalStateException {
     if (isTunnel()) {
       throw new IllegalStateException("Treasure cannot be added to tunnels!");
     }
     this.treasures.addAll(treasures);
   }
 
+  /**
+   * Add a single treasure to the cave.
+   *
+   * @param treasure treasure to add
+   * @throws IllegalStateException if the current location is a tunnel
+   */
   void setTreasures(Treasure treasure) {
     if (isTunnel()) {
       throw new IllegalStateException("Treasure cannot be added to tunnels!");
@@ -60,10 +64,54 @@ class Cave {
     this.treasures.add(treasure);
   }
 
+  /**
+   * Clear all the treasure in the cave.
+   */
   void clearTreasure() {
     treasures.clear();
   }
 
+  /**
+   * Get a set of the available directions from the current cave.
+   *
+   * @return
+   */
+  Set<Direction> getOpenings() {
+    return directions;
+  }
+
+  /**
+   * Add the list of directions to the openings in the cave.
+   *
+   * @param directions the list of directions
+   */
+  void setOpenings(Set<Direction> directions) {
+    this.directions.addAll(directions);
+  }
+
+  /**
+   * Add the direction to the openings in the cave.
+   *
+   * @param direction the list of directions
+   */
+  void setOpenings(Direction direction) {
+    this.directions.add(direction);
+  }
+
+  /**
+   * Check whether cave is a tunnel.
+   *
+   * @return true if it is a tunnel
+   */
+  boolean isTunnel() {
+    return directions.size() == 2;
+  }
+
+  /**
+   * Check whether the cave has an otyugh.
+   *
+   * @return true if otyugh present.
+   */
   boolean hasOtyugh() {
     if (otyugh == null) {
       return false;
@@ -71,22 +119,55 @@ class Cave {
     return otyugh.getHealth() != 0;
   }
 
+  /**
+   * Add an Otyugh to the cave.
+   */
   void addOtyugh() {
     this.otyugh = new Otyugh();
   }
 
-  Otyugh getOtyugh() {
+  /**
+   * Get the otyugh present in the current cave.
+   *
+   * @return the UOtyugh if present
+   * @throws IllegalArgumentException if otyugh is null
+   */
+  Otyugh getOtyugh() throws IllegalArgumentException {
+    if (otyugh == null) {
+      throw new IllegalArgumentException("No Otyugh present at this location!!");
+    }
     return otyugh;
   }
 
+  /**
+   * Shoot the otyugh and reduce its health.
+   *
+   * @throws IllegalArgumentException if otyugh is null
+   */
   void shootOtyugh() {
+    if (otyugh == null) {
+      throw new IllegalArgumentException("No Otyugh present at this location!!");
+    }
     otyugh.hit();
+    if (otyugh.getHealth() <= 0) {
+      otyugh = null;
+    }
   }
 
+  /**
+   * Get the number of arrows present in the cave.
+   *
+   * @return the number of arrows
+   */
   int getArrows() {
     return arrows;
   }
 
+  /**
+   * Add arrows to the cave.
+   *
+   * @param arrows the number of arrows to add
+   */
   void setArrows(int arrows) {
     this.arrows = arrows;
   }

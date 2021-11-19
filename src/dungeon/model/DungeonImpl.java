@@ -376,6 +376,56 @@ public class DungeonImpl implements Dungeon {
     return Math.min(smell, 2);
   }
 
+  private int[] getNextCave(int[] pos, Direction direction) {
+    if (!dungeon[pos[0]][pos[1]].getOpenings().contains(direction)) {
+      throw new IllegalStateException("That is a wall! Cannot move through walls!");
+    }
+    switch (direction) {
+      case NORTH:
+        if (pos[0] == 0) {
+          return new int[]{size[0] - 1, pos[1]};
+        }
+        return new int[]{pos[0] - 1, pos[1]};
+
+      case EAST:
+        if (pos[1] == size[1] - 1) {
+          return new int[]{pos[0], 0};
+        }
+        return new int[]{pos[0], pos[1] + 1};
+
+      case WEST:
+        if (pos[1] == 0) {
+          return new int[]{pos[0], size[1] - 1};
+        }
+        return new int[]{pos[0], pos[1] - 1};
+
+      case SOUTH:
+        if (pos[0] == size[0] - 1) {
+          return new int[]{0, pos[1]};
+        }
+        return new int[]{pos[0] + 1, pos[1]};
+
+      default:
+        break;
+    }
+    return new int[]{0, 0};
+  }
+
+  private void updatePlayerHealth() {
+    int[] current = player.getCurrentPosition();
+    if (dungeon[current[0]][current[1]].hasOtyugh()) {
+      if (dungeon[current[0]][current[1]].getOtyugh().getHealth() == 2) {
+        player.kill();
+      } else if (dungeon[current[0]][current[1]].getOtyugh().getHealth() == 1) {
+        Random rand = new Random();
+        int random = rand.nextInt(2);
+        if (random == 0) {
+          player.kill();
+        }
+      }
+    }
+  }
+
   @Override
   public boolean shoot(Direction direction, int steps) {
     if (player.getArrows() < 1) {
@@ -413,52 +463,6 @@ public class DungeonImpl implements Dungeon {
       }
     }
     return false;
-  }
-
-  @Override
-  public boolean isTunnel() {
-    return dungeon[player.getCurrentPosition()[0]][player.getCurrentPosition()[1]].isTunnel();
-  }
-
-  @Override
-  public List<Treasure> getTreasure() {
-    return new ArrayList<>(
-        dungeon[player.getCurrentPosition()[0]][player.getCurrentPosition()[1]].getTreasure());
-  }
-
-  private int[] getNextCave(int[] pos, Direction direction) {
-    if (!dungeon[pos[0]][pos[1]].getOpenings().contains(direction)) {
-      throw new IllegalStateException("That is a wall! Cannot move through walls!");
-    }
-    switch (direction) {
-      case NORTH:
-        if (pos[0] == 0) {
-          return new int[]{size[0] - 1, pos[1]};
-        }
-        return new int[]{pos[0] - 1, pos[1]};
-
-      case EAST:
-        if (pos[1] == size[1] - 1) {
-          return new int[]{pos[0], 0};
-        }
-        return new int[]{pos[0], pos[1] + 1};
-
-      case WEST:
-        if (pos[1] == 0) {
-          return new int[]{pos[0], size[1] - 1};
-        }
-        return new int[]{pos[0], pos[1] - 1};
-
-      case SOUTH:
-        if (pos[0] == size[0] - 1) {
-          return new int[]{0, pos[1]};
-        }
-        return new int[]{pos[0] + 1, pos[1]};
-
-      default:
-        break;
-    }
-    return new int[]{0, 0};
   }
 
   @Override
@@ -519,21 +523,6 @@ public class DungeonImpl implements Dungeon {
 
     updatePlayerHealth();
 
-  }
-
-  private void updatePlayerHealth() {
-    int[] current = player.getCurrentPosition();
-    if (dungeon[current[0]][current[1]].hasOtyugh()) {
-      if (dungeon[current[0]][current[1]].getOtyugh().getHealth() == 2) {
-        player.kill();
-      } else if (dungeon[current[0]][current[1]].getOtyugh().getHealth() == 1) {
-        Random rand = new Random();
-        int random = rand.nextInt(2);
-        if (random == 0) {
-          player.kill();
-        }
-      }
-    }
   }
 
   @Override

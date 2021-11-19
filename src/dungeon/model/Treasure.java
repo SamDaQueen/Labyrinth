@@ -11,10 +11,20 @@ enum Treasure {
 
   private final int value;
 
+  /**
+   * Contstructor for creating a new treasure enum.
+   *
+   * @param value
+   */
   Treasure(int value) {
     this.value = value;
   }
 
+  /**
+   * Get the value associated with the particular treasure
+   *
+   * @return
+   */
   int getValue() {
     return value;
   }

@@ -77,6 +77,11 @@ public interface Dungeon {
    */
   boolean hasReachedGoal();
 
+  /**
+   * Check if the player is dead
+   *
+   * @return true if player is dead
+   */
   boolean playerDead();
 
   /**
@@ -86,13 +91,21 @@ public interface Dungeon {
    */
   List<Direction> getPossibleMoves();
 
+
+  /**
+   * Get the smell in the given cave.
+   *
+   * @param pos cave position
+   * @return 0 = no smell, 1 = faint smell, 2 = strong smell
+   */
   int getSmell(int[] pos);
 
-
+  /**
+   * Shoot the arrow in the given direction for the given distance.
+   *
+   * @param direction the direction
+   * @param steps     the distance
+   * @return whether an Otyugh was hit
+   */
   boolean shoot(Direction direction, int steps);
-
-  boolean isTunnel();
-
-  List<Treasure> getTreasure();
-
 }

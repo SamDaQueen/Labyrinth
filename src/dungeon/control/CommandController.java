@@ -16,6 +16,12 @@ public class CommandController implements Controller {
   private final Appendable out;
   private final Scanner scan;
 
+  /**
+   * Constructor to create the command based controller.
+   *
+   * @param in  the readable (System.in)
+   * @param out the appendable (System.out)
+   */
   public CommandController(Readable in, Appendable out) {
     if (in == null || out == null) {
       throw new IllegalArgumentException("Readable and Appendable can't be null");
@@ -85,11 +91,11 @@ public class CommandController implements Controller {
         }
       }
 
-      if (model.hasReachedGoal()) {
-        out.append("\n\nHurray! You have found the exit of the dungeon and your status is: ")
-            .append(model.printPlayerStatus());
-      } else if (model.playerDead()) {
+      if (model.playerDead()) {
         out.append("\n\nSadly, you were devoured by the hungry Otyugh!! Your adventure ends :( ")
+            .append(model.printPlayerStatus());
+      } else if (model.hasReachedGoal()) {
+        out.append("\n\nHurray! You have found the exit of the dungeon and your status is: ")
             .append(model.printPlayerStatus());
       }
 
