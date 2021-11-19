@@ -1,4 +1,4 @@
-package dungeon;
+package dungeon.model;
 
 import static java.lang.Math.abs;
 import static org.junit.Assert.assertEquals;
@@ -240,41 +240,41 @@ public class InternalTest {
 
     dungeon = new DungeonImpl(caves, new int[]{0, 0}, new int[]{2, 3});
 
-    assertEquals(0, dungeon.getPlayerPosition()[0]);
-    assertEquals(0, dungeon.getPlayerPosition()[1]);
+    assertEquals(0, dungeon.getPos()[0]);
+    assertEquals(0, dungeon.getPos()[1]);
     dungeon.movePlayer(Direction.EAST);
-    assertEquals(0, dungeon.getPlayerPosition()[0]);
-    assertEquals(1, dungeon.getPlayerPosition()[1]);
+    assertEquals(0, dungeon.getPos()[0]);
+    assertEquals(1, dungeon.getPos()[1]);
     dungeon.movePlayer(Direction.EAST);
-    assertEquals(0, dungeon.getPlayerPosition()[0]);
-    assertEquals(2, dungeon.getPlayerPosition()[1]);
+    assertEquals(0, dungeon.getPos()[0]);
+    assertEquals(2, dungeon.getPos()[1]);
     dungeon.movePlayer(Direction.EAST);
-    assertEquals(0, dungeon.getPlayerPosition()[0]);
-    assertEquals(3, dungeon.getPlayerPosition()[1]);
+    assertEquals(0, dungeon.getPos()[0]);
+    assertEquals(3, dungeon.getPos()[1]);
     dungeon.movePlayer(Direction.SOUTH);
-    assertEquals(1, dungeon.getPlayerPosition()[0]);
-    assertEquals(3, dungeon.getPlayerPosition()[1]);
+    assertEquals(1, dungeon.getPos()[0]);
+    assertEquals(3, dungeon.getPos()[1]);
     dungeon.movePlayer(Direction.WEST);
-    assertEquals(1, dungeon.getPlayerPosition()[0]);
-    assertEquals(2, dungeon.getPlayerPosition()[1]);
+    assertEquals(1, dungeon.getPos()[0]);
+    assertEquals(2, dungeon.getPos()[1]);
     dungeon.movePlayer(Direction.WEST);
-    assertEquals(1, dungeon.getPlayerPosition()[0]);
-    assertEquals(1, dungeon.getPlayerPosition()[1]);
+    assertEquals(1, dungeon.getPos()[0]);
+    assertEquals(1, dungeon.getPos()[1]);
     dungeon.movePlayer(Direction.WEST);
-    assertEquals(1, dungeon.getPlayerPosition()[0]);
-    assertEquals(0, dungeon.getPlayerPosition()[1]);
+    assertEquals(1, dungeon.getPos()[0]);
+    assertEquals(0, dungeon.getPos()[1]);
     dungeon.movePlayer(Direction.SOUTH);
-    assertEquals(2, dungeon.getPlayerPosition()[0]);
-    assertEquals(0, dungeon.getPlayerPosition()[1]);
+    assertEquals(2, dungeon.getPos()[0]);
+    assertEquals(0, dungeon.getPos()[1]);
     dungeon.movePlayer(Direction.EAST);
-    assertEquals(2, dungeon.getPlayerPosition()[0]);
-    assertEquals(1, dungeon.getPlayerPosition()[1]);
+    assertEquals(2, dungeon.getPos()[0]);
+    assertEquals(1, dungeon.getPos()[1]);
     dungeon.movePlayer(Direction.EAST);
-    assertEquals(2, dungeon.getPlayerPosition()[0]);
-    assertEquals(2, dungeon.getPlayerPosition()[1]);
+    assertEquals(2, dungeon.getPos()[0]);
+    assertEquals(2, dungeon.getPos()[1]);
     dungeon.movePlayer(Direction.EAST);
-    assertEquals(2, dungeon.getPlayerPosition()[0]);
-    assertEquals(3, dungeon.getPlayerPosition()[1]);
+    assertEquals(2, dungeon.getPos()[0]);
+    assertEquals(3, dungeon.getPos()[1]);
 
     assertTrue(dungeon.hasReachedGoal());
   }
@@ -286,7 +286,7 @@ public class InternalTest {
     dungeonFixed = new DungeonImpl(caves, new int[]{4, 3}, new int[]{0, 1});
     dungeonFixed.movePlayer(Direction.WEST);
     dungeonFixed.movePlayer(Direction.SOUTH);
-    assertEquals(0, dungeonFixed.getPlayerPosition()[0]);
+    assertEquals(0, dungeonFixed.getPos()[0]);
   }
 
   @Test
@@ -300,7 +300,7 @@ public class InternalTest {
     dungeonFixed.movePlayer(Direction.NORTH);
     dungeonFixed.movePlayer(Direction.WEST);
     dungeonFixed.movePlayer(Direction.NORTH);
-    assertEquals(4, dungeonFixed.getPlayerPosition()[0]);
+    assertEquals(4, dungeonFixed.getPos()[0]);
   }
 
   @Test
@@ -313,7 +313,7 @@ public class InternalTest {
     dungeonFixed.movePlayer(Direction.WEST);
     dungeonFixed.movePlayer(Direction.WEST);
     dungeonFixed.movePlayer(Direction.WEST);
-    assertEquals(4, dungeonFixed.getPlayerPosition()[1]);
+    assertEquals(4, dungeonFixed.getPos()[1]);
   }
 
   @Test
@@ -326,7 +326,7 @@ public class InternalTest {
     dungeonFixed.movePlayer(Direction.EAST);
     dungeonFixed.movePlayer(Direction.SOUTH);
     dungeonFixed.movePlayer(Direction.EAST);
-    assertEquals(0, dungeonFixed.getPlayerPosition()[1]);
+    assertEquals(0, dungeonFixed.getPos()[1]);
   }
 
   @Test
@@ -343,8 +343,8 @@ public class InternalTest {
     dungeonFixed.movePlayer(Direction.NORTH);
     dungeonFixed.movePlayer(Direction.NORTH);
     dungeonFixed.movePlayer(Direction.SOUTH);
-    assertEquals(2, dungeonFixed.getPlayerPosition()[0]);
-    assertEquals(3, dungeonFixed.getPlayerPosition()[1]);
+    assertEquals(2, dungeonFixed.getPos()[0]);
+    assertEquals(3, dungeonFixed.getPos()[1]);
   }
 
   private Cave[][] getCaves() {

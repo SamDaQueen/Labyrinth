@@ -1,5 +1,5 @@
-import dungeon.Dungeon;
-import dungeon.DungeonImpl;
+import dungeon.model.Dungeon;
+import dungeon.model.DungeonImpl;
 import org.junit.Test;
 
 public class OtyughTest {
@@ -28,6 +28,7 @@ public class OtyughTest {
   public void maxOtyugh() {
     dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 20, 50);
     System.out.println(dungeon);
+    System.out.println(dungeon.getSmell(new int[]{1,1}));
   }
 
 

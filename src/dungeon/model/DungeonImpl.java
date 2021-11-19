@@ -1,4 +1,4 @@
-package dungeon;
+package dungeon.model;
 
 import static java.lang.Math.abs;
 
@@ -78,11 +78,11 @@ public class DungeonImpl implements Dungeon {
 
     this.player = new Player(start[0], start[1]);
 
-    for (int row = 0; row < size[0]; row++) {
-      for (int col = 0; col < size[1]; col++) {
-        System.out.println(dungeon[row][col]);
-      }
-    }
+//    for (int row = 0; row < size[0]; row++) {
+//      for (int col = 0; col < size[1]; col++) {
+//        System.out.println(dungeon[row][col]);
+//      }
+//    }
 
   }
 
@@ -142,9 +142,13 @@ public class DungeonImpl implements Dungeon {
     List<Cave> caves = getCaves();
     Random rand = new Random();
 
+    // add monster at the end
     dungeon[end[0]][end[1]].addOtyugh();
     caves.remove(dungeon[end[0]][end[1]]);
     withMonster.add(dungeon[end[0]][end[1]]);
+
+    // remove start from possible monster caves
+    caves.remove(dungeon[start[0]][start[1]]);
 
     while (withMonster.size() < Math.min(difficulty, getNumberOfCaves() - 1)) {
       if (caves.size() > 0) {
@@ -353,6 +357,110 @@ public class DungeonImpl implements Dungeon {
     return new int[]{row, col};
   }
 
+  public int getSmell(int[] pos) {
+    int smell = 0;
+    for (Direction direction : dungeon[pos[0]][pos[1]].getOpenings()) {
+      int[] next = getNextCave(pos, direction);
+      if (dungeon[next[0]][next[1]].hasOtyugh()) {
+        smell += 2;
+      }
+      for (Direction innerDirection : dungeon[next[0]][next[1]].getOpenings()) {
+        int[] innerNext = getNextCave(next, innerDirection);
+        if (!(innerNext[0] == pos[0] && innerNext[1] == pos[1])) {
+          if (dungeon[innerNext[0]][innerNext[1]].hasOtyugh()) {
+            smell++;
+          }
+        }
+      }
+    }
+    return Math.min(smell, 2);
+  }
+
+  @Override
+  public boolean shoot(Direction direction, int steps) {
+    if (player.getArrows() < 1) {
+      throw new IllegalStateException(
+          "No arrows to shoot!! Should we throw you at the Otyugh instead??");
+    }
+    player.useArrow();
+    int[] pos = player.getCurrentPosition();
+    int[] arrowPos;
+    if (!dungeon[pos[0]][pos[1]].getOpenings().contains(direction)) {
+      return false;
+    } else {
+      arrowPos = getNextCave(pos, direction);
+      steps--;
+      while (steps > 0) {
+        if (!dungeon[arrowPos[0]][arrowPos[1]].isTunnel()) {
+          steps--;
+        }
+        List<Direction> directionList = new ArrayList<>(
+            dungeon[arrowPos[0]][arrowPos[1]].getOpenings());
+        if (dungeon[arrowPos[0]][arrowPos[1]].isTunnel()) {
+          directionList.remove(direction);
+          direction = directionList.get(0);
+        } else {
+          if (!directionList.contains(direction)) {
+            break;
+          }
+        }
+        arrowPos = getNextCave(arrowPos, direction);
+
+      }
+      if (dungeon[arrowPos[0]][arrowPos[1]].hasOtyugh() && steps == 0) {
+        dungeon[arrowPos[0]][arrowPos[1]].shootOtyugh();
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @Override
+  public boolean isTunnel() {
+    return dungeon[player.getCurrentPosition()[0]][player.getCurrentPosition()[1]].isTunnel();
+  }
+
+  @Override
+  public List<Treasure> getTreasure() {
+    return new ArrayList<>(
+        dungeon[player.getCurrentPosition()[0]][player.getCurrentPosition()[1]].getTreasure());
+  }
+
+  private int[] getNextCave(int[] pos, Direction direction) {
+    if (!dungeon[pos[0]][pos[1]].getOpenings().contains(direction)) {
+      throw new IllegalStateException("That is a wall! Cannot move through walls!");
+    }
+    switch (direction) {
+      case NORTH:
+        if (pos[0] == 0) {
+          return new int[]{size[0] - 1, pos[1]};
+        }
+        return new int[]{pos[0] - 1, pos[1]};
+
+      case EAST:
+        if (pos[1] == size[1] - 1) {
+          return new int[]{pos[0], 0};
+        }
+        return new int[]{pos[0], pos[1] + 1};
+
+      case WEST:
+        if (pos[1] == 0) {
+          return new int[]{pos[0], size[1] - 1};
+        }
+        return new int[]{pos[0], pos[1] - 1};
+
+      case SOUTH:
+        if (pos[0] == size[0] - 1) {
+          return new int[]{0, pos[1]};
+        }
+        return new int[]{pos[0] + 1, pos[1]};
+
+      default:
+        break;
+    }
+    return new int[]{0, 0};
+  }
+
   @Override
   public List<Direction> getPossibleMoves() {
     return new ArrayList<>(
@@ -360,7 +468,7 @@ public class DungeonImpl implements Dungeon {
   }
 
   @Override
-  public int[] getPlayerPosition() {
+  public int[] getPos() {
     return new int[]{
         player.getCurrentPosition()[0], player.getCurrentPosition()[1]
     };
@@ -408,6 +516,24 @@ public class DungeonImpl implements Dungeon {
       default:
         break;
     }
+
+    updatePlayerHealth();
+
+  }
+
+  private void updatePlayerHealth() {
+    int[] current = player.getCurrentPosition();
+    if (dungeon[current[0]][current[1]].hasOtyugh()) {
+      if (dungeon[current[0]][current[1]].getOtyugh().getHealth() == 2) {
+        player.kill();
+      } else if (dungeon[current[0]][current[1]].getOtyugh().getHealth() == 1) {
+        Random rand = new Random();
+        int random = rand.nextInt(2);
+        if (random == 0) {
+          player.kill();
+        }
+      }
+    }
   }
 
   @Override
@@ -421,14 +547,32 @@ public class DungeonImpl implements Dungeon {
     int row = player.getCurrentPosition()[0];
     int col = player.getCurrentPosition()[1];
     builder.append("Player is at location: [").append(row).append(",").append(col)
-        .append("] with possible moves and treasures: ").append(dungeon[row][col]);
+        .append("]: ").append(dungeon[row][col]).append("\n");
     return builder.toString();
   }
 
   @Override
-  public void pickTreasure() {
-    player.updateCollectedTreasure(
-        dungeon[player.getCurrentPosition()[0]][player.getCurrentPosition()[1]].getTreasure());
+  public boolean pickTreasure() {
+    List<Treasure> treasures =
+        dungeon[player.getCurrentPosition()[0]][player.getCurrentPosition()[1]].getTreasure();
+    if (treasures.isEmpty()) {
+      return false;
+    }
+    player.updateCollectedTreasure(treasures);
+    dungeon[player.getCurrentPosition()[0]][player.getCurrentPosition()[1]].clearTreasure();
+    return true;
+  }
+
+  @Override
+  public boolean pickArrows() {
+    int arrows =
+        dungeon[player.getCurrentPosition()[0]][player.getCurrentPosition()[1]].getArrows();
+    if (arrows == 0) {
+      return false;
+    }
+    player.addArrow(arrows);
+    dungeon[player.getCurrentPosition()[0]][player.getCurrentPosition()[1]].setArrows(0);
+    return true;
   }
 
   @Override
@@ -446,15 +590,20 @@ public class DungeonImpl implements Dungeon {
     return wrapping;
   }
 
-
   @Override
   public boolean hasReachedGoal() {
     return end[0] == player.getCurrentPosition()[0] && end[1] == player.getCurrentPosition()[1];
   }
 
   @Override
+  public boolean playerDead() {
+    return !player.isAlive();
+  }
+
+  @Override
   public String toString() {
     StringBuilder builder = new StringBuilder();
+    int[] playerPos = player.getCurrentPosition();
     builder.append("   ");
     for (int col = 0; col < size[1]; col++) {
       if (dungeon[0][col].getOpenings().contains(Direction.NORTH)) {
@@ -471,11 +620,13 @@ public class DungeonImpl implements Dungeon {
         builder.append("   ");
       }
       for (int col = 0; col < size[1]; col++) {
-        if (row == start[0] && col == start[1]) {
+        if (row == playerPos[0] && col == playerPos[1]) {
+          builder.append("P");
+        } else if (row == start[0] && col == start[1]) {
           builder.append("S");
         } else if (row == end[0] && col == end[1]) {
           builder.append("X");
-        } else if (dungeon[row][col].getOtyugh() != null) {
+        } else if (dungeon[row][col].hasOtyugh()) {
           builder.append("M");
         } else {
           builder.append("O");
@@ -497,8 +648,6 @@ public class DungeonImpl implements Dungeon {
       }
       builder.append("\n");
     }
-
-    builder.append(Arrays.toString(start)).append(" ").append(Arrays.toString(end));
 
     return builder.toString();
   }

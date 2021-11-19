@@ -1,4 +1,4 @@
-package dungeon;
+package dungeon.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,12 +60,27 @@ class Cave {
     this.treasures.add(treasure);
   }
 
-  Otyugh getOtyugh() {
-    return otyugh;
+  void clearTreasure() {
+    treasures.clear();
+  }
+
+  boolean hasOtyugh() {
+    if (otyugh == null) {
+      return false;
+    }
+    return otyugh.getHealth() != 0;
   }
 
   void addOtyugh() {
     this.otyugh = new Otyugh();
+  }
+
+  Otyugh getOtyugh() {
+    return otyugh;
+  }
+
+  void shootOtyugh() {
+    otyugh.hit();
   }
 
   int getArrows() {
@@ -86,11 +101,12 @@ class Cave {
     }
     List<Direction> sorted = new ArrayList<>(directions);
     Collections.sort(sorted);
-    builder.append(" ").append(sorted).append(" ").append(treasures).append(" ").append(arrows)
-        .append(" ");
-    if (otyugh != null) {
-      builder.append("Otyugh present!");
+    builder.append(" Available directions: ").append(sorted);
+    if (!isTunnel()) {
+      builder.append(" Treasures: ").append(treasures);
     }
+    builder.append(" Arrows: ").append(arrows).append(" ");
+
     return builder.toString();
   }
 

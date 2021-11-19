@@ -2,9 +2,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import dungeon.Direction;
-import dungeon.Dungeon;
-import dungeon.DungeonImpl;
+import dungeon.model.Direction;
+import dungeon.model.Dungeon;
+import dungeon.model.DungeonImpl;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -69,33 +69,6 @@ public class DungeonTest {
   }
 
   @Test
-  public void smallestDungeon() {
-    dungeon = new DungeonImpl(new int[]{3, 4}, 0, false, 10, 1);
-    Random rand = new Random();
-    while (!dungeon.hasReachedGoal()) {
-      dungeon.pickTreasure();
-      List<Direction> possibleMoves = dungeon.getPossibleMoves();
-      Direction direction = possibleMoves.get(rand.nextInt(possibleMoves.size()));
-      dungeon.movePlayer(direction);
-    }
-    assertTrue(dungeon.hasReachedGoal());
-  }
-
-  @Test
-  public void smallestDungeon2() {
-    dungeon = new DungeonImpl(new int[]{4, 3}, 0, false, 20, 1);
-    Random rand = new Random();
-    while (!dungeon.hasReachedGoal()) {
-      dungeon.pickTreasure();
-      List<Direction> possibleMoves = dungeon.getPossibleMoves();
-      Direction direction = possibleMoves.get(rand.nextInt(possibleMoves.size()));
-      dungeon.movePlayer(direction);
-    }
-    assertTrue(dungeon.hasReachedGoal());
-  }
-
-
-  @Test
   public void testLargeDungeon() {
     dungeon = new DungeonImpl(new int[]{50, 50}, 30, true, 50, 1);
     assertEquals(50, dungeon.getSize()[0]);
@@ -109,13 +82,13 @@ public class DungeonTest {
     List<Direction> directions = dungeon.getPossibleMoves();
     dungeon.movePlayer(directions.get(0));
     if (directions.get(0) == Direction.NORTH) {
-      assertEquals(start[0] - 1, dungeon.getPlayerPosition()[0]);
+      assertEquals(start[0] - 1, dungeon.getPos()[0]);
     } else if (directions.get(0) == Direction.SOUTH) {
-      assertEquals(start[0] + 1, dungeon.getPlayerPosition()[0]);
+      assertEquals(start[0] + 1, dungeon.getPos()[0]);
     } else if (directions.get(0) == Direction.EAST) {
-      assertEquals(start[1] + 1, dungeon.getPlayerPosition()[1]);
+      assertEquals(start[1] + 1, dungeon.getPos()[1]);
     } else if (directions.get(0) == Direction.WEST) {
-      assertEquals(start[1] - 1, dungeon.getPlayerPosition()[1]);
+      assertEquals(start[1] - 1, dungeon.getPos()[1]);
     }
   }
 

@@ -1,4 +1,4 @@
-package dungeon;
+package dungeon.model;
 
 /**
  * Enumeration for the four possible directions in our dungeon.

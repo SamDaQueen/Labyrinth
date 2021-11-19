@@ -1,4 +1,4 @@
-package dungeon;
+package dungeon.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +16,7 @@ class Player {
   private final List<Treasure> collectedTreasure;
   private int score;
   private int arrows;
+  private boolean alive;
 
   Player(int row, int col) {
     this.currentPosition = new int[2];
@@ -24,6 +25,7 @@ class Player {
     this.collectedTreasure = new ArrayList<>();
     this.score = 0;
     this.arrows = 3;
+    this.alive = true;
   }
 
   int[] getCurrentPosition() {
@@ -42,11 +44,17 @@ class Player {
     }
   }
 
-  public int getArrows() {
+  int getArrows() {
     return arrows;
   }
 
-  public void addArrow(int arrows) {
+  void useArrow() {
+    if (arrows > 0) {
+      arrows--;
+    }
+  }
+
+  void addArrow(int arrows) {
     this.arrows += arrows;
   }
 
@@ -62,6 +70,15 @@ class Player {
           .append("), ");
     }
     builder.append("with a score of ").append(score);
+    builder.append(" and has ").append(arrows).append(" arrows.\n");
     return builder.toString();
+  }
+
+  public boolean isAlive() {
+    return alive;
+  }
+
+  public void kill() {
+    this.alive = false;
   }
 }

@@ -1,4 +1,4 @@
-package dungeon;
+package dungeon.model;
 
 import java.util.Scanner;
 

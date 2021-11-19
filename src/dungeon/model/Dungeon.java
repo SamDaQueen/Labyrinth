@@ -1,4 +1,4 @@
-package dungeon;
+package dungeon.model;
 
 import java.util.List;
 
@@ -34,7 +34,12 @@ public interface Dungeon {
   /**
    * Provides the player the functionality to pick up the treasure in the current location.
    */
-  void pickTreasure();
+  boolean pickTreasure();
+
+  /**
+   * Provides the player the functionality to pick up the arrows in the current location.
+   */
+  boolean pickArrows();
 
   /**
    * Returns the size of the dungeon as an int array.
@@ -55,7 +60,7 @@ public interface Dungeon {
    *
    * @return the current location
    */
-  int[] getPlayerPosition();
+  int[] getPos();
 
 
   /**
@@ -72,11 +77,22 @@ public interface Dungeon {
    */
   boolean hasReachedGoal();
 
+  boolean playerDead();
+
   /**
    * Gets a list of possible moves from the current location for the player to choose from.
    *
    * @return available moves
    */
   List<Direction> getPossibleMoves();
+
+  int getSmell(int[] pos);
+
+
+  boolean shoot(Direction direction, int steps);
+
+  boolean isTunnel();
+
+  List<Treasure> getTreasure();
 
 }

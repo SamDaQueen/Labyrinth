@@ -1,4 +1,4 @@
-package dungeon;
+package dungeon.model;
 
 /**
  * An edge represented as two caves. Edge from A to B is equivalent to edge from B to A.

@@ -1,4 +1,4 @@
-package dungeon;
+package dungeon.model;
 
 /**
  * Enumeration for the three possible treasures in our dungeon along with the scores that they give
