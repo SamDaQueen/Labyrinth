@@ -3,6 +3,7 @@ package dungeon.control.commands;
 import dungeon.control.Controller;
 import dungeon.model.Direction;
 import dungeon.model.Dungeon;
+import java.io.IOException;
 import java.util.Locale;
 
 
@@ -38,16 +39,18 @@ public class Move implements Controller {
   }
 
   @Override
-  public void execute(Dungeon model) {
+  public void execute(Dungeon model, Appendable out) {
     if (model == null) {
       throw new IllegalArgumentException("Model cannot be null");
     }
     try {
       model.movePlayer(direction);
+      out.append("Moved to direction ").append(direction.toString());
     } catch (IllegalStateException ise) {
       throw new IllegalStateException(
           "\nThis move is not possible! Please choose from available moves only!");
+    } catch (IOException ioe) {
+      throw new IllegalStateException("\nAppend failed ", ioe);
     }
-
   }
 }

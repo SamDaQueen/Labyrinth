@@ -427,7 +427,7 @@ public class DungeonImpl implements Dungeon {
   }
 
   @Override
-  public boolean shoot(Direction direction, int steps) {
+  public int shoot(Direction direction, int steps) {
     if (player.getArrows() < 1) {
       throw new IllegalStateException(
           "No arrows to shoot!! Should we throw you at the Otyugh instead??");
@@ -436,7 +436,7 @@ public class DungeonImpl implements Dungeon {
     int[] pos = player.getCurrentPosition();
     int[] arrowPos;
     if (!dungeon[pos[0]][pos[1]].getOpenings().contains(direction)) {
-      return false;
+      return 0;
     } else {
       arrowPos = getNextCave(pos, direction);
       steps--;
@@ -459,10 +459,13 @@ public class DungeonImpl implements Dungeon {
       }
       if (dungeon[arrowPos[0]][arrowPos[1]].hasOtyugh() && steps == 0) {
         dungeon[arrowPos[0]][arrowPos[1]].shootOtyugh();
-        return true;
+        if (!dungeon[arrowPos[0]][arrowPos[1]].hasOtyugh()) {
+          return 2;
+        }
+        return 1;
       }
     }
-    return false;
+    return 0;
   }
 
   @Override

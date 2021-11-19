@@ -13,26 +13,26 @@ import java.util.Scanner;
  */
 public class CommandController implements Controller {
 
-  private final Appendable out;
   private final Scanner scan;
 
   /**
    * Constructor to create the command based controller.
    *
-   * @param in  the readable (System.in)
-   * @param out the appendable (System.out)
+   * @param in the readable (System.in)
    */
-  public CommandController(Readable in, Appendable out) {
-    if (in == null || out == null) {
+  public CommandController(Readable in) {
+    if (in == null) {
       throw new IllegalArgumentException("Readable and Appendable can't be null");
     }
-    this.out = out;
     scan = new Scanner(in);
   }
 
   @Override
-  public void execute(Dungeon model) {
+  public void execute(Dungeon model, Appendable out) {
 
+    if (out == null) {
+      throw new IllegalArgumentException("Appendable cannot be null!");
+    }
     if (model == null) {
       throw new IllegalArgumentException("Model cannot be null!");
     }
@@ -66,15 +66,15 @@ public class CommandController implements Controller {
             return;
           case "move":
             cmd = new Move(scan.next());
-            out.append("You are brave and attempt to advance in the dungeon...");
+            out.append("You are brave and attempt to advance in the dungeon... ");
             break;
           case "pick":
             cmd = new Pick();
-            out.append("This will add a fine addition to your collection...");
+            out.append("This will add a fine addition to your collection... ");
             break;
           case "shoot":
             cmd = new Shoot(scan.next(), scan.nextInt());
-            out.append("You have attempted to slay an Otyugh...");
+            out.append("You have attempted to slay an Otyugh... ");
             break;
           default:
             out.append("Unknown command!");
@@ -82,7 +82,7 @@ public class CommandController implements Controller {
         }
         if (cmd != null) {
           try {
-            cmd.execute(model);
+            cmd.execute(model, out);
           } catch (IllegalStateException ise) {
             out.append(ise.getMessage());
             continue;

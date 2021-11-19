@@ -3,6 +3,7 @@ package dungeon.control.commands;
 import dungeon.control.Controller;
 import dungeon.model.Direction;
 import dungeon.model.Dungeon;
+import java.io.IOException;
 import java.util.Locale;
 
 /**
@@ -42,12 +43,25 @@ public class Shoot implements Controller {
   }
 
   @Override
-  public void execute(Dungeon model) {
+  public void execute(Dungeon model, Appendable out) {
     if (model == null) {
-      throw new IllegalArgumentException("model cannot be null");
+      throw new IllegalArgumentException("Model cannot be null");
     }
-    if (!model.shoot(direction, steps)) {
-      throw new IllegalStateException("Your arrow could not reach the Otyugh. What a waste!");
+    if (steps > 5) {
+      throw new IllegalStateException(
+          "You aren't cupid here!! Please give a shooting distance of max 5");
+    }
+    try {
+      int shot = model.shoot(direction, steps);
+      if (shot == 0) {
+        out.append("Your arrow could not reach the Otyugh. What a waste!");
+      } else if (shot == 1) {
+        out.append("Your arrow hit the Otyugh and you hear a piercing howl!");
+      } else {
+        out.append("Your have successfully hit the Otyugh twice and it is now dead!");
+      }
+    } catch (IOException ioe) {
+      throw new IllegalStateException("\nAppend failed ", ioe);
     }
   }
 }

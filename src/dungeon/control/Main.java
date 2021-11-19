@@ -34,7 +34,7 @@ public class Main {
         Integer.parseInt(args[2]),
         Boolean.parseBoolean(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]));
 
-    new CommandController(input, output).execute(model);
+    new CommandController(input).execute(model, output);
   }
 
 }

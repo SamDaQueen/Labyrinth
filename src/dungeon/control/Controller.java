@@ -12,6 +12,6 @@ public interface Controller {
    *
    * @param model the dungeon model
    */
-  void execute(Dungeon model);
+  void execute(Dungeon model, Appendable out);
 
 }
