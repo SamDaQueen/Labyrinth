@@ -15,7 +15,7 @@ class Otyugh {
   }
 
   /**
-   * Get the current health of the Otyugh
+   * Get the current health of the Otyugh.
    *
    * @return 2 = full health, 1 = half health, 0 = dead
    */

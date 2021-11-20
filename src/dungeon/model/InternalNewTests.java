@@ -7,6 +7,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Class for testing the new features added to the model such as arrows and Otyugh.
+ */
 public class InternalNewTests {
 
   private DungeonImpl dungeon;
@@ -120,7 +123,8 @@ public class InternalNewTests {
     fixedDungeon.movePlayer(Direction.WEST);
     fixedDungeon.movePlayer(Direction.SOUTH);
     assertTrue(fixedDungeon.pickTreasure());
-    assertEquals("[RUBY, SAPPHIRE, DIAMOND]", fixedDungeon.getPlayer().getCollectedTreasure().toString());
+    assertEquals("[RUBY, SAPPHIRE, DIAMOND]",
+        fixedDungeon.getPlayer().getCollectedTreasure().toString());
   }
 
   @Test

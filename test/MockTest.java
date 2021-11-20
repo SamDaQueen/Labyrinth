@@ -6,6 +6,9 @@ import java.io.StringReader;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Class for isolating the Controller and then testing it using a mock model.
+ */
 public class MockTest {
 
   private Dungeon dungeon;

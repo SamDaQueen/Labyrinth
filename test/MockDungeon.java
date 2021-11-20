@@ -2,6 +2,9 @@ import dungeon.model.Direction;
 import dungeon.model.Dungeon;
 import java.util.List;
 
+/**
+ * Mock Dungeon Model for testing the controller separately.
+ */
 public class MockDungeon implements Dungeon {
 
   private final int uniqueCode;

@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Class for representing a player navigating through the dungeon. A player is represented as its current position, the
- * treasure it has collected so far, and the total score so far.
+ * Class for representing a player navigating through the dungeon. A player is represented as its
+ * current position, the treasure it has collected so far, and the total score so far.
  */
 class Player {
 
@@ -54,7 +54,7 @@ class Player {
   }
 
   /**
-   * Update the current position of the player
+   * Update the current position of the player.
    *
    * @param row the new roe
    * @param col the new col
@@ -81,7 +81,7 @@ class Player {
   }
 
   /**
-   * Get the number of arrows owned by the player
+   * Get the number of arrows owned by the player.
    *
    * @return number of arrows
    */

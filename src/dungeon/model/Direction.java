@@ -10,7 +10,7 @@ public enum Direction {
   WEST;
 
   /**
-   * Inverts the current direction
+   * Inverts the current direction.
    *
    * @param d the old direction
    * @return the inverted direction

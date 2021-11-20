@@ -9,7 +9,7 @@ class Edge {
   private final Cave cave2;
 
   /**
-   * Contructor for creating an edge.
+   * Constructor for creating an edge.
    *
    * @param cave1 cave 1
    * @param cave2 cave 2
@@ -20,7 +20,7 @@ class Edge {
   }
 
   /**
-   * Return one end of the edge
+   * Return one end of the edge.
    *
    * @return the cave
    */
@@ -29,7 +29,7 @@ class Edge {
   }
 
   /**
-   * Return second end of the edge
+   * Return second end of the edge.
    *
    * @return the cave
    */

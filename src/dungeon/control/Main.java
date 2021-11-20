@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 public class Main {
 
   /**
-   * The main method to act as the driver
+   * The main method to act as the driver.
    *
    * @param args command line arguments
    */

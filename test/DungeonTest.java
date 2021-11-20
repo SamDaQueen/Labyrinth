@@ -125,4 +125,14 @@ public class DungeonTest {
     assertFalse(dungeon.isWrapping());
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void invalidOtyugh() {
+    dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 20, 0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void negativeOtyugh() {
+    dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 20, -5);
+  }
+
 }

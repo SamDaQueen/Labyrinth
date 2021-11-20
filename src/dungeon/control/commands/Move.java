@@ -15,7 +15,7 @@ public class Move implements Controller {
   private Direction direction;
 
   /**
-   * Constructor for the Move command
+   * Constructor for the Move command.
    *
    * @param d the direction to move in
    */

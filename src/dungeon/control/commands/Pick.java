@@ -16,11 +16,13 @@ public class Pick implements Controller {
       throw new IllegalArgumentException("Model cannot be null");
     }
     try {
+      boolean pickedArrows = model.pickArrows();
+      boolean pickedTreasure = model.pickTreasure();
 
-      if (!(model.pickTreasure() || model.pickArrows())) {
-        out.append("Oh no!! Nothing to pick here!");
-      } else {
+      if (pickedArrows || pickedTreasure) {
         out.append("Added to inventory :D ");
+      } else {
+        out.append("Oh no!! Nothing to pick here!");
       }
     } catch (IOException ioe) {
       throw new IllegalStateException("\nAppend failed ", ioe);

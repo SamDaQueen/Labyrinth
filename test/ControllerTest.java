@@ -9,6 +9,9 @@ import java.io.StringReader;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Class for testing the Controller and the Model together.
+ */
 public class ControllerTest {
 
   Dungeon model;
@@ -227,32 +230,32 @@ public class ControllerTest {
                  + "What do you wish to do? move [direction]/ pick/ shoot [direction] [distance]/ quit: This will "
                  + "add a fine addition to your collection... Added to inventory :D \n"
                  + "\n"
-                 + "Player has collected DIAMOND(3), RUBY(3), SAPPHIRE(1), with a score of 120 and has 3 arrows.\n"
+                 + "Player has collected DIAMOND(3), RUBY(3), SAPPHIRE(1), with a score of 120 and has 6 arrows.\n"
                  + "Player is at location: [3,2]: Cave Available directions: [NORTH, EAST, WEST] Treasures: "
-                 + "[] Arrows: 3 \n"
+                 + "[] Arrows: 0 \n"
                  + "There is a strong stench... An Otyugh must be in the next cell!! Or perhaps there are more "
                  + "than one Otyughs nearby hungry for your flesh!!\n"
                  + "What do you wish to do? move [direction]/ pick/ shoot [direction] [distance]/ quit: "
                  + "You have attempted to slay an Otyugh... Your arrow hit the Otyugh and you hear a piercing howl!\n"
                  + "\n"
-                 + "Player has collected DIAMOND(3), RUBY(3), SAPPHIRE(1), with a score of 120 and has 2 arrows.\n"
+                 + "Player has collected DIAMOND(3), RUBY(3), SAPPHIRE(1), with a score of 120 and has 5 arrows.\n"
                  + "Player is at location: [3,2]: Cave Available directions: [NORTH, EAST, WEST] Treasures:"
-                 + " [] Arrows: 3 \n"
+                 + " [] Arrows: 0 \n"
                  + "There is a strong stench... An Otyugh must be in the next cell!! Or perhaps there are "
                  + "more than one Otyughs nearby hungry for your flesh!!\n"
                  + "What do you wish to do? move [direction]/ pick/ shoot [direction] [distance]/ quit: "
                  + "You have attempted to slay an Otyugh... Your have successfully hit the Otyugh twice and it is now dead!\n"
                  + "\n"
-                 + "Player has collected DIAMOND(3), RUBY(3), SAPPHIRE(1), with a score of 120 and has 1 arrows.\n"
+                 + "Player has collected DIAMOND(3), RUBY(3), SAPPHIRE(1), with a score of 120 and has 4 arrows.\n"
                  + "Player is at location: [3,2]: Cave Available directions: [NORTH, EAST, WEST] Treasures: "
-                 + "[] Arrows: 3 \n"
+                 + "[] Arrows: 0 \n"
                  + "There is a strong stench... An Otyugh must be in the next cell!! Or perhaps there are "
                  + "more than one Otyughs nearby hungry for your flesh!!\n"
                  + "What do you wish to do? move [direction]/ pick/ shoot [direction] [distance]/ quit: "
                  + "You are brave and attempt to advance in the dungeon... Moved to direction EAST\n"
                  + "\n"
                  + "Hurray! You have found the exit of the dungeon and your status is: Player has "
-                 + "collected DIAMOND(3), RUBY(3), SAPPHIRE(1), with a score of 120 and has 1 arrows.\n",
+                 + "collected DIAMOND(3), RUBY(3), SAPPHIRE(1), with a score of 120 and has 4 arrows.\n",
         out.toString());
 
   }
@@ -377,7 +380,8 @@ public class ControllerTest {
 
   @Test
   public void strongSmellTwoOtyughs() {
-    in = new StringReader("move east pick move east shoot south 1 shoot south 1 move south move west move south");
+    in = new StringReader(
+        "move east pick move east shoot south 1 shoot south 1 move south move west move south");
     new CommandController(in).execute(model, out);
     assertTrue(out.toString().contains(
         "There is a strong stench... An Otyugh must be in the next cell!! Or perhaps there are more than"
@@ -417,7 +421,8 @@ public class ControllerTest {
   public void noMoreArrows() {
     in = new StringReader("shoot east 3 shoot east 3 shoot east 3 shoot east 3");
     new CommandController(in).execute(model, out);
-    assertTrue(out.toString().contains("No arrows to shoot!! Should we throw you at the Otyugh instead??"));
+    assertTrue(out.toString()
+        .contains("No arrows to shoot!! Should we throw you at the Otyugh instead??"));
   }
 
   @Test
@@ -448,21 +453,24 @@ public class ControllerTest {
   public void killOtyugh() {
     in = new StringReader("shoot east 1 move east shoot east 1");
     new CommandController(in).execute(model, out);
-    assertTrue(out.toString().contains("Your have successfully hit the Otyugh twice and it is now dead!"));
+    assertTrue(
+        out.toString().contains("Your have successfully hit the Otyugh twice and it is now dead!"));
   }
 
   @Test
   public void killPlayer() {
     in = new StringReader("move east move east move south move west");
     new CommandController(in).execute(model, out);
-    assertTrue(out.toString().contains("Sadly, you were devoured by the hungry Otyugh!! Your adventure ends :("));
+    assertTrue(out.toString()
+        .contains("Sadly, you were devoured by the hungry Otyugh!! Your adventure ends :("));
   }
 
   @Test
   public void halfInjuredOtyugh() {
     in = new StringReader("move east move east move south shoot west 1 move west move west");
     new CommandController(in).execute(model, out);
-    assertTrue(out.toString().contains("Sadly, you were devoured by the hungry Otyugh!! Your adventure ends :(")
+    assertTrue(out.toString().contains(
+        "Sadly, you were devoured by the hungry Otyugh!! Your adventure ends :(")
                || out.toString().contains(
         "Player is at location: [1,2]: Cave Available directions: [EAST, SOUTH, WEST] Treasures: [] Arrows: 0"));
   }
@@ -528,21 +536,24 @@ public class ControllerTest {
   public void invalidDistance() {
     in = new StringReader("shoot west 10");
     new CommandController(in).execute(model, out);
-    assertTrue(out.toString().contains("You aren't Artemis here!! Please give a shooting distance between 1 and 5"));
+    assertTrue(out.toString()
+        .contains("You aren't Artemis here!! Please give a shooting distance between 1 and 5"));
   }
 
   @Test
   public void zeroDistance() {
     in = new StringReader("shoot west 0");
     new CommandController(in).execute(model, out);
-    assertTrue(out.toString().contains("You aren't Artemis here!! Please give a shooting distance between 1 and 5"));
+    assertTrue(out.toString()
+        .contains("You aren't Artemis here!! Please give a shooting distance between 1 and 5"));
   }
 
   @Test
   public void negativeDistance() {
     in = new StringReader("shoot west -10");
     new CommandController(in).execute(model, out);
-    assertTrue(out.toString().contains("You aren't Artemis here!! Please give a shooting distance between 1 and 5"));
+    assertTrue(out.toString()
+        .contains("You aren't Artemis here!! Please give a shooting distance between 1 and 5"));
   }
 
   @Test
@@ -621,8 +632,9 @@ public class ControllerTest {
 
   @Test
   public void invalidCommandsInBetween() {
-    in = new StringReader("move east pick move east pick move north shoot max south 1 move south pick shoot west 1"
-                          + " move west shoot west 1 move west shoot west 1 move west move north");
+    in = new StringReader(
+        "move east pick move east pick move north shoot max south 1 move south pick shoot west 1"
+        + " move west shoot west 1 move west shoot west 1 move west move north");
     new CommandController(in).execute(model, out);
     assertTrue(out.toString().contains(
         "This move is not possible! Please choose from available moves only!"));

@@ -6,6 +6,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+/**
+ * Internal test for verifying the functioning of the Otyughs.
+ */
 public class InternalOtyughTest {
 
   private DungeonImpl dungeon;

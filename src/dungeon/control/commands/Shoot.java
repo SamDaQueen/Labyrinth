@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.util.Locale;
 
 /**
- * Class for executing the shoot command to attempt shooting an arrow in a given direction for a given distance.
+ * Class for executing the shoot command to attempt shooting an arrow in a given direction for a
+ * given distance.
  */
 public class Shoot implements Controller {
 
@@ -15,7 +16,7 @@ public class Shoot implements Controller {
   private Direction direction;
 
   /**
-   * Constructor for the Shoot command
+   * Constructor for the Shoot command.
    *
    * @param dir   the direction to shoot the arrow in
    * @param steps the distance to shoot the arrow till
