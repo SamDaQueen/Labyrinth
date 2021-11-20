@@ -3,8 +3,9 @@ package dungeon.model;
 import java.util.List;
 
 /**
- * The dungeon interface represents a maze with caves and tunnels. Caves can have treasures. A player can move around
- * the dungeon to find the exit as well as collect the treasure along the way.
+ * The dungeon interface represents a maze with caves and tunnels. Caves can have treasures. A
+ * player can move around the dungeon to find the exit as well as collect the treasure along the
+ * way.
  */
 public interface Dungeon {
 
@@ -23,8 +24,8 @@ public interface Dungeon {
   String printPlayerStatus();
 
   /**
-   * Print the details about the current location of the player such as possible moves and treasure in the current
-   * location.
+   * Print the details about the current location of the player such as possible moves and treasure
+   * in the current location.
    *
    * @return printable string
    */
@@ -77,7 +78,7 @@ public interface Dungeon {
   boolean hasReachedGoal();
 
   /**
-   * Check if the player is dead
+   * Check if the player is dead.
    *
    * @return true if player is dead
    */

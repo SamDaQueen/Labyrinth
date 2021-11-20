@@ -8,8 +8,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
- * Test class for validating the internal working of the package-private classes and methods that do not need to be
- * exposed to the user.
+ * Test class for validating the internal working of the package-private classes and methods that do
+ * not need to be exposed to the user.
  */
 public class InternalTest {
 
@@ -129,10 +129,13 @@ public class InternalTest {
   @Test
   public void printPlayerStatus() {
     dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
-    assertEquals("Player has collected with a score of 0 and has 3 arrows.\n", dungeonFixed.printPlayerStatus());
+    assertEquals("Player has collected with a score of 0 and has 3 arrows.\n",
+        dungeonFixed.printPlayerStatus());
     dungeonFixed.movePlayer(Direction.WEST);
     dungeonFixed.pickTreasure();
-    assertEquals("Player has collected DIAMOND(1), RUBY(1), SAPPHIRE(2), with a score of 90 and has 3 arrows.\n",
+    assertEquals(
+        "Player has collected DIAMOND(1), RUBY(1), SAPPHIRE(2), with a score "
+        + "of 90 and has 3 arrows.\n",
         dungeonFixed.printPlayerStatus());
   }
 
@@ -140,12 +143,14 @@ public class InternalTest {
   public void printCurrentLocation() {
     dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
     assertEquals(
-        "Player is at location: [4,3]: Cave Available directions: [NORTH, EAST, WEST] Treasures: []"
+        "Player is at location: [4,3]: Cave Available directions: [NORTH, EAST, WEST]"
+        + " Treasures: []"
         + " Arrows: 0 \n",
         dungeonFixed.printCurrentLocation());
     dungeonFixed.movePlayer(Direction.EAST);
     assertEquals(
-        "Player is at location: [4,4]: Cave Available directions: [WEST] Treasures: [RUBY, RUBY, SAPPHIRE]"
+        "Player is at location: [4,4]: Cave Available directions: [WEST] Treasures:"
+        + " [RUBY, RUBY, SAPPHIRE]"
         + " Arrows: 0 \n",
         dungeonFixed.printCurrentLocation());
   }
@@ -161,7 +166,8 @@ public class InternalTest {
     dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
     dungeonFixed.movePlayer(Direction.EAST);
     dungeonFixed.pickTreasure();
-    assertEquals("Player has collected RUBY(2), SAPPHIRE(1), with a score of 70 and has 3 arrows.\n",
+    assertEquals(
+        "Player has collected RUBY(2), SAPPHIRE(1), with a score of 70 and has 3 arrows.\n",
         dungeonFixed.printPlayerStatus());
   }
 

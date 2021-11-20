@@ -10,9 +10,10 @@ import java.util.Random;
 import java.util.Set;
 
 /**
- * Implementation of the Dungeon interface represented as the size, degree of interconnectivity, whether the dungeon is
- * wrapping or not, the percentage of caves with treasure, starting and ending positions, 2-D array of Caves as the
- * nodes of the dungeon, the player, and the edges between the caves.
+ * Implementation of the Dungeon interface represented as the size, degree of interconnectivity,
+ * whether the dungeon is wrapping or not, the percentage of caves with treasure, starting and
+ * ending positions, 2-D array of Caves as the nodes of the dungeon, the player, and the edges
+ * between the caves.
  */
 public class DungeonImpl implements Dungeon {
 
@@ -103,8 +104,7 @@ public class DungeonImpl implements Dungeon {
    * Alternate constructor to get fixed dungeon.
    */
   public DungeonImpl() {
-    Cave[][] caves = getFixedDungeon();
-    this.dungeon = caves;
+    this.dungeon = getFixedDungeon();
     this.size = new int[]{4, 4};
     this.wrapping = false;
     this.interconnectivity = 0;

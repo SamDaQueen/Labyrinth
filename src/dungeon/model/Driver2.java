@@ -16,7 +16,7 @@ public class Driver2 {
 
     System.out.println(
         "*****Welcome to the Labyrinth! Navigate this maze while collecting"
-            + " treasures and trying to find the exit!*****\n");
+        + " treasures and trying to find the exit!*****\n");
 
     System.out.println("Initializing dungeon and player...");
 
@@ -35,7 +35,7 @@ public class Driver2 {
       System.out.println(dungeon.printPlayerStatus());
       while (true) {
         System.out.println("Please select direction from: " + dungeon.getPossibleMoves()
-            + " Type -> (1.NORTH 2.EAST 3.SOUTH 4.WEST)");
+                           + " Type -> (1.NORTH 2.EAST 3.SOUTH 4.WEST)");
         int option = scanner.nextInt();
 
         switch (option) {
@@ -64,7 +64,7 @@ public class Driver2 {
       dungeon.movePlayer(direction);
     }
     System.out.println("\n\nHurray! You have found the exit of the dungeon and your status is: "
-        + dungeon.printPlayerStatus());
+                       + dungeon.printPlayerStatus());
 
 
   }

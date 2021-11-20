@@ -21,7 +21,7 @@ enum Treasure {
   }
 
   /**
-   * Get the value associated with the particular treasure
+   * Get the value associated with the particular treasure.
    *
    * @return the score
    */

@@ -10,8 +10,8 @@ import java.util.Locale;
 import java.util.Scanner;
 
 /**
- * A command controller class for running the game based on the commands given by the user and executing them
- * accordingly. Has Readable and Appendable for the input and output.
+ * A command controller class for running the game based on the commands given by the user and
+ * executing them accordingly. Has Readable and Appendable for the input and output.
  */
 public class CommandController implements Controller {
 

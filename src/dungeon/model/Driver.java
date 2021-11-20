@@ -23,7 +23,7 @@ public class Driver {
 
     System.out.println(
         "*****Welcome to the Labyrinth! Navigate this maze while collecting"
-            + " treasures and trying to find the exit!*****\n");
+        + " treasures and trying to find the exit!*****\n");
 
     System.out.println("Initializing dungeon and player...");
 
@@ -45,7 +45,7 @@ public class Driver {
         dungeon.movePlayer(direction);
       }
       System.out.println("\n\nHurray! You have found the exit of the dungeon and your status is: "
-          + dungeon.printPlayerStatus());
+                         + dungeon.printPlayerStatus());
 
       System.out.println(
           "\n\nPrinting the dungeon at the end for testing and checking purposes only!!");
