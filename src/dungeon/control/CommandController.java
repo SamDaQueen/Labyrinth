@@ -46,13 +46,7 @@ public class CommandController implements Controller {
         out.append("\n\n");
         out.append(model.printPlayerStatus());
         out.append(model.printCurrentLocation());
-        if (model.getSmell(new int[]{model.getPos()[0], model.getPos()[1]}) == 1) {
-          out.append("There is a faint stench... An Otyugh must be close!!\n");
-        } else if (model.getSmell(new int[]{model.getPos()[0], model.getPos()[1]}) == 2) {
-          out.append(
-              "There is a strong stench... An Otyugh must be in the next cell!! "
-              + "Or perhaps there are more than one Otyughs nearby hungry for your flesh!!\n");
-        }
+        out.append(model.printSmell());
         out.append(
             "What do you wish to do? move [direction]/ pick/ shoot [direction] [distance]/ quit: ");
         if (!scan.hasNext()) {

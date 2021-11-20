@@ -15,7 +15,6 @@ public enum Direction {
    * @param d the old direction
    * @return the inverted direction
    */
-
   Direction invert(Direction d) {
     switch (d) {
       case NORTH:

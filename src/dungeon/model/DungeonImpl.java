@@ -77,12 +77,6 @@ public class DungeonImpl implements Dungeon {
 
     this.player = new Player(start[0], start[1]);
 
-//    for (int row = 0; row < size[0]; row++) {
-//      for (int col = 0; col < size[1]; col++) {
-//        System.out.println(dungeon[row][col]);
-//      }
-//    }
-
   }
 
   /**
@@ -121,11 +115,6 @@ public class DungeonImpl implements Dungeon {
     this.edges = new HashSet<>();
     this.difficulty = 5;
 
-//    for (int row = 0; row < size[0]; row++) {
-//      for (int col = 0; col < size[1]; col++) {
-//        System.out.println(dungeon[row][col]);
-//      }
-//    }
   }
 
   private void setTreasureInCaves() {
@@ -379,25 +368,6 @@ public class DungeonImpl implements Dungeon {
     return new int[]{row, col};
   }
 
-  public int getSmell(int[] pos) {
-    int smell = 0;
-    for (Direction direction : dungeon[pos[0]][pos[1]].getOpenings()) {
-      int[] next = getNextCave(pos, direction);
-      if (dungeon[next[0]][next[1]].hasOtyugh()) {
-        smell += 2;
-      }
-      for (Direction innerDirection : dungeon[next[0]][next[1]].getOpenings()) {
-        int[] innerNext = getNextCave(next, innerDirection);
-        if (!(innerNext[0] == pos[0] && innerNext[1] == pos[1])) {
-          if (dungeon[innerNext[0]][innerNext[1]].hasOtyugh()) {
-            smell++;
-          }
-        }
-      }
-    }
-    return Math.min(smell, 2);
-  }
-
   private int[] getNextCave(int[] pos, Direction direction) {
     if (!dungeon[pos[0]][pos[1]].getOpenings().contains(direction)) {
       throw new IllegalStateException("That is a wall! Cannot move through walls!");
@@ -500,6 +470,19 @@ public class DungeonImpl implements Dungeon {
     return new ArrayList<>(
         dungeon[player.getCurrentPosition()[0]][player.getCurrentPosition()[1]].getOpenings());
   }
+
+  @Override
+  public String printSmell() {
+    if (getSmell(player.getCurrentPosition()) == 1) {
+      return "There is a faint stench... An Otyugh must be close!!\n";
+    } else if (getSmell(player.getCurrentPosition()) == 2) {
+      return
+          "There is a strong stench... An Otyugh must be in the next cell!! "
+          + "Or perhaps there are more than one Otyughs nearby hungry for your flesh!!\n";
+    }
+    return "";
+  }
+
 
   @Override
   public int[] getPos() {
@@ -672,6 +655,31 @@ public class DungeonImpl implements Dungeon {
   }
 
   /**
+   * Package-private method for getting the smell at the given cave position.
+   *
+   * @param pos the position
+   * @return 0: no smell, 1: faint smell: 2: strong smell
+   */
+  int getSmell(int[] pos) {
+    int smell = 0;
+    for (Direction direction : dungeon[pos[0]][pos[1]].getOpenings()) {
+      int[] next = getNextCave(pos, direction);
+      if (dungeon[next[0]][next[1]].hasOtyugh()) {
+        smell += 2;
+      }
+      for (Direction innerDirection : dungeon[next[0]][next[1]].getOpenings()) {
+        int[] innerNext = getNextCave(next, innerDirection);
+        if (!(innerNext[0] == pos[0] && innerNext[1] == pos[1])) {
+          if (dungeon[innerNext[0]][innerNext[1]].hasOtyugh()) {
+            smell++;
+          }
+        }
+      }
+    }
+    return Math.min(smell, 2);
+  }
+
+  /**
    * Package-private method for asserting the ending location.
    *
    * @return the end as int array
@@ -745,6 +753,11 @@ public class DungeonImpl implements Dungeon {
     return new Player(player);
   }
 
+  /**
+   * Generate fake dungeon for empty constructor used for testing.
+   *
+   * @return the dungeon
+   */
   private Cave[][] getFixedDungeon() {
     Cave[][] caves = new Cave[4][4];
     for (int row = 0; row < 4; row++) {

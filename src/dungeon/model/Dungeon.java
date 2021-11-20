@@ -3,9 +3,8 @@ package dungeon.model;
 import java.util.List;
 
 /**
- * The dungeon interface represents a maze with caves and tunnels. Caves can have treasures. A
- * player can move around the dungeon to find the exit as well as collect the treasure along the
- * way.
+ * The dungeon interface represents a maze with caves and tunnels. Caves can have treasures. A player can move around
+ * the dungeon to find the exit as well as collect the treasure along the way.
  */
 public interface Dungeon {
 
@@ -24,8 +23,8 @@ public interface Dungeon {
   String printPlayerStatus();
 
   /**
-   * Print the details about the current location of the player such as possible moves and treasure
-   * in the current location.
+   * Print the details about the current location of the player such as possible moves and treasure in the current
+   * location.
    *
    * @return printable string
    */
@@ -95,10 +94,9 @@ public interface Dungeon {
   /**
    * Get the smell in the given cave.
    *
-   * @param pos cave position
-   * @return 0 = no smell, 1 = faint smell, 2 = strong smell
+   * @return Printable string for the smell
    */
-  int getSmell(int[] pos);
+  String printSmell();
 
   /**
    * Shoot the arrow in the given direction for the given distance.

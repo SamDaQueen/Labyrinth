@@ -79,7 +79,8 @@ public class MockDungeon implements Dungeon {
   }
 
   @Override
-  public int getSmell(int[] pos) {
-    return 0;
+  public String printSmell() {
+    return null;
   }
+
 }
