@@ -7,8 +7,7 @@ import java.io.IOException;
 import java.util.Locale;
 
 /**
- * Class for executing the shoot command to attempt shooting an arrow in a given direction for a
- * given distance.
+ * Class for executing the shoot command to attempt shooting an arrow in a given direction for a given distance.
  */
 public class Shoot implements Controller {
 
@@ -23,22 +22,25 @@ public class Shoot implements Controller {
    */
   public Shoot(String dir, int steps) {
     switch (dir.toLowerCase(Locale.ROOT)) {
+      case "n":
       case "north":
         direction = Direction.NORTH;
         break;
+      case "s":
       case "south":
         direction = Direction.SOUTH;
         break;
+      case "w":
       case "west":
         direction = Direction.WEST;
         break;
+      case "e":
       case "east":
         direction = Direction.EAST;
         break;
       default:
         break;
     }
-
     this.steps = steps;
   }
 

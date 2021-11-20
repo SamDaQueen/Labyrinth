@@ -21,15 +21,19 @@ public class Move implements Controller {
    */
   public Move(String d) {
     switch (d.toLowerCase(Locale.ROOT)) {
+      case "n":
       case "north":
         direction = Direction.NORTH;
         break;
+      case "s":
       case "south":
         direction = Direction.SOUTH;
         break;
+      case "w":
       case "west":
         direction = Direction.WEST;
         break;
+      case "e":
       case "east":
         direction = Direction.EAST;
         break;

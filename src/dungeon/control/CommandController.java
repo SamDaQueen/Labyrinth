@@ -6,6 +6,7 @@ import dungeon.control.commands.Shoot;
 import dungeon.model.Dungeon;
 import java.io.IOException;
 import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -59,19 +60,22 @@ public class CommandController implements Controller {
         }
         try {
           String in = scan.next();
-          switch (in) {
+          switch (in.toLowerCase(Locale.ROOT)) {
             case "q":
             case "quit":
               out.append("You have given up and chose to quit. Good bye!!");
               return;
+            case "m":
             case "move":
               cmd = new Move(scan.next());
               out.append("You are brave and attempt to advance in the dungeon... ");
               break;
+            case "p":
             case "pick":
               cmd = new Pick();
               out.append("This will add a fine addition to your collection... ");
               break;
+            case "s":
             case "shoot":
               cmd = new Shoot(scan.next(), scan.nextInt());
               out.append("You have attempted to slay an Otyugh... ");
