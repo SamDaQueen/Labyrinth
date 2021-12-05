@@ -579,12 +579,12 @@ public class DungeonImpl implements Dungeon {
 
   @Override
   public int[] getSize() {
-    return size;
+    return new int[]{size[0], size[1]};
   }
 
   @Override
   public int[] getStart() {
-    return start;
+    return new int[]{start[0], start[1]};
   }
 
   @Override

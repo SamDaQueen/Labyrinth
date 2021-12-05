@@ -60,6 +60,9 @@ class Player {
    * @param col the new col
    */
   void setCurrentPosition(int row, int col) {
+    if (row < 0 || col < 0) {
+      throw new IllegalArgumentException("Row and col cannot be negative!");
+    }
     this.currentPosition[0] = row;
     this.currentPosition[1] = col;
   }
@@ -70,6 +73,9 @@ class Player {
    * @param newTreasures list of the new treasures.
    */
   void updateCollectedTreasure(List<Treasure> newTreasures) {
+    if (newTreasures == null) {
+      throw new IllegalArgumentException("Cannot update null treasures!");
+    }
     this.collectedTreasure.addAll(newTreasures);
     for (Treasure t : newTreasures) {
       score += t.getValue();

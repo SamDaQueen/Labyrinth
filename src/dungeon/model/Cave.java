@@ -32,7 +32,7 @@ class Cave {
   /**
    * Get the list of treasures present in the cave.
    *
-   * @return
+   * @return the treasures
    */
   List<Treasure> getTreasure() {
     return treasures;
@@ -58,6 +58,9 @@ class Cave {
    * @throws IllegalStateException if the current location is a tunnel
    */
   void setTreasures(Treasure treasure) {
+    if (treasure == null) {
+      throw new IllegalArgumentException("Cannot update null treasures!");
+    }
     if (isTunnel()) {
       throw new IllegalStateException("Treasure cannot be added to tunnels!");
     }
@@ -74,7 +77,7 @@ class Cave {
   /**
    * Get a set of the available directions from the current cave.
    *
-   * @return
+   * @return the directions
    */
   Set<Direction> getOpenings() {
     return directions;
@@ -86,6 +89,9 @@ class Cave {
    * @param directions the list of directions
    */
   void setOpenings(Set<Direction> directions) {
+    if (directions == null) {
+      throw new IllegalArgumentException("Cannot update null directions!");
+    }
     this.directions.addAll(directions);
   }
 
