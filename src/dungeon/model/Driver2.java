@@ -20,7 +20,7 @@ public class Driver2 {
 
     System.out.println("Initializing dungeon and player...");
 
-    Dungeon dungeon = new DungeonImpl(new int[]{5, 5}, 3, false, 20, 1);
+    Dungeon dungeon = new DungeonImpl(new int[]{4, 4}, 3, false, 20, 1);
 
     System.out.println(
         "\n\nPrinting the dungeon for testing and checking purposes only!!");
@@ -30,9 +30,8 @@ public class Driver2 {
     Direction direction = Direction.NORTH;
 
     while (!dungeon.hasReachedGoal()) {
-      System.out.println(dungeon.printCurrentLocation());
-      dungeon.pickTreasure();
-      System.out.println(dungeon.printPlayerStatus());
+      System.out.println(dungeon);
+
       while (true) {
         System.out.println("Please select direction from: " + dungeon.getPossibleMoves()
                            + " Type -> (1.NORTH 2.EAST 3.SOUTH 4.WEST)");
@@ -62,6 +61,9 @@ public class Driver2 {
       }
       System.out.println("You have chosen to move " + direction);
       dungeon.movePlayer(direction);
+      System.out.println(dungeon.printCurrentLocation());
+      dungeon.pickTreasure();
+      System.out.println(dungeon.printPlayerStatus());
     }
     System.out.println("\n\nHurray! You have found the exit of the dungeon and your status is: "
                        + dungeon.printPlayerStatus());

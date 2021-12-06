@@ -12,8 +12,8 @@ import java.util.Set;
  */
 class Player {
 
-  private final int[] currentPosition;
   private final List<Treasure> collectedTreasure;
+  private int[] currentPosition;
   private int score;
   private int arrows;
   private boolean alive;
@@ -25,16 +25,19 @@ class Player {
    * @param col the current column where the player is
    */
   Player(int row, int col) {
-    this.currentPosition = new int[2];
-    this.currentPosition[0] = row;
-    this.currentPosition[1] = col;
+    this.currentPosition = new int[]{row, col};
     this.collectedTreasure = new ArrayList<>();
     this.score = 0;
     this.arrows = 3;
     this.alive = true;
   }
 
-  public Player(Player player) {
+  /**
+   * Copy constructor for the player
+   *
+   * @param player the player to be copied
+   */
+  Player(Player player) {
     this.currentPosition = new int[2];
     this.currentPosition[0] = player.getCurrentPosition()[0];
     this.currentPosition[1] = player.getCurrentPosition()[1];
@@ -63,8 +66,7 @@ class Player {
     if (row < 0 || col < 0) {
       throw new IllegalArgumentException("Row and col cannot be negative!");
     }
-    this.currentPosition[0] = row;
-    this.currentPosition[1] = col;
+    currentPosition = new int[]{row, col};
   }
 
   /**

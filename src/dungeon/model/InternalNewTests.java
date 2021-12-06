@@ -18,6 +18,7 @@ public class InternalNewTests {
   @Before
   public void setUp() {
     fixedDungeon = new DungeonImpl();
+    System.out.println(fixedDungeon);
   }
 
   @Test
@@ -221,6 +222,45 @@ public class InternalNewTests {
     fixedDungeon.movePlayer(Direction.SOUTH);
     assertEquals(0, fixedDungeon.getPlayer().getArrows());
     assertEquals(0, fixedDungeon.getPlayer().getCollectedTreasure().size());
+  }
+
+  @Test
+  public void singleThief() {
+    for (int i = 0; i < 100; i++) {
+      boolean thief = false;
+
+      dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 10, 1);
+      for (int row = 0; row < 5; row++) {
+        for (int col = 0; col < 5; col++) {
+          dungeon.getPlayer().setCurrentPosition(row, col);
+          if (dungeon.hasThief()) {
+            thief = true;
+            break;
+          }
+        }
+        if (thief) {
+          break;
+        }
+      }
+      assertTrue(thief);
+    }
+  }
+
+  @Test
+  public void thiefSteals() {
+    fixedDungeon.movePlayer(Direction.EAST);
+    fixedDungeon.movePlayer(Direction.EAST);
+    fixedDungeon.movePlayer(Direction.SOUTH);
+    fixedDungeon.pickArrows();
+    fixedDungeon.shoot(Direction.WEST, 1);
+    fixedDungeon.shoot(Direction.WEST, 1);
+    fixedDungeon.movePlayer(Direction.WEST);
+    fixedDungeon.movePlayer(Direction.WEST);
+    if (fixedDungeon.hasThief()) {
+      assertTrue(fixedDungeon.printCurrentLocation().contains("Uh-oh!"));
+    } else {
+      assertFalse(fixedDungeon.printCurrentLocation().contains("Uh-oh!"));
+    }
   }
 
 }

@@ -32,6 +32,11 @@ public class MockDungeon implements Dungeon {
   }
 
   @Override
+  public boolean hasThief() {
+    return false;
+  }
+
+  @Override
   public String printPlayerStatus() {
     return null;
   }

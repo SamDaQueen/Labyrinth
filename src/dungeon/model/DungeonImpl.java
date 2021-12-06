@@ -27,6 +27,8 @@ public class DungeonImpl implements Dungeon {
   private final Cave[][] dungeon;
   private final Player player;
   private final Set<Edge> edges;
+  private final Thief thief;
+  private final Random rand;
 
   /**
    * Constructs a new Dungeon object.
@@ -54,6 +56,7 @@ public class DungeonImpl implements Dungeon {
     if (difficulty < 1) {
       throw new IllegalArgumentException("There must be at least one Otyugh!");
     }
+    this.rand = new Random();
     this.size = size;
     this.interconnectivity = interconnectivity;
     this.wrapping = wrapping;
@@ -77,6 +80,7 @@ public class DungeonImpl implements Dungeon {
     setMonstersInCaves();
     setArrows();
 
+    this.thief = addThief();
     this.player = new Player(start[0], start[1]);
 
   }
@@ -99,6 +103,8 @@ public class DungeonImpl implements Dungeon {
     this.player = new Player(this.start[0], this.start[1]);
     this.edges = new HashSet<>();
     this.difficulty = 1;
+    this.thief = new Thief(1, 1);
+    this.rand = new Random();
   }
 
   /**
@@ -115,13 +121,14 @@ public class DungeonImpl implements Dungeon {
     this.player = new Player(0, 1);
     this.edges = new HashSet<>();
     this.difficulty = 5;
+    this.thief = new Thief(1, 1);
+    this.rand = new Random();
 
   }
 
   private void setTreasureInCaves() {
     Set<Cave> withTreasure = new HashSet<>();
     List<Cave> caves = getCaves();
-    Random rand = new Random();
 
     while (withTreasure.size() <= perOfCavesWTreasure * getNumberOfCaves() / 100) {
       if (caves.size() > 0) {
@@ -155,7 +162,6 @@ public class DungeonImpl implements Dungeon {
   private void setMonstersInCaves() {
     Set<Cave> withMonster = new HashSet<>();
     List<Cave> caves = getCaves();
-    Random rand = new Random();
 
     // add monster at the end
     dungeon[end[0]][end[1]].addOtyugh();
@@ -185,7 +191,6 @@ public class DungeonImpl implements Dungeon {
 
   private void setPitInDungeon() {
     List<Cave> caves = getCaves();
-    Random rand = new Random();
     // remove start and end from possible pit caves
     caves.remove(dungeon[end[0]][end[1]]);
     caves.remove(dungeon[start[0]][start[1]]);
@@ -194,7 +199,6 @@ public class DungeonImpl implements Dungeon {
 
   private void setArrows() {
     Set<Cave> withArrows = new HashSet<>();
-    Random rand = new Random();
 
     while (withArrows.size() <= perOfCavesWTreasure * size[0] * size[1] / 100) {
       int row = rand.nextInt(size[0]);
@@ -208,6 +212,17 @@ public class DungeonImpl implements Dungeon {
         withArrows.add(dungeon[row][col]);
       }
     }
+  }
+
+  private Thief addThief() {
+    int row = rand.nextInt(size[0]);
+    int col = rand.nextInt(size[1]);
+
+    while (row == start[0] && col == start[1] || row == end[0] && col == end[1]) {
+      row = rand.nextInt(size[0]);
+      col = rand.nextInt(size[1]);
+    }
+    return new Thief(row, col);
   }
 
   private List<Cave> getCaves() {
@@ -334,7 +349,6 @@ public class DungeonImpl implements Dungeon {
       }
     }
 
-    Random rand = new Random();
     Set<Set<Cave>> newSetOfSets = new HashSet<>(sets);
     List<Edge> leftovers = new ArrayList<>();
 
@@ -377,7 +391,6 @@ public class DungeonImpl implements Dungeon {
   }
 
   private int[] pickCave() {
-    Random rand = new Random();
     int row = rand.nextInt(size[0]);
     int col = rand.nextInt(size[1]);
     while (dungeon[row][col].isTunnel()) {
@@ -428,7 +441,6 @@ public class DungeonImpl implements Dungeon {
       if (dungeon[current[0]][current[1]].getOtyugh().getHealth() == 2) {
         player.kill();
       } else if (dungeon[current[0]][current[1]].getOtyugh().getHealth() == 1) {
-        Random rand = new Random();
         int random = rand.nextInt(2);
         if (random == 0) {
           player.kill();
@@ -497,6 +509,11 @@ public class DungeonImpl implements Dungeon {
   }
 
   @Override
+  public boolean hasThief() {
+    return Arrays.equals(player.getCurrentPosition(), thief.getCurrentPosition());
+  }
+
+  @Override
   public List<Direction> getPossibleMoves() {
     return new ArrayList<>(
         dungeon[player.getCurrentPosition()[0]][player.getCurrentPosition()[1]].getOpenings());
@@ -518,46 +535,27 @@ public class DungeonImpl implements Dungeon {
     if (!dungeon[current[0]][current[1]].getOpenings().contains(d)) {
       throw new IllegalStateException("Move not possible!");
     }
-    switch (d) {
-      case NORTH:
-        if (current[0] == 0) {
-          player.setCurrentPosition(size[0] - 1, current[1]);
-          break;
-        }
-        player.setCurrentPosition(current[0] - 1, current[1]);
-        break;
 
-      case EAST:
-        if (current[1] == size[1] - 1) {
-          player.setCurrentPosition(current[0], 0);
-          break;
-        }
-        player.setCurrentPosition(current[0], current[1] + 1);
-        break;
+    int[] next = getNextCave(current, d);
+    player.setCurrentPosition(next[0], next[1]);
 
-      case WEST:
-        if (current[1] == 0) {
-          player.setCurrentPosition(current[0], size[1] - 1);
-          break;
-        }
-        player.setCurrentPosition(current[0], current[1] - 1);
-        break;
-
-      case SOUTH:
-        if (current[0] == size[0] - 1) {
-          player.setCurrentPosition(0, current[1]);
-          break;
-        }
-        player.setCurrentPosition(current[0] + 1, current[1]);
-        break;
-
-      default:
-        break;
+    // move the thief with 50% probability
+    if (rand.nextInt(2) == 1) {
+      moveThief();
     }
 
     updatePlayerHealth();
     updatePlayerTreasure();
 
+  }
+
+  private void moveThief() {
+    int[] current = thief.getCurrentPosition();
+    Cave thiefCave = dungeon[current[0]][current[1]];
+    Direction d = new ArrayList<>(thiefCave.getOpenings()).get(
+        rand.nextInt(thiefCave.getOpenings().size()));
+    int[] next = getNextCave(current, d);
+    thief.setCurrentPosition(next[0], next[1]);
   }
 
   private void updatePlayerTreasure() {
@@ -566,7 +564,9 @@ public class DungeonImpl implements Dungeon {
       player.clearTreasure();
       player.clearArrows();
     }
-    // TODO: add thief code
+    if (hasThief()) {
+      player.clearTreasure();
+    }
   }
 
   @Override
@@ -594,6 +594,11 @@ public class DungeonImpl implements Dungeon {
       builder.append(
           "You feel a cool breeze hitting your face... There must be a pit in any of the"
           + " neighboring caves... Move carefully...\n");
+    }
+
+    if (hasThief()) {
+      builder.append(
+          "Uh-oh! The thief of the dungeon has found you and will take all of your treasures!");
     }
 
     return builder.toString();
@@ -676,6 +681,10 @@ public class DungeonImpl implements Dungeon {
           builder.append("X");
         } else if (dungeon[row][col].hasOtyugh()) {
           builder.append("M");
+        } else if (dungeon[row][col].hasPit()) {
+          builder.append("H");
+        } else if (thief.getCurrentPosition()[0] == row && thief.getCurrentPosition()[1] == col) {
+          builder.append("T");
         } else {
           builder.append("O");
         }
@@ -791,12 +800,12 @@ public class DungeonImpl implements Dungeon {
   }
 
   /**
-   * Package-private method for getting a copy of the player.
+   * Package-private method for getting the player.
    *
-   * @return copy of player
+   * @return the player
    */
   Player getPlayer() {
-    return new Player(player);
+    return player;
   }
 
   /**

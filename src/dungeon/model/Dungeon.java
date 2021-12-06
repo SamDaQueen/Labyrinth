@@ -106,4 +106,6 @@ public interface Dungeon {
    * @return true if breeze present
    */
   boolean hasBreeze();
+
+  boolean hasThief();
 }
