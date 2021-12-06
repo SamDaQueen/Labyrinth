@@ -77,7 +77,7 @@ public class DungeonImpl implements Dungeon {
 
     setPitInDungeon();
     setTreasureInCaves();
-    setMonstersInCaves();
+    setOtyughsInCaves();
     setArrows();
 
     this.thief = addThief();
@@ -159,28 +159,28 @@ public class DungeonImpl implements Dungeon {
     }
   }
 
-  private void setMonstersInCaves() {
-    Set<Cave> withMonster = new HashSet<>();
+  private void setOtyughsInCaves() {
+    Set<Cave> withOtyugh = new HashSet<>();
     List<Cave> caves = getCaves();
 
-    // add monster at the end
+    // add otyugh at the end
     dungeon[end[0]][end[1]].addOtyugh();
     caves.remove(dungeon[end[0]][end[1]]);
-    withMonster.add(dungeon[end[0]][end[1]]);
+    withOtyugh.add(dungeon[end[0]][end[1]]);
 
-    // remove start from possible monster caves
+    // remove start from possible otyugh caves
     caves.remove(dungeon[start[0]][start[1]]);
 
-    while (withMonster.size() < Math.min(difficulty, getNumberOfCaves() - 2)) {
+    while (withOtyugh.size() < Math.min(difficulty, getNumberOfCaves() - 2)) {
       if (caves.size() > 0) {
         int choose = rand.nextInt(caves.size());
         Cave cave = caves.get(choose);
         if (cave.hasPit()) {
           continue;
         }
-        if (!withMonster.contains(cave)) {
+        if (!withOtyugh.contains(cave)) {
           cave.addOtyugh();
-          withMonster.add(cave);
+          withOtyugh.add(cave);
           caves.remove(cave);
         }
       } else {
