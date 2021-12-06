@@ -27,6 +27,11 @@ public class MockDungeon implements Dungeon {
   }
 
   @Override
+  public boolean hasBreeze() {
+    return false;
+  }
+
+  @Override
   public String printPlayerStatus() {
     return null;
   }
@@ -78,11 +83,6 @@ public class MockDungeon implements Dungeon {
 
   @Override
   public List<Direction> getPossibleMoves() {
-    return null;
-  }
-
-  @Override
-  public String printSmell() {
     return null;
   }
 

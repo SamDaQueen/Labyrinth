@@ -10,7 +10,9 @@ import java.util.Set;
  * Package-private class to represent each node of the dungeon. A node is a tunnel if it has exactly
  * two paths connected to it, otherwise it is a cave. A cave may contain treasure. Each tunnel and
  * cave has a list of all the treasures it contains, and a set of the directions connecting that
- * cave to the adjacent caves.
+ * cave to the adjacent caves. Caves may also contain a monster called an Otyugh that can eat the
+ * player. The Otyugh can be killed by using two arrows shot by the player. The Cave could also have
+ * a pit that the player can fall into. A pit will have a breeze in the adjacent caves.
  */
 class Cave {
 
@@ -18,6 +20,7 @@ class Cave {
   private final Set<Direction> directions;
   private Otyugh otyugh;
   private int arrows;
+  private boolean pit;
 
   /**
    * Constructor for creating a new instance of the Cave class.
@@ -27,6 +30,7 @@ class Cave {
     this.treasures = new ArrayList<>();
     otyugh = null;
     arrows = 0;
+    this.pit = false;
   }
 
   /**
@@ -45,6 +49,9 @@ class Cave {
    * @throws IllegalStateException if the current location is a tunnel
    */
   void setTreasures(List<Treasure> treasures) throws IllegalStateException {
+    if (pit && treasures.size() > 0) {
+      throw new IllegalStateException("Cannot add treasures to cave with pit!");
+    }
     if (isTunnel()) {
       throw new IllegalStateException("Treasure cannot be added to tunnels!");
     }
@@ -57,7 +64,10 @@ class Cave {
    * @param treasure treasure to add
    * @throws IllegalStateException if the current location is a tunnel
    */
-  void setTreasures(Treasure treasure) {
+  void setTreasures(Treasure treasure) throws IllegalStateException {
+    if (pit) {
+      throw new IllegalStateException("Cannot add treasure to cave with pit!");
+    }
     if (treasure == null) {
       throw new IllegalArgumentException("Cannot update null treasures!");
     }
@@ -87,8 +97,9 @@ class Cave {
    * Add the list of directions to the openings in the cave.
    *
    * @param directions the list of directions
+   * @throws IllegalStateException if direction is null
    */
-  void setOpenings(Set<Direction> directions) {
+  void setOpenings(Set<Direction> directions) throws IllegalStateException {
     if (directions == null) {
       throw new IllegalArgumentException("Cannot update null directions!");
     }
@@ -127,8 +138,13 @@ class Cave {
 
   /**
    * Add an Otyugh to the cave.
+   *
+   * @throws IllegalStateException if cave has a pit
    */
-  void addOtyugh() {
+  void addOtyugh() throws IllegalStateException {
+    if (pit) {
+      throw new IllegalStateException("Cannot add otyugh to cave with pit!");
+    }
     this.otyugh = new Otyugh();
   }
 
@@ -173,10 +189,33 @@ class Cave {
    * Add arrows to the cave.
    *
    * @param arrows the number of arrows to add
+   * @throws IllegalStateException if cave is pit
    */
-  void setArrows(int arrows) {
+  void setArrows(int arrows) throws IllegalStateException {
+    if (pit && arrows > 0) {
+      throw new IllegalStateException("Cannot add arrows to cave with pit!");
+    }
     this.arrows = arrows;
   }
+
+  /**
+   * Check whether the cave has a pit.
+   *
+   * @return true if pit exists
+   */
+  boolean hasPit() {
+    return pit;
+  }
+
+  /**
+   * Set the state of pit in the cave.
+   *
+   * @param pit true if pit exists
+   */
+  void setPit(boolean pit) {
+    this.pit = pit;
+  }
+
 
   @Override
   public String toString() {
@@ -193,6 +232,13 @@ class Cave {
       builder.append(" Treasures: ").append(treasures);
     }
     builder.append(" Arrows: ").append(arrows).append(" ");
+
+    if (pit) {
+      builder.append(
+          "\nOh no! You have fallen into a deep pit in the dungeon!\nYou climb out of the pit... "
+          + "But while doing so you lose all the treasures and arrows that you have collected so"
+          + " far! Sed life :(");
+    }
 
     return builder.toString();
   }

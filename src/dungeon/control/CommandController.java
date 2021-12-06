@@ -46,7 +46,6 @@ public class CommandController implements Controller {
         out.append("\n\n");
         out.append(model.printPlayerStatus());
         out.append(model.printCurrentLocation());
-        out.append(model.printSmell());
         out.append(
             "What do you wish to do? move [direction]/ pick/ shoot [direction] [distance]/ quit: ");
         if (!scan.hasNext()) {

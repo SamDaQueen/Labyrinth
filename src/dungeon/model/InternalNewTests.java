@@ -64,14 +64,14 @@ public class InternalNewTests {
 
   @Test
   public void noSmell() {
-    assertEquals(0, fixedDungeon.getSmell(fixedDungeon.getPos()));
+    assertEquals(0, fixedDungeon.getSmell());
   }
 
   @Test
   public void faintSmell() {
     fixedDungeon.movePlayer(Direction.EAST);
     fixedDungeon.movePlayer(Direction.EAST);
-    assertEquals(1, fixedDungeon.getSmell(fixedDungeon.getPos()));
+    assertEquals(1, fixedDungeon.getSmell());
   }
 
   @Test
@@ -79,7 +79,7 @@ public class InternalNewTests {
     fixedDungeon.movePlayer(Direction.EAST);
     fixedDungeon.movePlayer(Direction.EAST);
     fixedDungeon.movePlayer(Direction.SOUTH);
-    assertEquals(2, fixedDungeon.getSmell(fixedDungeon.getPos()));
+    assertEquals(2, fixedDungeon.getSmell());
   }
 
   @Test
@@ -92,7 +92,7 @@ public class InternalNewTests {
     fixedDungeon.movePlayer(Direction.SOUTH);
     fixedDungeon.movePlayer(Direction.WEST);
     fixedDungeon.movePlayer(Direction.SOUTH);
-    assertEquals(2, fixedDungeon.getSmell(fixedDungeon.getPos()));
+    assertEquals(2, fixedDungeon.getSmell());
   }
 
   @Test
@@ -186,6 +186,41 @@ public class InternalNewTests {
       }
     }
     assertTrue(playerDied && playerEscaped);
+  }
+
+  @Test
+  public void testBreeze() {
+    fixedDungeon.movePlayer(Direction.EAST);
+    fixedDungeon.movePlayer(Direction.EAST);
+    fixedDungeon.movePlayer(Direction.SOUTH);
+    fixedDungeon.shoot(Direction.WEST, 1);
+    fixedDungeon.shoot(Direction.WEST, 1);
+    assertFalse(fixedDungeon.hasBreeze());
+    fixedDungeon.movePlayer(Direction.WEST);
+    assertTrue(fixedDungeon.hasBreeze());
+    fixedDungeon.movePlayer(Direction.SOUTH);
+    assertFalse(fixedDungeon.hasBreeze());
+    fixedDungeon.movePlayer(Direction.WEST);
+    assertTrue(fixedDungeon.hasBreeze());
+    fixedDungeon.movePlayer(Direction.EAST);
+    fixedDungeon.movePlayer(Direction.EAST);
+    assertTrue(fixedDungeon.hasBreeze());
+    fixedDungeon.movePlayer(Direction.WEST);
+    fixedDungeon.movePlayer(Direction.SOUTH);
+    assertTrue(fixedDungeon.hasBreeze());
+  }
+
+  @Test
+  public void testPitFall() {
+    fixedDungeon.movePlayer(Direction.EAST);
+    fixedDungeon.movePlayer(Direction.EAST);
+    fixedDungeon.movePlayer(Direction.SOUTH);
+    fixedDungeon.shoot(Direction.WEST, 1);
+    fixedDungeon.shoot(Direction.WEST, 1);
+    fixedDungeon.movePlayer(Direction.WEST);
+    fixedDungeon.movePlayer(Direction.SOUTH);
+    assertEquals(0, fixedDungeon.getPlayer().getArrows());
+    assertEquals(0, fixedDungeon.getPlayer().getCollectedTreasure().size());
   }
 
 }

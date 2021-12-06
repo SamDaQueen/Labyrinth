@@ -91,14 +91,6 @@ public interface Dungeon {
    */
   List<Direction> getPossibleMoves();
 
-
-  /**
-   * Get the smell in the given cave.
-   *
-   * @return Printable string for the smell
-   */
-  String printSmell();
-
   /**
    * Shoot the arrow in the given direction for the given distance.
    *
@@ -107,4 +99,11 @@ public interface Dungeon {
    * @return whether an Otyugh was hit, 0 if no hit, 1 if first hit, 2 if second hit
    */
   int shoot(Direction direction, int steps);
+
+  /**
+   * Know if the current location has a breeze, indicating a pit in any of the neighboring caves.
+   *
+   * @return true if breeze present
+   */
+  boolean hasBreeze();
 }

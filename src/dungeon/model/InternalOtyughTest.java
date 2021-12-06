@@ -51,7 +51,7 @@ public class InternalOtyughTest {
   public void maxOtyugh() {
     dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 20, 50);
     dungeon.getNumberOfCaves();
-    assertEquals(countOtyughs(dungeon), dungeon.getNumberOfCaves() - 1);
+    assertEquals(countOtyughs(dungeon), dungeon.getNumberOfCaves() - 2);
   }
 
   @Test

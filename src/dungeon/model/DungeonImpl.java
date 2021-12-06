@@ -72,6 +72,7 @@ public class DungeonImpl implements Dungeon {
     this.start = start;
     this.end = end;
 
+    setPitInDungeon();
     setTreasureInCaves();
     setMonstersInCaves();
     setArrows();
@@ -126,6 +127,9 @@ public class DungeonImpl implements Dungeon {
       if (caves.size() > 0) {
         int choose = rand.nextInt(caves.size());
         Cave cave = caves.get(choose);
+        if (cave.hasPit()) {
+          continue;
+        }
         if (!withTreasure.contains(cave)) {
           List<Treasure> treasures = new ArrayList<>();
           treasures.add(Treasure.DIAMOND);
@@ -161,10 +165,13 @@ public class DungeonImpl implements Dungeon {
     // remove start from possible monster caves
     caves.remove(dungeon[start[0]][start[1]]);
 
-    while (withMonster.size() < Math.min(difficulty, getNumberOfCaves() - 1)) {
+    while (withMonster.size() < Math.min(difficulty, getNumberOfCaves() - 2)) {
       if (caves.size() > 0) {
         int choose = rand.nextInt(caves.size());
         Cave cave = caves.get(choose);
+        if (cave.hasPit()) {
+          continue;
+        }
         if (!withMonster.contains(cave)) {
           cave.addOtyugh();
           withMonster.add(cave);
@@ -176,6 +183,15 @@ public class DungeonImpl implements Dungeon {
     }
   }
 
+  private void setPitInDungeon() {
+    List<Cave> caves = getCaves();
+    Random rand = new Random();
+    // remove start and end from possible pit caves
+    caves.remove(dungeon[end[0]][end[1]]);
+    caves.remove(dungeon[start[0]][start[1]]);
+    caves.get(rand.nextInt(caves.size())).setPit(true);
+  }
+
   private void setArrows() {
     Set<Cave> withArrows = new HashSet<>();
     Random rand = new Random();
@@ -183,6 +199,9 @@ public class DungeonImpl implements Dungeon {
     while (withArrows.size() <= perOfCavesWTreasure * size[0] * size[1] / 100) {
       int row = rand.nextInt(size[0]);
       int col = rand.nextInt(size[1]);
+      if (dungeon[row][col].hasPit()) {
+        continue;
+      }
       if (!withArrows.contains(dungeon[row][col])) {
         int arrows = rand.nextInt(3);
         dungeon[row][col].setArrows(arrows + 1);
@@ -466,23 +485,22 @@ public class DungeonImpl implements Dungeon {
   }
 
   @Override
+  public boolean hasBreeze() {
+    int[] current = player.getCurrentPosition();
+    for (Direction d : getPossibleMoves()) {
+      int[] next = getNextCave(current, d);
+      if (dungeon[next[0]][next[1]].hasPit()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @Override
   public List<Direction> getPossibleMoves() {
     return new ArrayList<>(
         dungeon[player.getCurrentPosition()[0]][player.getCurrentPosition()[1]].getOpenings());
   }
-
-  @Override
-  public String printSmell() {
-    if (getSmell(player.getCurrentPosition()) == 1) {
-      return "There is a faint stench... An Otyugh must be close!!\n";
-    } else if (getSmell(player.getCurrentPosition()) == 2) {
-      return
-          "There is a strong stench... An Otyugh must be in the next cell!! "
-          + "Or perhaps there are more than one Otyughs nearby hungry for your flesh!!\n";
-    }
-    return "";
-  }
-
 
   @Override
   public int[] getPos() {
@@ -493,6 +511,9 @@ public class DungeonImpl implements Dungeon {
 
   @Override
   public void movePlayer(Direction d) {
+    if (d == null) {
+      throw new IllegalArgumentException("Direction cannot be null!");
+    }
     int[] current = player.getCurrentPosition();
     if (!dungeon[current[0]][current[1]].getOpenings().contains(d)) {
       throw new IllegalStateException("Move not possible!");
@@ -535,7 +556,17 @@ public class DungeonImpl implements Dungeon {
     }
 
     updatePlayerHealth();
+    updatePlayerTreasure();
 
+  }
+
+  private void updatePlayerTreasure() {
+    int[] current = player.getCurrentPosition();
+    if (dungeon[current[0]][current[1]].hasPit()) {
+      player.clearTreasure();
+      player.clearArrows();
+    }
+    // TODO: add thief code
   }
 
   @Override
@@ -550,6 +581,21 @@ public class DungeonImpl implements Dungeon {
     int col = player.getCurrentPosition()[1];
     builder.append("Player is at location: [").append(row).append(",").append(col)
         .append("]: ").append(dungeon[row][col]).append("\n");
+
+    if (getSmell() == 1) {
+      builder.append("There is a faint stench... An Otyugh must be close!!\n");
+    } else if (getSmell() == 2) {
+      builder.append("There is a strong stench... An Otyugh must be in the next cell!!"
+                     + " Or perhaps there are more than one Otyughs nearby hungry"
+                     + " for your flesh!!\n");
+    }
+
+    if (hasBreeze()) {
+      builder.append(
+          "You feel a cool breeze hitting your face... There must be a pit in any of the"
+          + " neighboring caves... Move carefully...\n");
+    }
+
     return builder.toString();
   }
 
@@ -657,11 +703,11 @@ public class DungeonImpl implements Dungeon {
   /**
    * Package-private method for getting the smell at the given cave position.
    *
-   * @param pos the position
    * @return 0: no smell, 1: faint smell: 2: strong smell
    */
-  int getSmell(int[] pos) {
+  int getSmell() {
     int smell = 0;
+    int[] pos = player.getCurrentPosition();
     for (Direction direction : dungeon[pos[0]][pos[1]].getOpenings()) {
       int[] next = getNextCave(pos, direction);
       if (dungeon[next[0]][next[1]].hasOtyugh()) {
@@ -814,6 +860,7 @@ public class DungeonImpl implements Dungeon {
     caves[2][2].setTreasures(Treasure.RUBY);
     caves[2][2].setTreasures(Treasure.SAPPHIRE);
     caves[2][2].setTreasures(Treasure.DIAMOND);
+    caves[2][2].setPit(true);
 
     caves[2][3].setOpenings(Direction.WEST);
     caves[2][3].setTreasures(Treasure.RUBY);

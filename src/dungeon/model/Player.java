@@ -82,8 +82,28 @@ class Player {
     }
   }
 
+  /**
+   * Get the list of treasures held by the player.
+   *
+   * @return list of treasures
+   */
   List<Treasure> getCollectedTreasure() {
     return new ArrayList<>(collectedTreasure);
+  }
+
+  /**
+   * Clear all the treasure the player has when they fall into a pit or encounter a thief.
+   */
+  void clearTreasure() {
+    this.collectedTreasure.clear();
+    this.score = 0;
+  }
+
+  /**
+   * Clear all the arrows the player has when they fall into a pit.
+   */
+  void clearArrows() {
+    this.arrows = 0;
   }
 
   /**

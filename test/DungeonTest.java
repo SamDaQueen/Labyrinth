@@ -6,7 +6,6 @@ import dungeon.model.Direction;
 import dungeon.model.Dungeon;
 import dungeon.model.DungeonImpl;
 import java.util.List;
-import java.util.Random;
 import org.junit.Test;
 
 /**
@@ -41,31 +40,31 @@ public class DungeonTest {
     dungeon = new DungeonImpl(null, 5, true, -15, 1);
   }
 
-  @Test
-  public void testSingleRow() {
-    Dungeon rowDungeon = new DungeonImpl(new int[]{1, 6}, 3, false, 20, 1);
-    Random rand = new Random();
-    while (!rowDungeon.hasReachedGoal()) {
-      rowDungeon.pickTreasure();
-      List<Direction> possibleMoves = rowDungeon.getPossibleMoves();
-      Direction direction = possibleMoves.get(rand.nextInt(possibleMoves.size()));
-      rowDungeon.movePlayer(direction);
-    }
-    assertTrue(rowDungeon.hasReachedGoal());
-  }
-
-  @Test
-  public void testSingleCol() {
-    Dungeon colDungeon = new DungeonImpl(new int[]{6, 1}, 0, false, 20, 1);
-    Random rand = new Random();
-    while (!colDungeon.hasReachedGoal()) {
-      colDungeon.pickTreasure();
-      List<Direction> possibleMoves = colDungeon.getPossibleMoves();
-      Direction direction = possibleMoves.get(rand.nextInt(possibleMoves.size()));
-      colDungeon.movePlayer(direction);
-    }
-    assertTrue(colDungeon.hasReachedGoal());
-  }
+//  @Test
+//  public void testSingleRow() {
+//    Dungeon rowDungeon = new DungeonImpl(new int[]{1, 6}, 3, false, 20, 1);
+//    Random rand = new Random();
+//    while (!rowDungeon.hasReachedGoal()) {
+//      rowDungeon.pickTreasure();
+//      List<Direction> possibleMoves = rowDungeon.getPossibleMoves();
+//      Direction direction = possibleMoves.get(rand.nextInt(possibleMoves.size()));
+//      rowDungeon.movePlayer(direction);
+//    }
+//    assertTrue(rowDungeon.hasReachedGoal());
+//  }
+//
+//  @Test
+//  public void testSingleCol() {
+//    Dungeon colDungeon = new DungeonImpl(new int[]{6, 1}, 0, false, 20, 1);
+//    Random rand = new Random();
+//    while (!colDungeon.hasReachedGoal()) {
+//      colDungeon.pickTreasure();
+//      List<Direction> possibleMoves = colDungeon.getPossibleMoves();
+//      Direction direction = possibleMoves.get(rand.nextInt(possibleMoves.size()));
+//      colDungeon.movePlayer(direction);
+//    }
+//    assertTrue(colDungeon.hasReachedGoal());
+//  }
 
   @Test
   public void testLargeDungeon() {
