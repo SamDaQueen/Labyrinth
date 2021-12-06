@@ -22,15 +22,14 @@ public class Driver2 {
 
     Dungeon dungeon = new DungeonImpl(new int[]{4, 4}, 3, false, 20, 1);
 
-    System.out.println(
-        "\n\nPrinting the dungeon for testing and checking purposes only!!");
-    System.out.println(dungeon);
+//    System.out.println(
+//        "\n\nPrinting the dungeon for testing and checking purposes only!!");
+//    System.out.println(dungeon);
 
     Scanner scanner = new Scanner(System.in);
     Direction direction = Direction.NORTH;
 
-    while (!dungeon.hasReachedGoal()) {
-      System.out.println(dungeon);
+    while (!(dungeon.hasReachedGoal() || dungeon.playerDead())) {
 
       while (true) {
         System.out.println("Please select direction from: " + dungeon.getPossibleMoves()

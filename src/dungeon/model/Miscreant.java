@@ -1,15 +1,15 @@
 package dungeon.model;
 
-class Thief {
+class Miscreant {
 
   private final int[] currentPosition;
 
-  Thief(int row, int col) {
+  Miscreant(int row, int col) {
     this.currentPosition = new int[]{row, col};
   }
 
   /**
-   * Get the current position of the thief in the dungeon.
+   * Get the current position of the monster in the dungeon.
    *
    * @return [row, col]
    */
@@ -18,7 +18,7 @@ class Thief {
   }
 
   /**
-   * Update the current position of the thief.
+   * Update the current position of the monster.
    *
    * @param row the new roe
    * @param col the new col
@@ -30,5 +30,4 @@ class Thief {
     this.currentPosition[0] = row;
     this.currentPosition[1] = col;
   }
-
 }

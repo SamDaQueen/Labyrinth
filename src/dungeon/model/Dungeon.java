@@ -107,5 +107,8 @@ public interface Dungeon {
    */
   boolean hasBreeze();
 
-  boolean hasThief();
+  boolean metThief();
+
+  boolean metMonster();
+
 }

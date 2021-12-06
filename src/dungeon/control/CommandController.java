@@ -43,9 +43,13 @@ public class CommandController implements Controller {
 
     try {
       while (!(model.hasReachedGoal() || model.playerDead())) {
+        //System.out.println(model);
         out.append("\n\n");
         out.append(model.printPlayerStatus());
         out.append(model.printCurrentLocation());
+        if (model.playerDead()) {
+          break;
+        }
         out.append(
             "What do you wish to do? move [direction]/ pick/ shoot [direction] [distance]/ quit: ");
         if (!scan.hasNext()) {
@@ -92,12 +96,17 @@ public class CommandController implements Controller {
       }
 
       if (model.playerDead()) {
-        out.append("\n\nSadly, you were devoured by the hungry Otyugh!! Your adventure ends :( ")
-            .append(model.printPlayerStatus());
+        if (model.metMonster()) {
+          out.append(
+              "\nSadly, you could not survive the combat and are dead."
+              + " Video games and movies did not help... Your adventure ends :(");
+        } else {
+          out.append("\n\nSadly, you were devoured by the hungry Otyugh!! Your adventure ends :( ");
+        }
       } else if (model.hasReachedGoal()) {
-        out.append("\n\nHurray! You have found the exit of the dungeon and your status is: ")
-            .append(model.printPlayerStatus());
+        out.append("\n\nHurray! You have found the exit of the dungeon and your status is: ");
       }
+      out.append("\n").append(model.printPlayerStatus());
 
     } catch (IOException ioe) {
       throw new IllegalStateException("\nAppend failed ", ioe);

@@ -32,7 +32,12 @@ public class MockDungeon implements Dungeon {
   }
 
   @Override
-  public boolean hasThief() {
+  public boolean metThief() {
+    return false;
+  }
+
+  @Override
+  public boolean metMonster() {
     return false;
   }
 

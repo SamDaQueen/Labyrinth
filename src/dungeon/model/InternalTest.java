@@ -19,10 +19,10 @@ public class InternalTest {
   @Test
   public void printDungeon() {
     dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
-    assertEquals("                       \n"
+    assertEquals("\n                       \n"
                  + "   O---X   O---O---O   \n"
                  + "   |           |   |   \n"
-                 + "   O---O   O---O---O   \n"
+                 + "   O---T   W---O---O   \n"
                  + "       |       |   |   \n"
                  + "   O   O---O---O---O   \n"
                  + "   |   |       |   |   \n"
@@ -129,7 +129,7 @@ public class InternalTest {
   @Test
   public void printPlayerStatus() {
     dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
-    assertEquals("Player has collected with a score of 0 and has 3 arrows.\n",
+    assertEquals("Player has collected no treasures and has 3 arrows.\n",
         dungeonFixed.printPlayerStatus());
     dungeonFixed.movePlayer(Direction.WEST);
     dungeonFixed.pickTreasure();

@@ -18,7 +18,6 @@ public class InternalNewTests {
   @Before
   public void setUp() {
     fixedDungeon = new DungeonImpl();
-    System.out.println(fixedDungeon);
   }
 
   @Test
@@ -233,7 +232,7 @@ public class InternalNewTests {
       for (int row = 0; row < 5; row++) {
         for (int col = 0; col < 5; col++) {
           dungeon.getPlayer().setCurrentPosition(row, col);
-          if (dungeon.hasThief()) {
+          if (dungeon.metThief()) {
             thief = true;
             break;
           }
@@ -256,10 +255,32 @@ public class InternalNewTests {
     fixedDungeon.shoot(Direction.WEST, 1);
     fixedDungeon.movePlayer(Direction.WEST);
     fixedDungeon.movePlayer(Direction.WEST);
-    if (fixedDungeon.hasThief()) {
+    if (fixedDungeon.metThief()) {
       assertTrue(fixedDungeon.printCurrentLocation().contains("Uh-oh!"));
     } else {
       assertFalse(fixedDungeon.printCurrentLocation().contains("Uh-oh!"));
+    }
+  }
+
+  @Test
+  public void singleMonster() {
+    for (int i = 0; i < 100; i++) {
+      boolean monster = false;
+
+      dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 10, 1);
+      for (int row = 0; row < 5; row++) {
+        for (int col = 0; col < 5; col++) {
+          dungeon.getPlayer().setCurrentPosition(row, col);
+          if (dungeon.metMonster()) {
+            monster = true;
+            break;
+          }
+        }
+        if (monster) {
+          break;
+        }
+      }
+      assertTrue(monster);
     }
   }
 

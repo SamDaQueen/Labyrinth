@@ -27,8 +27,9 @@ public class DungeonImpl implements Dungeon {
   private final Cave[][] dungeon;
   private final Player player;
   private final Set<Edge> edges;
-  private final Thief thief;
+  private final Miscreant thief;
   private final Random rand;
+  private Miscreant nekker;
 
   /**
    * Constructs a new Dungeon object.
@@ -81,6 +82,7 @@ public class DungeonImpl implements Dungeon {
     setArrows();
 
     this.thief = addThief();
+    this.nekker = addMonster();
     this.player = new Player(start[0], start[1]);
 
   }
@@ -103,7 +105,8 @@ public class DungeonImpl implements Dungeon {
     this.player = new Player(this.start[0], this.start[1]);
     this.edges = new HashSet<>();
     this.difficulty = 1;
-    this.thief = new Thief(1, 1);
+    this.thief = new Miscreant(1, 1);
+    this.nekker = new Miscreant(1, 2);
     this.rand = new Random();
   }
 
@@ -121,7 +124,8 @@ public class DungeonImpl implements Dungeon {
     this.player = new Player(0, 1);
     this.edges = new HashSet<>();
     this.difficulty = 5;
-    this.thief = new Thief(1, 1);
+    this.thief = new Miscreant(1, 1);
+    this.nekker = new Miscreant(1, 2);
     this.rand = new Random();
 
   }
@@ -214,7 +218,7 @@ public class DungeonImpl implements Dungeon {
     }
   }
 
-  private Thief addThief() {
+  private Miscreant addThief() {
     int row = rand.nextInt(size[0]);
     int col = rand.nextInt(size[1]);
 
@@ -222,7 +226,19 @@ public class DungeonImpl implements Dungeon {
       row = rand.nextInt(size[0]);
       col = rand.nextInt(size[1]);
     }
-    return new Thief(row, col);
+    return new Miscreant(row, col);
+  }
+
+  private Miscreant addMonster() {
+    int row = rand.nextInt(size[0]);
+    int col = rand.nextInt(size[1]);
+
+    while (row == start[0] && col == start[1] || row == end[0] && col == end[1]
+           || dungeon[row][col].hasOtyugh()) {
+      row = rand.nextInt(size[0]);
+      col = rand.nextInt(size[1]);
+    }
+    return new Miscreant(row, col);
   }
 
   private List<Cave> getCaves() {
@@ -437,6 +453,8 @@ public class DungeonImpl implements Dungeon {
 
   private void updatePlayerHealth() {
     int[] current = player.getCurrentPosition();
+
+    // check if cave has otyugh
     if (dungeon[current[0]][current[1]].hasOtyugh()) {
       if (dungeon[current[0]][current[1]].getOtyugh().getHealth() == 2) {
         player.kill();
@@ -509,8 +527,112 @@ public class DungeonImpl implements Dungeon {
   }
 
   @Override
-  public boolean hasThief() {
+  public boolean metThief() {
     return Arrays.equals(player.getCurrentPosition(), thief.getCurrentPosition());
+  }
+
+  private void combatMode(StringBuilder builder) {
+
+    // initialize healths
+    int playerHealth = 30;
+    int nekkerHealth = 50;
+
+    // attack points
+    // nekker
+    int scream = 12;
+    int slash = 17;
+
+    // player
+    int punch = 10;
+    int kick = 15;
+    int dash = 20;
+    int evade = 10;
+
+    int nekkerHit;
+    int playerHit;
+
+    // true if player's turn
+    boolean playerTurn = true;
+
+    builder.append(
+            "\nWhoooshhh! The roaming nekker has found you!\nYou remember all the video"
+            + " games that you have played and all the movies that you have watched and"
+            + " hope that they have trained you well enough for this day...\nYou fight"
+            + " for your life by punching (+").append(punch).append(" damage to nekker)"
+                                                                    + ", kicking (+")
+        .append(kick).append(" damage to nekker), dashing (+").append(dash)
+        .append(" damage to nekker) or evading (+").append(evade)
+        .append(" health to player and extra turn).\nThe nekker will also attack"
+                + " you with a blood-curdling scream (+").append(scream)
+        .append(" damage to player) or a vengeful slash (+").append(slash)
+        .append(" damage to player). The nekker is lethargic and may sometimes"
+                + " miss, good for you! Will you survive?\n");
+    builder.append("\n**********Combat Mode On**********");
+
+    while (playerHealth > 0 && nekkerHealth > 0) {
+
+      builder.append("\n\nPlayer Health: ").append(playerHealth).append(" Monster Health: ")
+          .append(nekkerHealth);
+
+      if (playerTurn) {
+        builder.append("\nYour turn to attack!");
+        playerHit = new Random().nextInt(4);
+        switch (playerHit) {
+          case 0:
+            builder.append("\nYou punch the nekker in its face causing it ").append(punch)
+                .append(" damage... ");
+            nekkerHealth -= punch;
+            break;
+          case 1:
+            builder.append("\nYou side kick the nekker causing it ").append(kick)
+                .append(" damage... ");
+            nekkerHealth -= kick;
+            break;
+          case 2:
+            builder.append("\nYou dash at the nekker causing it ").append(dash)
+                .append(" damage... ");
+            nekkerHealth -= dash;
+            break;
+          case 3:
+            builder.append("\nYou evade the nekker and gain ").append(evade).append(" health... ");
+            playerHealth += evade;
+            playerTurn = false;
+            break;
+          default:
+            break;
+        }
+      } else {
+        builder.append("\nMonster's turn to strike back!");
+        nekkerHit = new Random().nextInt(3);
+        switch (nekkerHit) {
+          case 0:
+            builder.append("\nThe nekker is annoyed and screams at you.You lose ").append(scream)
+                .append(" health...");
+            playerHealth -= scream;
+            break;
+          case 1:
+            builder.append("\nThe nekker is raging and slashes at you. You lose ").append(slash)
+                .append(" health...");
+            playerHealth -= slash;
+            break;
+          case 2:
+            builder.append("\nThe nekker missed and could not hit you...");
+            break;
+          default:
+            break;
+        }
+      }
+      playerTurn = !playerTurn;
+    }
+
+    if (playerHealth <= 0) {
+      player.kill();
+    } else {
+      builder.append("Video games and movies will be proud of you!\n"
+                     + "You successfully defeated the nekker and will not encounter it again :D");
+      nekker = null;
+    }
+    builder.append("\n**********Combat Mode Off**********\n");
   }
 
   @Override
@@ -529,7 +651,7 @@ public class DungeonImpl implements Dungeon {
   @Override
   public void movePlayer(Direction d) {
     if (d == null) {
-      throw new IllegalArgumentException("Direction cannot be null!");
+      throw new IllegalStateException("Direction cannot be null!");
     }
     int[] current = player.getCurrentPosition();
     if (!dungeon[current[0]][current[1]].getOpenings().contains(d)) {
@@ -539,23 +661,24 @@ public class DungeonImpl implements Dungeon {
     int[] next = getNextCave(current, d);
     player.setCurrentPosition(next[0], next[1]);
 
-    // move the thief with 50% probability
-    if (rand.nextInt(2) == 1) {
-      moveThief();
+    moveMiscreant(thief);
+    if (nekker != null) {
+      moveMiscreant(nekker);
     }
-
-    updatePlayerHealth();
     updatePlayerTreasure();
-
+    updatePlayerHealth();
   }
 
-  private void moveThief() {
-    int[] current = thief.getCurrentPosition();
-    Cave thiefCave = dungeon[current[0]][current[1]];
-    Direction d = new ArrayList<>(thiefCave.getOpenings()).get(
-        rand.nextInt(thiefCave.getOpenings().size()));
-    int[] next = getNextCave(current, d);
-    thief.setCurrentPosition(next[0], next[1]);
+  private void moveMiscreant(Miscreant miscreant) {
+    // move the miscreant with 50% probability
+    if (rand.nextInt(2) == 1) {
+      int[] current = miscreant.getCurrentPosition();
+      Cave cave = dungeon[current[0]][current[1]];
+      Direction d = new ArrayList<>(cave.getOpenings()).get(
+          rand.nextInt(cave.getOpenings().size()));
+      int[] next = getNextCave(current, d);
+      miscreant.setCurrentPosition(next[0], next[1]);
+    }
   }
 
   private void updatePlayerTreasure() {
@@ -564,7 +687,7 @@ public class DungeonImpl implements Dungeon {
       player.clearTreasure();
       player.clearArrows();
     }
-    if (hasThief()) {
+    if (metThief()) {
       player.clearTreasure();
     }
   }
@@ -596,9 +719,13 @@ public class DungeonImpl implements Dungeon {
           + " neighboring caves... Move carefully...\n");
     }
 
-    if (hasThief()) {
+    if (metThief()) {
       builder.append(
-          "Uh-oh! The thief of the dungeon has found you and will take all of your treasures!");
+          "Uh-oh! The thief of the dungeon has found you and has taken all of your treasures!\n");
+    }
+
+    if (metMonster()) {
+      combatMode(builder);
     }
 
     return builder.toString();
@@ -654,10 +781,18 @@ public class DungeonImpl implements Dungeon {
   }
 
   @Override
+  public boolean metMonster() {
+    if (nekker == null) {
+      return false;
+    }
+    return Arrays.equals(player.getCurrentPosition(), nekker.getCurrentPosition());
+  }
+
+  @Override
   public String toString() {
     StringBuilder builder = new StringBuilder();
     int[] playerPos = player.getCurrentPosition();
-    builder.append("   ");
+    builder.append("\n").append("   ");
     for (int col = 0; col < size[1]; col++) {
       if (dungeon[0][col].getOpenings().contains(Direction.NORTH)) {
         builder.append("|   ");
@@ -681,6 +816,9 @@ public class DungeonImpl implements Dungeon {
           builder.append("X");
         } else if (dungeon[row][col].hasOtyugh()) {
           builder.append("M");
+        } else if (nekker != null && nekker.getCurrentPosition()[0] == row
+                   && nekker.getCurrentPosition()[1] == col) {
+          builder.append("W");
         } else if (dungeon[row][col].hasPit()) {
           builder.append("H");
         } else if (thief.getCurrentPosition()[0] == row && thief.getCurrentPosition()[1] == col) {
@@ -807,6 +945,7 @@ public class DungeonImpl implements Dungeon {
   Player getPlayer() {
     return player;
   }
+
 
   /**
    * Generate fake dungeon for empty constructor used for testing.

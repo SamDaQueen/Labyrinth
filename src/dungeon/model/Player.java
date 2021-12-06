@@ -156,13 +156,17 @@ class Player {
     StringBuilder builder = new StringBuilder();
     builder.append("Player has collected ");
     Set<Treasure> distinct = new HashSet<>(collectedTreasure);
-    List<Treasure> sorted = new ArrayList<>(distinct);
-    Collections.sort(sorted);
-    for (Treasure t : sorted) {
-      builder.append(t).append("(").append(Collections.frequency(collectedTreasure, t))
-          .append("), ");
+    if (distinct.size() == 0) {
+      builder.append("no treasures");
+    } else {
+      List<Treasure> sorted = new ArrayList<>(distinct);
+      Collections.sort(sorted);
+      for (Treasure t : sorted) {
+        builder.append(t).append("(").append(Collections.frequency(collectedTreasure, t))
+            .append("), ");
+      }
+      builder.append("with a score of ").append(score);
     }
-    builder.append("with a score of ").append(score);
     builder.append(" and has ").append(arrows).append(" arrows.\n");
     return builder.toString();
   }
