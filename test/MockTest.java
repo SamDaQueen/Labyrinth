@@ -1,13 +1,13 @@
 import static org.junit.Assert.assertEquals;
 
-import dungeon.control.CommandController;
+import dungeon.controller.CommandController;
 import dungeon.model.Dungeon;
 import java.io.StringReader;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Class for isolating the Controller and then testing it using a mock model.
+ * Class for isolating the TextController and then testing it using a mock model.
  */
 public class MockTest {
 

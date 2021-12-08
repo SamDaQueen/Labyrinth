@@ -1,7 +1,5 @@
 package dungeon.view;
 
-import java.awt.Color;
-import javax.swing.BorderFactory;
 import javax.swing.JTextArea;
 
 public class CustomJTextArea extends JTextArea {

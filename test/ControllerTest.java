@@ -2,7 +2,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import dungeon.control.CommandController;
+import dungeon.controller.CommandController;
 import dungeon.model.Dungeon;
 import dungeon.model.DungeonImpl;
 import java.io.StringReader;
@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Class for testing the Controller and the Model together.
+ * Class for testing the TextController and the Model together.
  */
 public class ControllerTest {
 

@@ -111,4 +111,5 @@ public interface Dungeon {
 
   boolean metMonster();
 
+  Cave[][] getDungeon();
 }

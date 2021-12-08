@@ -1,8 +1,8 @@
-package dungeon.control;
+package dungeon.controller;
 
-import dungeon.control.commands.Move;
-import dungeon.control.commands.Pick;
-import dungeon.control.commands.Shoot;
+import dungeon.controller.commands.Move;
+import dungeon.controller.commands.Pick;
+import dungeon.controller.commands.Shoot;
 import dungeon.model.Dungeon;
 import java.io.IOException;
 import java.util.InputMismatchException;
@@ -13,7 +13,7 @@ import java.util.Scanner;
  * A command controller class for running the game based on the commands given by the user and
  * executing them accordingly. Has Readable and Appendable for the input and output.
  */
-public class CommandController implements Controller {
+public class CommandController implements TextController {
 
   private final Scanner scan;
 
@@ -39,7 +39,7 @@ public class CommandController implements Controller {
       throw new IllegalArgumentException("Model cannot be null!");
     }
 
-    Controller cmd = null;
+    TextController cmd = null;
 
     try {
       while (!(model.hasReachedGoal() || model.playerDead())) {

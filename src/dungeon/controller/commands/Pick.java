@@ -1,6 +1,6 @@
-package dungeon.control.commands;
+package dungeon.controller.commands;
 
-import dungeon.control.Controller;
+import dungeon.controller.TextController;
 import dungeon.model.Dungeon;
 import java.io.IOException;
 
@@ -8,7 +8,7 @@ import java.io.IOException;
  * Class for executing the pick command to pick up all the treasure and arrows in the current
  * location.
  */
-public class Pick implements Controller {
+public class Pick implements TextController {
 
   @Override
   public void execute(Dungeon model, Appendable out) {

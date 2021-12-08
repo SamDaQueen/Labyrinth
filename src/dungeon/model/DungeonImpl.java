@@ -933,7 +933,7 @@ public class DungeonImpl implements Dungeon {
    *
    * @return copy of caves
    */
-  Cave[][] getDungeon() {
+  public Cave[][] getDungeon() {
     return Arrays.copyOf(dungeon, size[0]);
   }
 

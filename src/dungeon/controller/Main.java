@@ -1,11 +1,11 @@
-package dungeon.control;
+package dungeon.controller;
 
 import dungeon.model.Dungeon;
 import dungeon.model.DungeonImpl;
 import java.io.InputStreamReader;
 
 /**
- * Main class for implementing the Model-Controller design for the Dungeon Model.
+ * Main class for implementing the Model-TextController design for the Dungeon Model.
  */
 public class Main {
 

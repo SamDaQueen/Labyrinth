@@ -14,7 +14,7 @@ import java.util.Set;
  * player. The Otyugh can be killed by using two arrows shot by the player. The Cave could also have
  * a pit that the player can fall into. A pit will have a breeze in the adjacent caves.
  */
-class Cave {
+public class Cave {
 
   private final List<Treasure> treasures;
   private final Set<Direction> directions;

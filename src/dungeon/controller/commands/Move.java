@@ -1,6 +1,6 @@
-package dungeon.control.commands;
+package dungeon.controller.commands;
 
-import dungeon.control.Controller;
+import dungeon.controller.TextController;
 import dungeon.model.Direction;
 import dungeon.model.Dungeon;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.util.Locale;
 /**
  * Class for executing the move command in a specific direction.
  */
-public class Move implements Controller {
+public class Move implements TextController {
 
   private Direction direction;
 

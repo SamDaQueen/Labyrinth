@@ -4,10 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,8 +29,8 @@ public class JFrameView extends JFrame implements IView {
   private final int MAX_HEIGHT = 750;
   private final JPanel innerPane;
   private final JPanel outerPane;
-  private JLabel caveDesc;
-  private JLabel playerDesc;
+  private JTextArea caveDesc;
+  private JTextArea playerDesc;
   private JButton resetBtn;
   private JButton restartBtn;
   private JButton quitBtn;
@@ -69,7 +75,11 @@ public class JFrameView extends JFrame implements IView {
     outerPane.add(Box.createRigidArea(new Dimension(0, 10)));
 
     setUpCaveView();
-    setUpDungeonView();
+    try {
+      setUpDungeonView();
+    } catch (IOException e) {
+      System.out.println("Could not set up dungeon view: " + e.getMessage());
+    }
     setUpPlayerView();
     setUpButtonView();
 
@@ -88,17 +98,17 @@ public class JFrameView extends JFrame implements IView {
     caveDescView.setBorder(BorderFactory.createEtchedBorder());
 
     // add the label heading field
-    JTextArea caveDescHeading = new CustomJTextArea(
+    caveDesc = new CustomJTextArea(
         "Cave Description Area. All the information about the status of the dungeon"
         + " will be displayed here.");
-    caveDescView.add(caveDescHeading);
+    caveDescView.add(caveDesc);
 
     // add scroll controls
     JScrollPane caveScroll = new JScrollPane(caveDescView,
         JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-        JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-    caveDescHeading.setPreferredSize(caveDim);
+    caveDesc.setPreferredSize(caveDim);
     caveDescView.setMaximumSize(caveDim);
     caveScroll.setMaximumSize(new Dimension(300, 600));
 
@@ -106,22 +116,42 @@ public class JFrameView extends JFrame implements IView {
     innerPane.add(Box.createRigidArea(new Dimension(10, 0)));
   }
 
-  private void setUpDungeonView() {
+  private void setUpDungeonView() throws IOException {
 
     // dungeon view dimensions
-    Dimension dungeonDim = new Dimension(570, 570);
+    Dimension dungeonDim = new Dimension(550, 550);
+
+    // to wrap the dungeon
+    JPanel outerArea = new JPanel();
+    outerArea.setMaximumSize(dungeonDim);
 
     // add the dungeon panel to the center
     JPanel dungeonView = new JPanel();
     dungeonView.setBorder(BorderFactory.createEtchedBorder());
+    outerArea.add(dungeonView);
 
     // add scroll controls
-    JScrollPane dungeonScroll = new JScrollPane(dungeonView,
+    JScrollPane dungeonScroll = new JScrollPane(outerArea,
         JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
         JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-    dungeonView.setPreferredSize(dungeonDim);
+    dungeonView.setMaximumSize(dungeonDim);
     dungeonScroll.setMaximumSize(new Dimension(600, 600));
+
+    int row = 5;
+    int col = 5;
+
+    // add grid layout for the dungeon
+    GridLayout dungeonGrid = new GridLayout(row, col, 0, 0);
+    dungeonView.setLayout(dungeonGrid);
+
+    BufferedImage image = ImageIO.read(new File("icons/NSE.png"));
+    for (int i = 0; i < row; i++) {
+      for (int j = 0; j < col; j++) {
+        JLabel place = new JLabel(new ImageIcon(image));
+        dungeonView.add(place);
+      }
+    }
 
     innerPane.add(dungeonScroll);
     innerPane.add(Box.createRigidArea(new Dimension(10, 0)));
@@ -137,17 +167,17 @@ public class JFrameView extends JFrame implements IView {
     playerDescView.setBorder(BorderFactory.createEtchedBorder());
 
     // add the label field
-    JTextArea playerDescHeading = new CustomJTextArea(
+    playerDesc = new CustomJTextArea(
         "Player Description Area. All the information about the status of the"
         + " player will be displayed here.");
-    playerDescView.add(playerDescHeading);
+    playerDescView.add(playerDesc);
 
     // add scroll controls
     JScrollPane playerScroll = new JScrollPane(playerDescView,
         JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-        JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-    playerDescHeading.setPreferredSize(playerDim);
+    playerDesc.setPreferredSize(playerDim);
     playerDescView.setMaximumSize(playerDim);
     playerScroll.setMaximumSize(new Dimension(300, 600));
     innerPane.add(playerScroll);
@@ -182,6 +212,11 @@ public class JFrameView extends JFrame implements IView {
     buttonView.setAlignmentX(Component.CENTER_ALIGNMENT);
 
     outerPane.add(buttonView);
+  }
+
+  @Override
+  public void drawDungeon() {
+
   }
 }
 
