@@ -47,7 +47,7 @@ public class JFrameView extends JFrame implements IView {
   private final Map<String, BufferedImage> imageMap;
   ReadOnlyModel model;
   private JMenu menu;
-  private JMenuItem settingsMenu, restartMenu, resetMenu, quitMenu;
+  private JMenuItem settingsMenu, quitMenu;
   private JTextArea caveDesc, playerDesc;
   private JButton resetBtn, restartBtn, quitBtn;
   private JPanel dungeonView;
@@ -311,13 +311,9 @@ public class JFrameView extends JFrame implements IView {
     menu = new JMenu("Menu");
 
     settingsMenu = new JMenuItem("Settings");
-    resetMenu = new JMenuItem("Reset Dungeon");
-    restartMenu = new JMenuItem("Restart Game");
     quitMenu = new JMenuItem("Quit Game");
 
     menu.add(settingsMenu);
-    menu.add(resetMenu);
-    menu.add(restartMenu);
     menu.add(quitMenu);
 
     menuBar.add(menu);
@@ -468,6 +464,7 @@ public class JFrameView extends JFrame implements IView {
     quitBtn.addActionListener(l -> f.exitProgram());
     restartBtn.addActionListener(l -> f.restartGame(new int[]{5, 5}, 3, true, 25, 3));
     resetBtn.addActionListener(l -> f.resetGame());
+    quitMenu.addActionListener(l -> f.exitProgram());
 
     this.addKeyListener(new KeyListener() {
       @Override
