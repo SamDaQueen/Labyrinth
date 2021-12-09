@@ -1,6 +1,7 @@
 package dungeon.view;
 
 import dungeon.controller.Features;
+import dungeon.controller.ViewController;
 import dungeon.model.Dungeon;
 
 public interface IView {
@@ -20,4 +21,8 @@ public interface IView {
   int[] getPlayerRowCol();
 
   int getCellSize();
+
+  void setUpSettings(Features f);
+
+  void showHelp();
 }

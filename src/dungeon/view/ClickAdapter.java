@@ -39,6 +39,8 @@ public class ClickAdapter extends MouseAdapter {
       listener.move(Direction.WEST);
     } else if (clickCol > playerCol && clickRow == playerRow) {
       listener.move(Direction.EAST);
+    } else if (clickRow == playerRow && clickCol == playerCol) {
+      listener.pick();
     }
 
   }

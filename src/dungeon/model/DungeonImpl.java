@@ -45,8 +45,11 @@ public class DungeonImpl implements Dungeon {
     if (size == null) {
       throw new IllegalArgumentException("Size of the maze cannot be null!");
     }
-    if (size[0] + size[1] < 7) {
+    if (size[0] < 4 || size[1] < 4) {
       throw new IllegalArgumentException("Size too small!");
+    }
+    if (size[0] > 25 || size[1] > 25) {
+      throw new IllegalArgumentException("Size too big!");
     }
     if (perOfCavesWTreasure <= 0) {
       throw new IllegalArgumentException("Please provide positive value for % of treasure!");

@@ -1,0 +1,75 @@
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>Welcome to the Labyrinth!!</title>
+</head>
+<body><center><h2 id='welcome-to-the-labyrinth'>Welcome to the Labyrinth!!</h2></center>
+
+<h3 id='about-the-labyrinth'>About the game</h3>
+<ul>
+<li><p><em>Obstacles</em>: you can find them stopping you from reaching the exit of the dungeon</p>
+<ul>
+<li><strong>Otyugh</strong>: There are multiple Otyugh spread throughout the dungeon.
+ If you encounter an Otyugh, it will devour you and the game will end!
+  Luckily, you will have arrows to try and kill the monster.<br>
+If you hit the monster once, it will be injured and if you encounter them, you might have a chance of escaping.
+ The Otyugh can be killed by shooting it twice.
+ <br>They are filthy creatures, and you will be able to smell them from neighboring cells.<br>
+ A faint stench: a monster two cells away from you. A strong stench: either
+  an Otyugh is in the next cell or there are more than one Otyugh near you.</li>
+<li><strong>Shadow</strong>: The Shadow monster will roam around the dungeon looking for you.
+ If it finds you, you will enter combat mode, and you might be able to kill the monster,
+  or you will be dead and your adventure will end.</li>
+<li><strong>Thief</strong>: There is also a thief roaming around in the dungeon. Whenever
+ if finds you, it will steal all of your treasure. And you may encounter him again and again. Beware!</li>
+<li><strong>Pits</strong>: Certain caves have a giant pit which you will fall into if you enter the cave.
+ You will survive, but while trying to climb out, you will lose all of your treasures and arrows.
+  To indicate that a pit is nearby, you will feel a breeze in all of its adjacent cells.</li>
+
+</ul>
+</li>
+</ul>
+
+<ul>
+<li><p><em>Movement</em>: You can only view the cells that you have visited. To move around in the dungeon, you can use:</p>
+<ul><li><strong>Arrow keys</strong>, <strong>WASD keys</strong>, <strong>Click</strong> in the same row/column of the direction you want to move towards</li></ul>
+</li>
+<li><p><em>Collecting Treasure</em>: If you see treasure and/or arrows in the cell you are currently in, you can:</p>
+<ul>
+<li>press the <strong>P key</strong> on the keyboard, <strong>Click</strong> on the cell you are currently present in</li>
+
+</ul>
+</li>
+<li><p><em>Shooting Monsters</em>: To shoot an Otyugh, you have to specify the direction and a distance. Arrows are crooked can can bend to travel through curved tunnels. But they can only travel straight through caves. To shoot:</p>
+<ol>
+<li>First, press the <strong>K key</strong> on the keyboard</li>
+<li>Then, select a direction using the <strong>arrow keys</strong></li>
+<li>Lastly, select a number from 1 to 5 for the distance using the <strong>numpad</strong> or the number row.</li>
+
+</ol>
+</li>
+<li><p><em>Settings and Options</em>:</p>
+<ul>
+<li><p>Reset Dungeon: Replay the same dungeon</p>
+</li>
+<li><p>Restart Game: Restart the game with a new dungeon</p>
+</li>
+<li><p>Menu&gt;Settings: Customize the game settings:</p>
+<ul>
+<li><strong>Rows</strong>: the number of rows in the dungeon (minimum 4, maximum 25)</li>
+<li><strong>Columns</strong>: the number of columns in the dungeon (minimum 4, maximum 25)</li>
+<li><strong>Interconnectivity</strong>: The number of paths between any two cells of the dungeon above 1 (minimum 0)</li>
+<li><strong>Wrapping</strong>: Indicates whether the caves wrap around the edges. i.e. if some top row cells and connected to the bottom-most cell and some right-most cells are connected to the left-most cells (true for wrapping and false for non-wrapping)</li>
+<li><strong>% Treasures</strong>: the percentage of treasures and arrows that can be found in the dungeon (minimum 1)</li>
+<li><strong>Difficulty</strong>: the number of Otyughs to be present in the dungeon (minimum 1)</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+
+</ul>
+<p>&nbsp;</p>
+</body>
+</html>

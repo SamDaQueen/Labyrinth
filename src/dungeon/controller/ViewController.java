@@ -41,7 +41,6 @@ public class ViewController implements Features {
 
   @Override
   public void resetGame() {
-    System.out.println("reset game");
     model = new DungeonImpl(dungeonCopy.getDungeon(), dungeonCopy.getStart(), dungeonCopy.getEnd());
     view.setModel(model);
     view.resetFocus();
@@ -89,6 +88,16 @@ public class ViewController implements Features {
     }
     view.resetFocus();
     view.refresh();
+  }
+
+  @Override
+  public void showHelp() {
+    view.showHelp();
+  }
+
+  @Override
+  public void setUpSettings() {
+    view.setUpSettings(this);
   }
 
 

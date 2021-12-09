@@ -21,7 +21,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +62,7 @@ public class JFrameView extends JFrame implements IView {
   private JMenu menu;
   private JMenuItem settingsMenu, quitMenu;
   private JTextArea caveDesc, playerDesc;
-  private JButton resetBtn, restartBtn, quitBtn;
+  private JButton resetBtn, restartBtn, quitBtn, helpButton;
   private JPanel dungeonView;
   private boolean gameOver;
   private boolean shootFlag;
@@ -218,11 +221,8 @@ public class JFrameView extends JFrame implements IView {
 
   private void setUpDungeonView() {
 
-    //innerPane.remove(1);
-
     // to wrap the dungeon
     JPanel outerArea = new JPanel();
-
     outerArea.removeAll();
 
     // add the dungeon panel to the center
@@ -296,6 +296,12 @@ public class JFrameView extends JFrame implements IView {
 
     int margin = 10;
 
+    helpButton = new JButton("How to Play");
+    helpButton.setMargin(new Insets(margin, margin, margin, margin));
+    helpButton.setActionCommand("Help Button");
+    buttonView.add(helpButton);
+    buttonView.add(Box.createRigidArea(new Dimension(30, 0)));
+
     resetBtn = new JButton("Reset Dungeon");
     resetBtn.setMargin(new Insets(margin, margin, margin, margin));
     resetBtn.setActionCommand("Reset Button");
@@ -336,7 +342,12 @@ public class JFrameView extends JFrame implements IView {
 
   @Override
   public void refresh() {
+
     dungeonView.removeAll();
+
+    // add grid layout for the dungeon
+    GridLayout dungeonGrid = new GridLayout(model.getSize()[0], model.getSize()[1]);
+    dungeonView.setLayout(dungeonGrid);
     BufferedImage[][] images = getDungeonImages();
     int row = model.getSize()[0];
     int col = model.getSize()[1];
@@ -512,7 +523,8 @@ public class JFrameView extends JFrame implements IView {
     restartBtn.addActionListener(l -> f.restartGame(new int[]{5, 5}, 3, true, 25, 3));
     resetBtn.addActionListener(l -> f.resetGame());
     quitMenu.addActionListener(l -> f.exitProgram());
-    settingsMenu.addActionListener(l -> setUpSettings(f));
+    helpButton.addActionListener(l -> f.showHelp());
+    settingsMenu.addActionListener(l -> f.setUpSettings());
 
     this.addKeyListener(new KeyListener() {
       @Override
@@ -590,7 +602,30 @@ public class JFrameView extends JFrame implements IView {
     dungeonView.addMouseListener(mouseAdapter);
   }
 
-  private void setUpSettings(Features f) {
+  @Override
+  public void showHelp() {
+    try {
+      BufferedReader bufferedReader = new BufferedReader(new FileReader("res/help.txt"));
+      String line;
+      StringBuilder stringBuilder = new StringBuilder();
+      while ((line = bufferedReader.readLine()) != null) {
+        stringBuilder.append(line);
+      }
+      JPanel panel = new JPanel();
+      JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+          JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+      JOptionPane.showMessageDialog(scrollPane, stringBuilder, "How To Play",
+          JOptionPane.PLAIN_MESSAGE);
+    } catch (FileNotFoundException fne) {
+      System.out.println("File not found!: " + fne);
+    } catch (IOException ioe) {
+      System.out.println("Could not read file!: " + ioe);
+    }
+
+  }
+
+  @Override
+  public void setUpSettings(Features f) {
     JTextField rows = new JTextField();
     JTextField cols = new JTextField();
     JTextField interconnectivity = new JTextField();
