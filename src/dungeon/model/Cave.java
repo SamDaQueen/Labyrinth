@@ -108,7 +108,7 @@ public class Cave implements ReadOnlyCave {
     if (isTunnel()) {
       builder.append("Tunnel");
     } else {
-      builder.append("ReadOnlyCave");
+      builder.append("Cave");
     }
     List<Direction> sorted = new ArrayList<>(directions);
     Collections.sort(sorted);

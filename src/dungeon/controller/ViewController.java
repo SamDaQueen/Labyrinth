@@ -19,7 +19,9 @@ public class ViewController implements Features {
       throw new IllegalArgumentException("View cannot be null!");
     }
     model = m;
-    dungeonCopy = new DungeonImpl(model.getDungeon(), model.getStart(), model.getEnd());
+    if (m.getDungeon().length > 0) {
+      dungeonCopy = new DungeonImpl(model.getDungeon(), model.getStart(), model.getEnd());
+    }
     view = v;
     view.setFeatures(this);
     view.resetFocus();
@@ -42,7 +44,10 @@ public class ViewController implements Features {
 
   @Override
   public void resetGame() {
-    model = new DungeonImpl(dungeonCopy.getDungeon(), dungeonCopy.getStart(), dungeonCopy.getEnd());
+    if (dungeonCopy != null) {
+      model = new DungeonImpl(dungeonCopy.getDungeon(), dungeonCopy.getStart(),
+          dungeonCopy.getEnd());
+    }
     view.setModel(model);
     view.replay();
     view.resetFocus();

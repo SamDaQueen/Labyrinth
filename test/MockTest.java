@@ -2,6 +2,7 @@ import static org.junit.Assert.assertEquals;
 
 import dungeon.controller.CommandController;
 import dungeon.model.Dungeon;
+import dungeon.model.MockModel;
 import java.io.StringReader;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,8 +20,7 @@ public class MockTest {
   @Before
   public void setUp() {
     log = new StringBuilder();
-    int code = 100;
-    dungeon = new MockDungeon(code, log);
+    dungeon = new MockModel(log);
     out = new StringBuilder();
   }
 
@@ -29,7 +29,7 @@ public class MockTest {
     in = new StringReader("move east");
     out = new StringBuilder();
     new CommandController(in).execute(dungeon, out);
-    assertEquals("Direction: EAST", log.toString());
+    assertEquals("\nDirection: EAST\n", log.toString());
   }
 
   @Test
@@ -37,7 +37,7 @@ public class MockTest {
     in = new StringReader("move west");
     out = new StringBuilder();
     new CommandController(in).execute(dungeon, out);
-    assertEquals("Direction: WEST", log.toString());
+    assertEquals("\nDirection: WEST\n", log.toString());
   }
 
   @Test
@@ -45,7 +45,7 @@ public class MockTest {
     in = new StringReader("move south");
     out = new StringBuilder();
     new CommandController(in).execute(dungeon, out);
-    assertEquals("Direction: SOUTH", log.toString());
+    assertEquals("\nDirection: SOUTH\n", log.toString());
   }
 
   @Test
@@ -53,7 +53,7 @@ public class MockTest {
     in = new StringReader("move north");
     out = new StringBuilder();
     new CommandController(in).execute(dungeon, out);
-    assertEquals("Direction: NORTH", log.toString());
+    assertEquals("\nDirection: NORTH\n", log.toString());
   }
 
   @Test
@@ -61,7 +61,7 @@ public class MockTest {
     in = new StringReader("shoot west 1");
     out = new StringBuilder();
     new CommandController(in).execute(dungeon, out);
-    assertEquals("Direction:WEST Distance: 1", log.toString());
+    assertEquals("\nDirection:WEST Distance: 1\n", log.toString());
   }
 
   @Test
@@ -69,7 +69,7 @@ public class MockTest {
     in = new StringReader("shoot north 10");
     out = new StringBuilder();
     new CommandController(in).execute(dungeon, out);
-    assertEquals("Direction:NORTH Distance: 10", log.toString());
+    assertEquals("\nDirection:NORTH Distance: 10\n", log.toString());
   }
 
 }

@@ -1,30 +1,27 @@
-import dungeon.model.Cave;
-import dungeon.model.Direction;
-import dungeon.model.Dungeon;
+package dungeon.model;
+
 import java.util.List;
 
 /**
  * Mock Dungeon Model for testing the controller separately.
  */
-public class MockDungeon implements Dungeon {
+public class MockModel implements Dungeon {
 
-  private final int uniqueCode;
-  private StringBuilder log;
+  private final StringBuilder log;
 
-  public MockDungeon(int uniqueCode, StringBuilder log) {
-    this.uniqueCode = uniqueCode;
+  public MockModel(StringBuilder log) {
     this.log = log;
   }
 
   @Override
   public void movePlayer(Direction d) {
-    log.append("Direction: ").append(d);
+    log.append("\nDirection: ").append(d).append("\n");
   }
 
   @Override
   public int shoot(Direction direction, int steps) {
-    log.append("Direction:").append(direction).append(" Distance: ").append(steps);
-    return uniqueCode;
+    log.append("\nDirection:").append(direction).append(" Distance: ").append(steps).append("\n");
+    return 0;
   }
 
   @Override
@@ -69,11 +66,13 @@ public class MockDungeon implements Dungeon {
 
   @Override
   public boolean pickTreasure() {
+    log.append("pick treasures, ");
     return false;
   }
 
   @Override
   public boolean pickArrows() {
+    log.append("pick arrows, ");
     return false;
   }
 

@@ -284,6 +284,24 @@ public class InternalNewTests {
     }
   }
 
+  @Test
+  public void shadowCombat() {
+    System.out.println(fixedDungeon);
+    fixedDungeon.movePlayer(Direction.EAST);
+    fixedDungeon.movePlayer(Direction.EAST);
+    fixedDungeon.movePlayer(Direction.SOUTH);
+    fixedDungeon.pickArrows();
+    fixedDungeon.shoot(Direction.WEST, 1);
+    fixedDungeon.shoot(Direction.WEST, 1);
+    fixedDungeon.movePlayer(Direction.WEST);
+    fixedDungeon.movePlayer(Direction.WEST);
+    if (fixedDungeon.metShadow()) {
+      assertTrue(fixedDungeon.printCurrentLocation().contains("Combat!"));
+    } else {
+      assertFalse(fixedDungeon.printCurrentLocation().contains("Combat!"));
+    }
+  }
+
 }
 
 

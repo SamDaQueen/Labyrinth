@@ -17,7 +17,6 @@ public interface Features {
 
   void shoot(Direction d, int distance);
 
-
   void showHelp();
 
   void setUpSettings();

@@ -20,9 +20,9 @@ public class InternalTest {
   public void printDungeon() {
     dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
     assertEquals("\n                       \n"
-                 + "   O---X   O---O---O   \n"
+                 + "   T---X   O---O---O   \n"
                  + "   |           |   |   \n"
-                 + "   O---T   W---O---O   \n"
+                 + "   O---O   W---O---O   \n"
                  + "       |       |   |   \n"
                  + "   O   O---O---O---O   \n"
                  + "   |   |       |   |   \n"
@@ -134,8 +134,8 @@ public class InternalTest {
     dungeonFixed.movePlayer(Direction.WEST);
     dungeonFixed.pickTreasure();
     assertEquals(
-        "Player has collected DIAMOND(1), RUBY(1), SAPPHIRE(2), with a score "
-        + "of 90 and has 3 arrows.\n",
+        "Player has collected DIAMOND(1), RUBY(1), EMERALD(2), with a score of"
+        + " 160 and has 3 arrows.\n",
         dungeonFixed.printPlayerStatus());
   }
 
@@ -143,15 +143,16 @@ public class InternalTest {
   public void printCurrentLocation() {
     dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
     assertEquals(
-        "Player is at location: [4,3]: Cave Available directions: [NORTH, EAST, WEST]"
-        + " Treasures: []"
-        + " Arrows: 0 \n",
+        "Player is at location: [4,3]: Cave\n"
+        + "Available directions: [NORTH, EAST, WEST]\n"
+        + "Arrows: 0 \n",
         dungeonFixed.printCurrentLocation());
     dungeonFixed.movePlayer(Direction.EAST);
     assertEquals(
-        "Player is at location: [4,4]: Cave Available directions: [WEST] Treasures:"
-        + " [RUBY, RUBY, SAPPHIRE]"
-        + " Arrows: 0 \n",
+        "Player is at location: [4,4]: Cave\n"
+        + "Available directions: [WEST]\n"
+        + "Treasures: RUBY(2), EMERALD(1), \n"
+        + "Arrows: 0 \n",
         dungeonFixed.printCurrentLocation());
   }
 
@@ -167,7 +168,7 @@ public class InternalTest {
     dungeonFixed.movePlayer(Direction.EAST);
     dungeonFixed.pickTreasure();
     assertEquals(
-        "Player has collected RUBY(2), SAPPHIRE(1), with a score of 70 and has 3 arrows.\n",
+        "Player has collected RUBY(2), EMERALD(1), with a score of 100 and has 3 arrows.\n",
         dungeonFixed.printPlayerStatus());
   }
 

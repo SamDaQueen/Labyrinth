@@ -68,9 +68,9 @@ public class DungeonTest {
 
   @Test
   public void testLargeDungeon() {
-    dungeon = new DungeonImpl(new int[]{50, 50}, 30, true, 50, 1);
-    assertEquals(50, dungeon.getSize()[0]);
-    assertEquals(50, dungeon.getSize()[1]);
+    dungeon = new DungeonImpl(new int[]{25, 25}, 30, true, 50, 1);
+    assertEquals(25, dungeon.getSize()[0]);
+    assertEquals(25, dungeon.getSize()[1]);
   }
 
   @Test
@@ -96,19 +96,19 @@ public class DungeonTest {
     assertEquals(5, dungeon.getSize()[0]);
     assertEquals(5, dungeon.getSize()[1]);
 
-    dungeon = new DungeonImpl(new int[]{20, 30}, 3, true, 20, 1);
+    dungeon = new DungeonImpl(new int[]{20, 22}, 3, true, 20, 1);
     assertEquals(20, dungeon.getSize()[0]);
-    assertEquals(30, dungeon.getSize()[1]);
+    assertEquals(22, dungeon.getSize()[1]);
   }
 
   @Test
   public void getStart() {
     for (int i = 0; i < 20; i++) {
-      dungeon = new DungeonImpl(new int[]{25, 30}, 5, true, 20, 1);
+      dungeon = new DungeonImpl(new int[]{25, 20}, 5, true, 20, 1);
       assertTrue(dungeon.getStart()[0] >= 0);
       assertTrue(dungeon.getStart()[0] <= 25);
       assertTrue(dungeon.getStart()[1] >= 0);
-      assertTrue(dungeon.getStart()[1] <= 30);
+      assertTrue(dungeon.getStart()[1] <= 20);
     }
   }
 
