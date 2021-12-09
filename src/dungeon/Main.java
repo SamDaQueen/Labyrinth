@@ -15,7 +15,7 @@ public class Main {
 
     if (args.length == 0) {
       // View mode
-      Dungeon model = new DungeonImpl(new int[]{8, 8}, 10, true, 30, 5);
+      Dungeon model = new DungeonImpl(new int[]{6, 6}, 10, true, 30, 2);
       IView view = new JFrameView(model);
       Features controller = new ViewController(model, view);
 

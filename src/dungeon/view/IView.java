@@ -1,14 +1,17 @@
 package dungeon.view;
 
 import dungeon.controller.Features;
+import dungeon.model.Dungeon;
 
 public interface IView {
 
-  void drawDungeon();
+  void setModel(Dungeon model);
 
   void setFeatures(Features f);
 
   void refresh();
 
   void resetFocus();
+
+  void endGame(String message);
 }

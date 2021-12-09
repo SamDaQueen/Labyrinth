@@ -97,4 +97,5 @@ public interface ReadOnlyModel {
   CaveImpl[][] getDungeon();
 
 
+  int[] getEnd();
 }

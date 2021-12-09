@@ -6,7 +6,14 @@ public interface Features {
 
   void exitProgram();
 
-  void restartGame();
+  void restartGame(int[] size, int interconnectivity, boolean wrapping, int treasures,
+      int difficulty);
+
+  void resetGame();
 
   void move(Direction north);
+
+  void pick();
+
+
 }

@@ -41,7 +41,7 @@ public class CaveImpl implements Cave {
    */
   @Override
   public List<Treasure> getTreasure() {
-    return treasures;
+    return new ArrayList<>(treasures);
   }
 
   /**
@@ -93,7 +93,7 @@ public class CaveImpl implements Cave {
    */
   @Override
   public Set<Direction> getOpenings() {
-    return directions;
+    return new HashSet<>(directions);
   }
 
   /**
@@ -267,4 +267,13 @@ public class CaveImpl implements Cave {
     return builder.toString();
   }
 
+  protected CaveImpl copy() {
+    CaveImpl cave = new CaveImpl();
+    cave.setTreasures(this.getTreasure());
+    cave.setOpenings(this.getOpenings());
+    cave.otyugh = this.otyugh;
+    cave.arrows = this.arrows;
+    cave.pit = this.pit;
+    return cave;
+  }
 }

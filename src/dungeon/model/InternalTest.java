@@ -118,7 +118,7 @@ public class InternalTest {
           ruby = true;
         } else if (dungeon.getDungeon()[row][col].getTreasure().contains(Treasure.DIAMOND)) {
           diamond = true;
-        } else if (dungeon.getDungeon()[row][col].getTreasure().contains(Treasure.SAPPHIRE)) {
+        } else if (dungeon.getDungeon()[row][col].getTreasure().contains(Treasure.EMERALD)) {
           sapphire = true;
         }
       }
@@ -457,8 +457,8 @@ public class InternalTest {
     caves[3][3].setOpenings(Direction.SOUTH);
 
     caves[3][4].setOpenings(Direction.NORTH);
-    caves[3][4].setTreasures(Treasure.SAPPHIRE);
-    caves[3][4].setTreasures(Treasure.SAPPHIRE);
+    caves[3][4].setTreasures(Treasure.EMERALD);
+    caves[3][4].setTreasures(Treasure.EMERALD);
     caves[3][4].setTreasures(Treasure.RUBY);
     caves[3][4].setTreasures(Treasure.DIAMOND);
     caves[3][4].setTreasures(Treasure.DIAMOND);
@@ -474,8 +474,8 @@ public class InternalTest {
     caves[4][2].setOpenings(Direction.WEST);
     caves[4][2].setTreasures(Treasure.DIAMOND);
     caves[4][2].setTreasures(Treasure.RUBY);
-    caves[4][2].setTreasures(Treasure.SAPPHIRE);
-    caves[4][2].setTreasures(Treasure.SAPPHIRE);
+    caves[4][2].setTreasures(Treasure.EMERALD);
+    caves[4][2].setTreasures(Treasure.EMERALD);
 
     caves[4][3].setOpenings(Direction.NORTH);
     caves[4][3].setOpenings(Direction.EAST);
@@ -484,7 +484,7 @@ public class InternalTest {
     caves[4][4].setOpenings(Direction.WEST);
     caves[4][4].setTreasures(Treasure.RUBY);
     caves[4][4].setTreasures(Treasure.RUBY);
-    caves[4][4].setTreasures(Treasure.SAPPHIRE);
+    caves[4][4].setTreasures(Treasure.EMERALD);
 
     return caves;
   }

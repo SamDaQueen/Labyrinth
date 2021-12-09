@@ -48,6 +48,11 @@ public class MockDungeon implements Dungeon {
   }
 
   @Override
+  public int[] getEnd() {
+    return new int[0];
+  }
+
+  @Override
   public String printPlayerStatus() {
     return null;
   }

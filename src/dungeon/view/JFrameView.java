@@ -3,10 +3,13 @@ package dungeon.view;
 import dungeon.controller.Features;
 import dungeon.model.CaveImpl;
 import dungeon.model.Direction;
+import dungeon.model.Dungeon;
 import dungeon.model.ReadOnlyModel;
+import dungeon.model.Treasure;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.KeyEvent;
@@ -14,6 +17,9 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -26,6 +32,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -34,14 +41,17 @@ import javax.swing.border.EtchedBorder;
 
 public class JFrameView extends JFrame implements IView {
 
-  private final int MAX_WIDTH = 1250;
-  private final int MAX_HEIGHT = 750;
+  private final int MAX_WIDTH = 1400;
+  private final int MAX_HEIGHT = 800;
   private final JPanel innerPane, outerPane;
+  private final Map<String, BufferedImage> imageMap;
   ReadOnlyModel model;
   private JMenu menu;
   private JMenuItem settingsMenu, restartMenu, resetMenu, quitMenu;
   private JTextArea caveDesc, playerDesc;
   private JButton resetBtn, restartBtn, quitBtn;
+  private JPanel dungeonView;
+  private boolean gameOver;
 
 
   public JFrameView(ReadOnlyModel model) {
@@ -55,7 +65,7 @@ public class JFrameView extends JFrame implements IView {
 
     // set size and location
     setSize(MAX_WIDTH, MAX_HEIGHT);
-    setLocation(150, 30);
+    setLocation(60, 10);
 
     // to avoid resizing
     setResizable(false);
@@ -68,10 +78,10 @@ public class JFrameView extends JFrame implements IView {
     outerPane = new JPanel();
     // align objects vertically
     outerPane.setLayout(new BoxLayout(outerPane, BoxLayout.PAGE_AXIS));
-    outerPane.setPreferredSize(new Dimension(MAX_WIDTH, 700));
+    outerPane.setPreferredSize(new Dimension(MAX_WIDTH, 750));
 
     // create border around the outer panel
-    int margin = 20;
+    int margin = 5;
     outerPane.setBorder(
         BorderFactory.createCompoundBorder(
             new EmptyBorder(margin, margin, margin, margin),
@@ -80,12 +90,14 @@ public class JFrameView extends JFrame implements IView {
     innerPane = new JPanel();
     // align objects horizontally
     innerPane.setLayout(new BoxLayout(innerPane, BoxLayout.LINE_AXIS));
-    innerPane.setMaximumSize(new Dimension(MAX_WIDTH, 600));
+    innerPane.setMaximumSize(new Dimension(MAX_WIDTH, 700));
 
     outerPane.add(innerPane);
     // gap between inner pane and button view
     outerPane.add(Box.createRigidArea(new Dimension(0, 10)));
 
+    imageMap = new HashMap<>();
+    setUpImageMap();
     setUpCaveView();
     setUpDungeonView();
     setUpPlayerView();
@@ -94,13 +106,76 @@ public class JFrameView extends JFrame implements IView {
 
     add(outerPane, BorderLayout.CENTER);
 
+    gameOver = false;
     setVisible(true);
+    resetFocus();
+  }
+
+  private void setUpImageMap() {
+    try {
+
+      // directions
+      imageMap.put("N", ImageIO.read(new File("icons/N.png")));
+      imageMap.put("E", ImageIO.read(new File("icons/E.png")));
+      imageMap.put("S", ImageIO.read(new File("icons/S.png")));
+      imageMap.put("W", ImageIO.read(new File("icons/W.png")));
+      imageMap.put("NE", ImageIO.read(new File("icons/NE.png")));
+      imageMap.put("NS", ImageIO.read(new File("icons/NS.png")));
+      imageMap.put("NW", ImageIO.read(new File("icons/NW.png")));
+      imageMap.put("SE", ImageIO.read(new File("icons/SE.png")));
+      imageMap.put("SW", ImageIO.read(new File("icons/SW.png")));
+      imageMap.put("EW", ImageIO.read(new File("icons/EW.png")));
+      imageMap.put("NSE", ImageIO.read(new File("icons/NSE.png")));
+      imageMap.put("NEW", ImageIO.read(new File("icons/NEW.png")));
+      imageMap.put("NSW", ImageIO.read(new File("icons/NSW.png")));
+      imageMap.put("SEW", ImageIO.read(new File("icons/SEW.png")));
+      imageMap.put("NSEW", ImageIO.read(new File("icons/NSEW.png")));
+
+      // black image
+      imageMap.put("black", ImageIO.read(new File("icons/black.png")));
+
+      // arrow images
+      imageMap.put("arrowB", ImageIO.read(new File("icons/arrow-black.png")));
+      imageMap.put("arrowW", ImageIO.read(new File("icons/arrow-white_small.png")));
+
+      // treasures
+      int treasureSize = 10;
+      imageMap.put("diamond",
+          resize(ImageIO.read(new File("icons/diamond.png")), treasureSize, treasureSize));
+      imageMap.put("emerald",
+          resize(ImageIO.read(new File("icons/emerald.png")), treasureSize, treasureSize));
+      imageMap.put("ruby",
+          resize(ImageIO.read(new File("icons/ruby.png")), treasureSize, treasureSize));
+
+      // monsters
+      imageMap.put("otyugh", ImageIO.read(new File("icons/otyugh_small.png")));
+      imageMap.put("nekker", ImageIO.read(new File("icons/nekker.png")));
+
+      // stench
+      imageMap.put("weakStench", ImageIO.read(new File("icons/stench01.png")));
+      imageMap.put("strongStench", ImageIO.read(new File("icons/stench02.png")));
+
+      // player
+      imageMap.put("sam", ImageIO.read(new File("icons/sam52.png")));
+
+      // breeze
+      imageMap.put("breeze", ImageIO.read(new File("icons/breeze.png")));
+
+      // pit
+      imageMap.put("pit", ImageIO.read(new File("icons/pit.png")));
+
+
+    } catch (
+        IOException e) {
+      System.out.println("Could not set up dungeon view: " + e.getMessage());
+    }
+
   }
 
   private void setUpCaveView() {
 
     // cave view dimensions
-    Dimension caveDim = new Dimension(280, 560);
+    Dimension caveDim = new Dimension(280, 1000);
 
     // add the cave description panel to the left
     JPanel caveDescView = new JPanel();
@@ -117,20 +192,64 @@ public class JFrameView extends JFrame implements IView {
 
     caveDesc.setPreferredSize(caveDim);
     caveDescView.setMaximumSize(caveDim);
-    caveScroll.setMaximumSize(new Dimension(300, 600));
+    caveScroll.setMaximumSize(new Dimension(300, 800));
 
     innerPane.add(caveScroll);
     innerPane.add(Box.createRigidArea(new Dimension(10, 0)));
   }
 
   private void setUpDungeonView() {
-    drawDungeon();
+    // dungeon view dimensions
+    Dimension dungeonDim = new Dimension(900, 800);
+
+    //innerPane.remove(1);
+
+    // to wrap the dungeon
+    JPanel outerArea = new JPanel();
+    outerArea.setMaximumSize(dungeonDim);
+
+    outerArea.removeAll();
+
+    // add the dungeon panel to the center
+    dungeonView = new JPanel();
+    dungeonView.setBorder(BorderFactory.createEtchedBorder());
+
+    int row = model.getSize()[0];
+    int col = model.getSize()[1];
+
+    // add grid layout for the dungeon
+    GridLayout dungeonGrid = new GridLayout(row, col);
+    dungeonView.setLayout(dungeonGrid);
+    dungeonView.setMaximumSize(new Dimension(900, 800));
+
+    BufferedImage[][] images = getDungeonImages();
+
+    for (int i = 0; i < row; i++) {
+      for (int j = 0; j < col; j++) {
+        JLabel place = new JLabel(new ImageIcon(images[i][j]));
+        dungeonView.add(place);
+      }
+    }
+
+    System.out.println(model);
+
+    outerArea.add(dungeonView);
+
+    // add scroll controls
+    JScrollPane dungeonScroll = new JScrollPane(outerArea,
+        JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+        JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+    dungeonScroll.setMaximumSize(new Dimension(900, 900));
+
+    innerPane.add(dungeonScroll);
+    innerPane.add(Box.createRigidArea(new Dimension(10, 0)));
   }
 
   private void setUpPlayerView() {
 
     // player view dimensions
-    Dimension playerDim = new Dimension(260, 560);
+    Dimension playerDim = new Dimension(260, 500);
 
     // add the player description panel to the right
     JPanel playerDescView = new JPanel();
@@ -147,14 +266,14 @@ public class JFrameView extends JFrame implements IView {
 
     playerDesc.setPreferredSize(playerDim);
     playerDescView.setMaximumSize(playerDim);
-    playerScroll.setMaximumSize(new Dimension(300, 600));
+    playerScroll.setMaximumSize(new Dimension(300, 800));
     innerPane.add(playerScroll);
   }
 
   private void setUpButtonView() {
 
     // button view dimensions dimensions
-    Dimension buttonDim = new Dimension(MAX_WIDTH, 75);
+    Dimension buttonDim = new Dimension(MAX_WIDTH, 50);
 
     // add the buttons panel to the bottom
     JPanel buttonView = new JPanel();
@@ -206,83 +325,149 @@ public class JFrameView extends JFrame implements IView {
   }
 
   @Override
-  public void drawDungeon() {
-    // dungeon view dimensions
-    Dimension dungeonDim = new Dimension(550, 550);
-
-    innerPane.remove(1);
-
-    // to wrap the dungeon
-    JPanel outerArea = new JPanel();
-    outerArea.setMaximumSize(dungeonDim);
-
-    // add the dungeon panel to the center
-    JPanel dungeonView = new JPanel();
-    dungeonView.setBorder(BorderFactory.createEtchedBorder());
-
+  public void refresh() {
+    dungeonView.removeAll();
+    BufferedImage[][] images = getDungeonImages();
     int row = model.getSize()[0];
     int col = model.getSize()[1];
-    System.out.println(model.getSize()[0] + "" + model.getSize()[1]);
-    CaveImpl[][] caves = model.getDungeon();
-
-    // add grid layout for the dungeon
-    GridLayout dungeonGrid = new GridLayout(row, col);
-    dungeonView.setLayout(dungeonGrid);
-    dungeonView.setMaximumSize(new Dimension(550, 550));
-
     for (int i = 0; i < row; i++) {
       for (int j = 0; j < col; j++) {
-        try {
-          BufferedImage image;
-          if (!caves[i][j].visited()) {
-            image = ImageIO.read(new File("icons/blank.png"));
-          } else {
-            Set<Direction> directionList = caves[i][j].getOpenings();
-            StringBuilder stringBuilder = new StringBuilder("icons/");
-            if (directionList.contains(Direction.NORTH)) {
-              stringBuilder.append("N");
-            }
-            if (directionList.contains(Direction.SOUTH)) {
-              stringBuilder.append("S");
-            }
-            if (directionList.contains(Direction.EAST)) {
-              stringBuilder.append("E");
-            }
-            if (directionList.contains(Direction.WEST)) {
-              stringBuilder.append("W");
-            }
-
-            stringBuilder.append(".png");
-
-            image = ImageIO.read(new File(stringBuilder.toString()));
-          }
-
-          JLabel place = new JLabel(new ImageIcon(image));
-          dungeonView.add(place);
-
-        } catch (
-            IOException e) {
-          System.out.println("Could not set up dungeon view: " + e.getMessage());
-        }
+        JLabel place = new JLabel(new ImageIcon(images[i][j]));
+        dungeonView.add(place);
       }
     }
-    outerArea.add(dungeonView);
+    dungeonView.updateUI();
+    caveDesc.setText(model.printCurrentLocation());
+    playerDesc.setText(model.printPlayerStatus());
+    repaint();
+  }
 
-    // add scroll controls
-    JScrollPane dungeonScroll = new JScrollPane(outerArea,
-        JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-        JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+  private BufferedImage[][] getDungeonImages() {
+    int row = model.getSize()[0];
+    int col = model.getSize()[1];
+    CaveImpl[][] caves = model.getDungeon();
 
-    dungeonScroll.setMaximumSize(new Dimension(600, 600));
+    int[] current = model.getPos();
 
-    innerPane.add(dungeonScroll);
-    innerPane.add(Box.createRigidArea(new Dimension(10, 0)));
+    BufferedImage[][] images = new BufferedImage[row][col];
+    for (int i = 0; i < row; i++) {
+      for (int j = 0; j < col; j++) {
+        BufferedImage image;
+        if (!caves[i][j].visited()) {
+          image = imageMap.get("black");
+        } else {
+          Set<Direction> directionList = caves[i][j].getOpenings();
+          StringBuilder stringBuilder = new StringBuilder();
+          if (directionList.contains(Direction.NORTH)) {
+            stringBuilder.append("N");
+          }
+          if (directionList.contains(Direction.SOUTH)) {
+            stringBuilder.append("S");
+          }
+          if (directionList.contains(Direction.EAST)) {
+            stringBuilder.append("E");
+          }
+          if (directionList.contains(Direction.WEST)) {
+            stringBuilder.append("W");
+          }
+
+          image = imageMap.get(stringBuilder.toString());
+
+          // pit
+          if (caves[i][j].hasPit()) {
+            image = overlay(image, imageMap.get("pit"), 5, 5);
+          }
+
+          // player's current location
+          if (i == current[0] && j == current[1]) {
+            image = overlay(image, imageMap.get("sam"), 12, 6);
+          }
+
+          // treasures
+          List<Treasure> treasures = caves[i][j].getTreasure();
+          if (treasures.contains(Treasure.DIAMOND)) {
+            image = overlay(image, imageMap.get("diamond"), 15, 30);
+          }
+          if (treasures.contains(Treasure.RUBY)) {
+            image = overlay(image, imageMap.get("ruby"), 25, 35);
+          }
+          if (treasures.contains(Treasure.EMERALD)) {
+            image = overlay(image, imageMap.get("emerald"), 15, 40);
+          }
+          if (caves[i][j].getArrows() > 0) {
+            image = overlay(image, imageMap.get("arrowW"), 15, 55);
+          }
+
+          // check for monsters
+          if (caves[i][j].hasOtyugh()) {
+            image = overlay(image, imageMap.get("otyugh"), 10, 5);
+          }
+          if (model.metNekker() && current[0] == i && current[1] == j) {
+            image = overlay(image, imageMap.get("nekker"), 10, 5);
+          }
+          if (model.printCurrentLocation().contains("strong stench") && current[0] == i
+              && current[1] == j) {
+            image = overlay(image, imageMap.get("strongStench"), 0, 0);
+          } else if (model.printCurrentLocation().contains("faint stench") && current[0] == i
+                     && current[1] == j) {
+            image = overlay(image, imageMap.get("weakStench"), 0, 0);
+          }
+
+          // breeze
+          if (model.hasBreeze() && current[0] == i && current[1] == j) {
+            image = overlay(image, imageMap.get("breeze"), 0, 0);
+          }
+
+        }
+        images[i][j] = resize(image, 650 / row, 650 / col);
+      }
+    }
+    return images;
+  }
+
+  private BufferedImage overlay(BufferedImage starting, BufferedImage overlay, int offsetX,
+      int offsetY) {
+    int w = Math.max(starting.getWidth(), overlay.getWidth());
+    int h = Math.max(starting.getHeight(), overlay.getHeight());
+    BufferedImage combined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+    Graphics g = combined.getGraphics();
+    g.drawImage(starting, 0, 0, null);
+    g.drawImage(overlay, offsetX, offsetY, null);
+    return combined;
+  }
+
+  BufferedImage resize(BufferedImage starting, int width, int height) {
+    BufferedImage newImage = new BufferedImage(width, height,
+        BufferedImage.TYPE_INT_ARGB);
+    Graphics g = newImage.getGraphics();
+    g.drawImage(starting, 0, 0, null);
+    g.drawImage(starting, 0, 0, width, height, null);
+    return newImage;
+  }
+
+  @Override
+  public void resetFocus() {
+    setFocusable(true);
+    requestFocus();
+  }
+
+  @Override
+  public void endGame(String message) {
+    gameOver = true;
+    JOptionPane.showMessageDialog(this, message, "GAME OVER!",
+        JOptionPane.INFORMATION_MESSAGE);
+  }
+
+  @Override
+  public void setModel(Dungeon model) {
+    this.model = model;
   }
 
   @Override
   public void setFeatures(Features f) {
     quitBtn.addActionListener(l -> f.exitProgram());
-    restartBtn.addActionListener(l -> f.restartGame());
+    restartBtn.addActionListener(l -> f.restartGame(new int[]{5, 5}, 3, true, 25, 3));
+    resetBtn.addActionListener(l -> f.resetGame());
 
     this.addKeyListener(new KeyListener() {
       @Override
@@ -291,14 +476,18 @@ public class JFrameView extends JFrame implements IView {
 
       @Override
       public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyChar() == 'w') {
-          f.move(Direction.NORTH);
-        } else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyChar() == 's') {
-          f.move(Direction.SOUTH);
-        } else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyChar() == 'a') {
-          f.move(Direction.WEST);
-        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyChar() == 'd') {
-          f.move(Direction.EAST);
+        if (!gameOver) {
+          if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyChar() == 'w') {
+            f.move(Direction.NORTH);
+          } else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyChar() == 's') {
+            f.move(Direction.SOUTH);
+          } else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyChar() == 'a') {
+            f.move(Direction.WEST);
+          } else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyChar() == 'd') {
+            f.move(Direction.EAST);
+          } else if (e.getKeyChar() == 'p') {
+            f.pick();
+          }
         }
       }
 
@@ -308,15 +497,5 @@ public class JFrameView extends JFrame implements IView {
     });
   }
 
-  @Override
-  public void refresh() {
-    repaint();
-  }
-
-  @Override
-  public void resetFocus() {
-    setFocusable(true);
-    requestFocus();
-  }
 }
 

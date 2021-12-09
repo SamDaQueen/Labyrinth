@@ -18,17 +18,17 @@ import java.util.Set;
 public class DungeonImpl implements Dungeon {
 
   private final int[] size;
-  private final int interconnectivity;
-  private final boolean wrapping;
-  private final int perOfCavesWTreasure;
   private final int[] start;
   private final int[] end;
-  private final int difficulty;
   private final CaveImpl[][] dungeon;
   private final Player player;
-  private final Set<Edge> edges;
-  private final Miscreant thief;
   private final Random rand;
+  private final Miscreant thief;
+  private int interconnectivity;
+  private boolean wrapping;
+  private int perOfCavesWTreasure;
+  private int difficulty;
+  private Set<Edge> edges;
   private Miscreant nekker;
 
   /**
@@ -96,19 +96,20 @@ public class DungeonImpl implements Dungeon {
    * @param end   the ending node
    */
   public DungeonImpl(CaveImpl[][] caves, int[] start, int[] end) {
-    this.dungeon = caves;
     this.size = new int[]{caves.length, caves[0].length};
-    this.wrapping = false;
-    this.interconnectivity = 0;
-    this.perOfCavesWTreasure = 20;
+    this.dungeon = new CaveImpl[this.size[0]][this.size[1]];
+
+    for (int i = 0; i < this.size[0]; i++) {
+      for (int j = 0; j < this.size[1]; j++) {
+        this.dungeon[i][j] = caves[i][j].copy();
+      }
+    }
+
     this.start = start;
     this.end = end;
     this.player = new Player(this.start[0], this.start[1]);
-    this.edges = new HashSet<>();
-    this.difficulty = 1;
-    this.thief = new Miscreant(1, 1);
-    this.nekker = new Miscreant(1, 2);
     this.rand = new Random();
+    this.thief = new Miscreant(0, 0);
 
     dungeon[start[0]][start[1]].setVisited();
   }
@@ -156,7 +157,7 @@ public class DungeonImpl implements Dungeon {
             treasures.add(Treasure.DIAMOND);
           }
           for (int i = 0; i < rand.nextInt(5); i++) {
-            treasures.add(Treasure.SAPPHIRE);
+            treasures.add(Treasure.EMERALD);
           }
           cave.setTreasures(treasures);
           withTreasure.add(cave);
@@ -883,7 +884,7 @@ public class DungeonImpl implements Dungeon {
    *
    * @return the end as int array
    */
-  int[] getEnd() {
+  public int[] getEnd() {
     return end;
   }
 
@@ -1012,7 +1013,7 @@ public class DungeonImpl implements Dungeon {
     caves[2][2].setOpenings(Direction.WEST);
     caves[2][2].setOpenings(Direction.EAST);
     caves[2][2].setTreasures(Treasure.RUBY);
-    caves[2][2].setTreasures(Treasure.SAPPHIRE);
+    caves[2][2].setTreasures(Treasure.EMERALD);
     caves[2][2].setTreasures(Treasure.DIAMOND);
     caves[2][2].setPit(true);
 
