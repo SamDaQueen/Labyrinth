@@ -45,6 +45,7 @@ public class CommandController implements Controller {
       while (!(model.hasReachedGoal() || model.playerDead())) {
         //System.out.println(model);
         out.append("\n\n");
+        out.append(model.toString());
         out.append(model.printPlayerStatus());
         out.append(model.printCurrentLocation());
         if (model.playerDead()) {
@@ -96,7 +97,7 @@ public class CommandController implements Controller {
       }
 
       if (model.playerDead()) {
-        if (model.metNekker()) {
+        if (model.metShadow()) {
           out.append(
               "\nSadly, you could not survive the combat and are dead."
               + " Video games and movies did not help... Your adventure ends :(");

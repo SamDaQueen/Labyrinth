@@ -29,7 +29,7 @@ public class DungeonImpl implements Dungeon {
   private int perOfCavesWTreasure;
   private int difficulty;
   private Set<Edge> edges;
-  private Miscreant nekker;
+  private Miscreant shadow;
 
   /**
    * Constructs a new Dungeon object.
@@ -82,7 +82,7 @@ public class DungeonImpl implements Dungeon {
     setArrows();
 
     this.thief = addThief();
-    this.nekker = addNekker();
+    this.shadow = addShadow();
     this.player = new Player(start[0], start[1]);
 
     dungeon[start[0]][start[1]].setVisited();
@@ -110,6 +110,7 @@ public class DungeonImpl implements Dungeon {
     this.player = new Player(this.start[0], this.start[1]);
     this.rand = new Random();
     this.thief = new Miscreant(0, 0);
+    this.shadow = new Miscreant(1, 2);
 
     dungeon[start[0]][start[1]].setVisited();
   }
@@ -129,7 +130,7 @@ public class DungeonImpl implements Dungeon {
     this.edges = new HashSet<>();
     this.difficulty = 5;
     this.thief = new Miscreant(1, 1);
-    this.nekker = new Miscreant(1, 2);
+    this.shadow = new Miscreant(1, 2);
     this.rand = new Random();
 
     dungeon[start[0]][start[1]].setVisited();
@@ -235,7 +236,7 @@ public class DungeonImpl implements Dungeon {
     return new Miscreant(row, col);
   }
 
-  private Miscreant addNekker() {
+  private Miscreant addShadow() {
     int row = rand.nextInt(size[0]);
     int col = rand.nextInt(size[1]);
 
@@ -541,10 +542,10 @@ public class DungeonImpl implements Dungeon {
 
     // initialize healths
     int playerHealth = 30;
-    int nekkerHealth = 50;
+    int shadowHealth = 50;
 
     // attack points
-    // nekker
+    // shadow
     int scream = 12;
     int slash = 17;
 
@@ -554,53 +555,53 @@ public class DungeonImpl implements Dungeon {
     int dash = 20;
     int evade = 10;
 
-    int nekkerHit;
+    int shadowHit;
     int playerHit;
 
     // true if player's turn
     boolean playerTurn = true;
 
     builder.append(
-            "\nWhoooshhh! The roaming nekker has found you!\nYou remember all the video"
+            "\nWhoooshhh! The roaming shadow has found you!\nYou remember all the video"
             + " games that you have played and all the movies that you have watched and"
             + " hope that they have trained you well enough for this day...\nYou fight"
-            + " for your life by punching (+").append(punch).append(" damage to nekker)"
+            + " for your life by punching (+").append(punch).append(" damage to shadow)"
                                                                     + ", kicking (+")
-        .append(kick).append(" damage to nekker), dashing (+").append(dash)
-        .append(" damage to nekker) or evading (+").append(evade)
-        .append(" health to player and extra turn).\nThe nekker will also attack"
+        .append(kick).append(" damage to shadow), dashing (+").append(dash)
+        .append(" damage to shadow) or evading (+").append(evade)
+        .append(" health to player and extra turn).\nThe shadow will also attack"
                 + " you with a blood-curdling scream (+").append(scream)
         .append(" damage to player) or a vengeful slash (+").append(slash)
-        .append(" damage to player). The nekker is lethargic and may sometimes"
+        .append(" damage to player). The shadow is lethargic and may sometimes"
                 + " miss, good for you! Will you survive?\n");
     builder.append("\n**********Combat Mode On**********");
 
-    while (playerHealth > 0 && nekkerHealth > 0) {
+    while (playerHealth > 0 && shadowHealth > 0) {
 
-      builder.append("\n\nPlayer Health: ").append(playerHealth).append(" Nekker Health: ")
-          .append(nekkerHealth);
+      builder.append("\n\nPlayer Health: ").append(playerHealth).append(" Shadow Health: ")
+          .append(shadowHealth);
 
       if (playerTurn) {
         builder.append("\nYour turn to attack!");
         playerHit = new Random().nextInt(4);
         switch (playerHit) {
           case 0:
-            builder.append("\nYou punch the nekker in its face causing it ").append(punch)
+            builder.append("\nYou punch the shadow in its face causing it ").append(punch)
                 .append(" damage... ");
-            nekkerHealth -= punch;
+            shadowHealth -= punch;
             break;
           case 1:
-            builder.append("\nYou side kick the nekker causing it ").append(kick)
+            builder.append("\nYou side kick the shadow causing it ").append(kick)
                 .append(" damage... ");
-            nekkerHealth -= kick;
+            shadowHealth -= kick;
             break;
           case 2:
-            builder.append("\nYou dash at the nekker causing it ").append(dash)
+            builder.append("\nYou dash at the shadow causing it ").append(dash)
                 .append(" damage... ");
-            nekkerHealth -= dash;
+            shadowHealth -= dash;
             break;
           case 3:
-            builder.append("\nYou evade the nekker and gain ").append(evade).append(" health... ");
+            builder.append("\nYou evade the shadow and gain ").append(evade).append(" health... ");
             playerHealth += evade;
             playerTurn = false;
             break;
@@ -608,21 +609,21 @@ public class DungeonImpl implements Dungeon {
             break;
         }
       } else {
-        builder.append("\nNekker's turn to strike back!");
-        nekkerHit = new Random().nextInt(3);
-        switch (nekkerHit) {
+        builder.append("\nShadow's turn to strike back!");
+        shadowHit = new Random().nextInt(3);
+        switch (shadowHit) {
           case 0:
-            builder.append("\nThe nekker is annoyed and screams at you.You lose ").append(scream)
+            builder.append("\nThe shadow is annoyed and screams at you.You lose ").append(scream)
                 .append(" health...");
             playerHealth -= scream;
             break;
           case 1:
-            builder.append("\nThe nekker is raging and slashes at you. You lose ").append(slash)
+            builder.append("\nThe shadow is raging and slashes at you. You lose ").append(slash)
                 .append(" health...");
             playerHealth -= slash;
             break;
           case 2:
-            builder.append("\nThe nekker missed and could not hit you...");
+            builder.append("\nThe shadow missed and could not hit you...");
             break;
           default:
             break;
@@ -635,8 +636,8 @@ public class DungeonImpl implements Dungeon {
       player.kill();
     } else {
       builder.append("Video games and movies will be proud of you!\n"
-                     + "You successfully defeated the nekker and will not encounter it again :D");
-      nekker = null;
+                     + "You successfully defeated the shadow and will not encounter it again :D");
+      shadow = null;
     }
     builder.append("\n**********Combat Mode Off**********\n");
   }
@@ -669,8 +670,8 @@ public class DungeonImpl implements Dungeon {
     dungeon[next[0]][next[1]].setVisited();
 
     moveMiscreant(thief);
-    if (nekker != null) {
-      moveMiscreant(nekker);
+    if (shadow != null) {
+      moveMiscreant(shadow);
     }
     updatePlayerTreasure();
     updatePlayerHealth();
@@ -731,7 +732,7 @@ public class DungeonImpl implements Dungeon {
           "Uh-oh! The thief of the dungeon has found you and has taken all of your treasures!\n");
     }
 
-    if (metNekker()) {
+    if (metShadow()) {
       combatMode(builder);
     }
 
@@ -788,11 +789,11 @@ public class DungeonImpl implements Dungeon {
   }
 
   @Override
-  public boolean metNekker() {
-    if (nekker == null) {
+  public boolean metShadow() {
+    if (shadow == null) {
       return false;
     }
-    return Arrays.equals(player.getCurrentPosition(), nekker.getCurrentPosition());
+    return Arrays.equals(player.getCurrentPosition(), shadow.getCurrentPosition());
   }
 
   @Override
@@ -823,8 +824,8 @@ public class DungeonImpl implements Dungeon {
           builder.append("X");
         } else if (dungeon[row][col].hasOtyugh()) {
           builder.append("M");
-        } else if (nekker != null && nekker.getCurrentPosition()[0] == row
-                   && nekker.getCurrentPosition()[1] == col) {
+        } else if (shadow != null && shadow.getCurrentPosition()[0] == row
+                   && shadow.getCurrentPosition()[1] == col) {
           builder.append("W");
         } else if (dungeon[row][col].hasPit()) {
           builder.append("H");
@@ -942,6 +943,14 @@ public class DungeonImpl implements Dungeon {
    */
   public CaveImpl[][] getDungeon() {
     return Arrays.copyOf(dungeon, size[0]);
+  }
+
+  @Override
+  public int[] getShadowPos() {
+    if (shadow != null) {
+      return new int[]{shadow.getCurrentPosition()[0], shadow.getCurrentPosition()[1]};
+    }
+    return null;
   }
 
   /**

@@ -15,7 +15,7 @@ public class Main {
 
     if (args.length == 0) {
       // View mode
-      Dungeon model = new DungeonImpl(new int[]{6, 6}, 10, true, 30, 2);
+      Dungeon model = new DungeonImpl(new int[]{6, 6}, 10, true, 30, 1);
       IView view = new JFrameView(model);
       Features controller = new ViewController(model, view);
 
@@ -33,8 +33,8 @@ public class Main {
       System.out.println(
           "\n*****Welcome to the Labyrinth! Navigate this maze while collecting"
           + " treasures and trying to find the exit!*****\nBut beware of the Otyughs!! "
-          + "As they might try to eat you.\nP.S. There are Nekkers roaming in the dungeon"
-          + " that scream and slash at you, you can try to fight them...\nAlso, "
+          + "As they might try to eat you.\nP.S. There is a Shadow roaming in the dungeon"
+          + " that screams and slashes at you, you can try to fight it...\nAlso, "
           + "there is a thief that would take all your treasures if you meet them.\n"
           + "Good luck, brave explorer!:)");
 

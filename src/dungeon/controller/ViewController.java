@@ -35,8 +35,8 @@ public class ViewController implements Features {
       int difficulty) {
     model = new DungeonImpl(size, interconnectivity, wrapping, treasures, difficulty);
     view.setModel(model);
-    view.refresh();
     view.resetFocus();
+    view.refresh();
   }
 
   @Override
@@ -44,29 +44,29 @@ public class ViewController implements Features {
     System.out.println("reset game");
     model = new DungeonImpl(dungeonCopy.getDungeon(), dungeonCopy.getStart(), dungeonCopy.getEnd());
     view.setModel(model);
-    view.refresh();
     view.resetFocus();
+    view.refresh();
   }
 
   @Override
   public void move(Direction d) {
-    System.out.println(d);
     try {
       model.movePlayer(d);
     } catch (IllegalStateException ise) {
       // ignore move
     }
-    if (model.playerDead()) {
-      if (model.metNekker()) {
-        view.endGame(
-            "Sadly, you could not survive the combat and are dead."
-            + " Video games and movies did not help... Your adventure ends :(");
-      } else {
-        view.endGame("Sadly, you were devoured by the hungry Otyugh!! Your adventure ends :( ");
-      }
-    } else if (model.hasReachedGoal()) {
-      view.endGame("Hurray! You have found the exit of the dungeon and your status is: ");
-    }
+    // System.out.println(model.printCurrentLocation());
+//    if (model.playerDead()) {
+//      if (model.metShadow()) {
+//        view.endGame(
+//            "Sadly, you could not survive the combat and are dead."
+//            + " Video games and movies did not help... Your adventure ends :(");
+//      } else {
+//        view.endGame("Sadly, you were devoured by the hungry Otyugh!! Your adventure ends :( ");
+//      }
+//    } else if (model.hasReachedGoal()) {
+//      view.endGame("Hurray! You have found the exit of the dungeon and your status is: ");
+//    }
     view.refresh();
   }
 
@@ -74,6 +74,20 @@ public class ViewController implements Features {
   public void pick() {
     model.pickTreasure();
     model.pickArrows();
+    view.refresh();
+  }
+
+  @Override
+  public void shoot(Direction d, int distance) {
+    int shot = model.shoot(d, distance);
+    if (shot == 0) {
+      view.showDialog("Your arrow could not reach the Otyugh. What a waste!");
+    } else if (shot == 1) {
+      view.showDialog("Your arrow hit the Otyugh and you hear a piercing howl!");
+    } else {
+      view.showDialog("Your have successfully hit the Otyugh twice and it is now dead!");
+    }
+    view.resetFocus();
     view.refresh();
   }
 

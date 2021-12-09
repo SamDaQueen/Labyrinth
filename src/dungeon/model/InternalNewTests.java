@@ -263,24 +263,24 @@ public class InternalNewTests {
   }
 
   @Test
-  public void singleNekker() {
+  public void singleShadow() {
     for (int i = 0; i < 100; i++) {
-      boolean nekker = false;
+      boolean shadow = false;
 
       dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 10, 1);
       for (int row = 0; row < 5; row++) {
         for (int col = 0; col < 5; col++) {
           dungeon.getPlayer().setCurrentPosition(row, col);
-          if (dungeon.metNekker()) {
-            nekker = true;
+          if (dungeon.metShadow()) {
+            shadow = true;
             break;
           }
         }
-        if (nekker) {
+        if (shadow) {
           break;
         }
       }
-      assertTrue(nekker);
+      assertTrue(shadow);
     }
   }
 

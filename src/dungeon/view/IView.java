@@ -14,4 +14,6 @@ public interface IView {
   void resetFocus();
 
   void endGame(String message);
+
+  void showDialog(String message);
 }

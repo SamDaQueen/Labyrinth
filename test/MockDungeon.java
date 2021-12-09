@@ -38,13 +38,18 @@ public class MockDungeon implements Dungeon {
   }
 
   @Override
-  public boolean metNekker() {
+  public boolean metShadow() {
     return false;
   }
 
   @Override
   public CaveImpl[][] getDungeon() {
     return new CaveImpl[0][];
+  }
+
+  @Override
+  public int[] getShadowPos() {
+    return new int[0];
   }
 
   @Override

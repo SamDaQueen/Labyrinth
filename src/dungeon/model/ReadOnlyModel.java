@@ -83,11 +83,11 @@ public interface ReadOnlyModel {
   boolean metThief();
 
   /**
-   * Check whether the nekker and the player are in the same cell.
+   * Check whether the shadow and the player are in the same cell.
    *
-   * @return true if nekker found player
+   * @return true if shadow found player
    */
-  boolean metNekker();
+  boolean metShadow();
 
   /**
    * Returns the dungeon
@@ -98,4 +98,6 @@ public interface ReadOnlyModel {
 
 
   int[] getEnd();
+
+  int[] getShadowPos();
 }

@@ -15,5 +15,7 @@ public interface Features {
 
   void pick();
 
+  void shoot(Direction d, int distance);
+
 
 }

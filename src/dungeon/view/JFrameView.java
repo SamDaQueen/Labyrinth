@@ -1,5 +1,10 @@
 package dungeon.view;
 
+import static dungeon.model.Direction.EAST;
+import static dungeon.model.Direction.NORTH;
+import static dungeon.model.Direction.SOUTH;
+import static dungeon.model.Direction.WEST;
+
 import dungeon.controller.Features;
 import dungeon.model.CaveImpl;
 import dungeon.model.Direction;
@@ -52,7 +57,9 @@ public class JFrameView extends JFrame implements IView {
   private JButton resetBtn, restartBtn, quitBtn;
   private JPanel dungeonView;
   private boolean gameOver;
-
+  private boolean shootFlag;
+  private boolean shootDirectionFlag;
+  private Direction shootDirection;
 
   public JFrameView(ReadOnlyModel model) {
     super("Labyrinth: The Game");
@@ -149,20 +156,23 @@ public class JFrameView extends JFrame implements IView {
 
       // monsters
       imageMap.put("otyugh", ImageIO.read(new File("icons/otyugh_small.png")));
-      imageMap.put("nekker", ImageIO.read(new File("icons/nekker.png")));
+      imageMap.put("shadow", ImageIO.read(new File("icons/shadow.png")));
 
       // stench
       imageMap.put("weakStench", ImageIO.read(new File("icons/stench01.png")));
       imageMap.put("strongStench", ImageIO.read(new File("icons/stench02.png")));
 
       // player
-      imageMap.put("sam", ImageIO.read(new File("icons/sam52.png")));
+      imageMap.put("sam", ImageIO.read(new File("icons/sam.png")));
 
       // breeze
       imageMap.put("breeze", ImageIO.read(new File("icons/breeze.png")));
 
       // pit
       imageMap.put("pit", ImageIO.read(new File("icons/pit.png")));
+
+      // thief
+      imageMap.put("thief", ImageIO.read(new File("icons/thief.png")));
 
 
     } catch (
@@ -175,7 +185,7 @@ public class JFrameView extends JFrame implements IView {
   private void setUpCaveView() {
 
     // cave view dimensions
-    Dimension caveDim = new Dimension(280, 1000);
+    Dimension caveDim = new Dimension(250, 1000);
 
     // add the cave description panel to the left
     JPanel caveDescView = new JPanel();
@@ -332,9 +342,9 @@ public class JFrameView extends JFrame implements IView {
         dungeonView.add(place);
       }
     }
-    dungeonView.updateUI();
     caveDesc.setText(model.printCurrentLocation());
     playerDesc.setText(model.printPlayerStatus());
+    dungeonView.updateUI();
     repaint();
   }
 
@@ -344,6 +354,7 @@ public class JFrameView extends JFrame implements IView {
     CaveImpl[][] caves = model.getDungeon();
 
     int[] current = model.getPos();
+    int[] shadowPos = model.getShadowPos();
 
     BufferedImage[][] images = new BufferedImage[row][col];
     for (int i = 0; i < row; i++) {
@@ -354,7 +365,7 @@ public class JFrameView extends JFrame implements IView {
         } else {
           Set<Direction> directionList = caves[i][j].getOpenings();
           StringBuilder stringBuilder = new StringBuilder();
-          if (directionList.contains(Direction.NORTH)) {
+          if (directionList.contains(NORTH)) {
             stringBuilder.append("N");
           }
           if (directionList.contains(Direction.SOUTH)) {
@@ -398,8 +409,10 @@ public class JFrameView extends JFrame implements IView {
           if (caves[i][j].hasOtyugh()) {
             image = overlay(image, imageMap.get("otyugh"), 10, 5);
           }
-          if (model.metNekker() && current[0] == i && current[1] == j) {
-            image = overlay(image, imageMap.get("nekker"), 10, 5);
+          if (shadowPos != null) {
+            if (shadowPos[0] == i && shadowPos[1] == j) {
+              image = overlay(image, imageMap.get("shadow"), 10, 5);
+            }
           }
           if (model.printCurrentLocation().contains("strong stench") && current[0] == i
               && current[1] == j) {
@@ -407,6 +420,9 @@ public class JFrameView extends JFrame implements IView {
           } else if (model.printCurrentLocation().contains("faint stench") && current[0] == i
                      && current[1] == j) {
             image = overlay(image, imageMap.get("weakStench"), 0, 0);
+          }
+          if (model.metThief() && current[0] == i && current[1] == j) {
+            image = overlay(image, imageMap.get("thief"), 30, 5);
           }
 
           // breeze
@@ -455,6 +471,12 @@ public class JFrameView extends JFrame implements IView {
   }
 
   @Override
+  public void showDialog(String message) {
+    JOptionPane.showMessageDialog(this, message, "Shooting Result!",
+        JOptionPane.PLAIN_MESSAGE);
+  }
+
+  @Override
   public void setModel(Dungeon model) {
     this.model = model;
   }
@@ -473,9 +495,9 @@ public class JFrameView extends JFrame implements IView {
 
       @Override
       public void keyPressed(KeyEvent e) {
-        if (!gameOver) {
+        if (!gameOver && !shootFlag) {
           if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyChar() == 'w') {
-            f.move(Direction.NORTH);
+            f.move(NORTH);
           } else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyChar() == 's') {
             f.move(Direction.SOUTH);
           } else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyChar() == 'a') {
@@ -490,6 +512,54 @@ public class JFrameView extends JFrame implements IView {
 
       @Override
       public void keyReleased(KeyEvent e) {
+        if (!gameOver) {
+          if (e.getKeyChar() == 'k') {
+            System.out.println("shoot");
+            shootFlag = true;
+          }
+          if (shootFlag) {
+            if (e.getKeyCode() == KeyEvent.VK_UP) {
+              System.out.println("shoot up");
+              shootDirectionFlag = true;
+              shootDirection = NORTH;
+            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+              System.out.println("shoot right");
+              shootDirectionFlag = true;
+              shootDirection = EAST;
+            } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+              System.out.println("shoot down");
+              shootDirectionFlag = true;
+              shootDirection = SOUTH;
+            } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+              System.out.println("shoot left");
+              shootDirectionFlag = true;
+              shootDirection = WEST;
+            }
+          }
+          if (shootFlag && shootDirectionFlag) {
+            if (e.getKeyCode() == KeyEvent.VK_1 || e.getKeyCode() == KeyEvent.VK_NUMPAD1) {
+              shootFlag = false;
+              shootDirectionFlag = false;
+              f.shoot(shootDirection, 1);
+            } else if (e.getKeyCode() == KeyEvent.VK_2 || e.getKeyCode() == KeyEvent.VK_NUMPAD2) {
+              shootFlag = false;
+              shootDirectionFlag = false;
+              f.shoot(shootDirection, 2);
+            } else if (e.getKeyCode() == KeyEvent.VK_3 || e.getKeyCode() == KeyEvent.VK_NUMPAD3) {
+              shootFlag = false;
+              shootDirectionFlag = false;
+              f.shoot(shootDirection, 1);
+            } else if (e.getKeyCode() == KeyEvent.VK_4 || e.getKeyCode() == KeyEvent.VK_NUMPAD4) {
+              shootFlag = false;
+              shootDirectionFlag = false;
+              f.shoot(shootDirection, 1);
+            } else if (e.getKeyCode() == KeyEvent.VK_5 || e.getKeyCode() == KeyEvent.VK_NUMPAD5) {
+              shootFlag = false;
+              shootDirectionFlag = false;
+              f.shoot(shootDirection, 1);
+            }
+          }
+        }
       }
     });
   }
