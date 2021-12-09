@@ -54,7 +54,7 @@ If you hit the monster once, it will be injured and if you encounter them, you m
 </li>
 <li><p>Restart Game: Restart the game with a new dungeon</p>
 </li>
-<li><p>Menu&gt;Settings: Customize the game settings:</p>
+<li><p>Menu&gt;Settings: Customize the game settings and start a new game:</p>
 <ul>
 <li><strong>Rows</strong>: the number of rows in the dungeon (minimum 4, maximum 25)</li>
 <li><strong>Columns</strong>: the number of columns in the dungeon (minimum 4, maximum 25)</li>

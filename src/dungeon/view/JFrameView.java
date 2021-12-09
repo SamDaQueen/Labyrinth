@@ -6,9 +6,8 @@ import static dungeon.model.Direction.SOUTH;
 import static dungeon.model.Direction.WEST;
 
 import dungeon.controller.Features;
-import dungeon.model.CaveImpl;
 import dungeon.model.Direction;
-import dungeon.model.Dungeon;
+import dungeon.model.ReadOnlyCave;
 import dungeon.model.ReadOnlyModel;
 import dungeon.model.Treasure;
 import java.awt.BorderLayout;
@@ -52,6 +51,11 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
+/**
+ * Class to set up the JFrame in which the game will be displayed. Implements the IView class that
+ * offers functionalities to the controller to update the view. Contains components of the view as
+ * well as a read-only copy of the model to update the contents of the view using it.
+ */
 public class JFrameView extends JFrame implements IView {
 
   private final int MAX_WIDTH = 1400;
@@ -66,6 +70,11 @@ public class JFrameView extends JFrame implements IView {
   private Direction shootDirection;
   private int playerRow, playerCol, cellSize;
 
+  /**
+   * Constructor for creating an instance of the JFrameView class with the given read-only model.
+   *
+   * @param model the read-only model
+   */
   public JFrameView(ReadOnlyModel model) {
     super("Labyrinth: The Game");
 
@@ -185,7 +194,7 @@ public class JFrameView extends JFrame implements IView {
   }
 
   @Override
-  public void setModel(Dungeon model) {
+  public void setModel(ReadOnlyModel model) {
     this.model = model;
   }
 
@@ -426,7 +435,7 @@ public class JFrameView extends JFrame implements IView {
 
     // add the cave description panel to the left
     JPanel caveDescView = new JPanel();
-    caveDescView.setBorder(BorderFactory.createTitledBorder("Current Cave Description"));
+    caveDescView.setBorder(BorderFactory.createTitledBorder("Current ReadOnlyCave Description"));
 
     // add the label heading field
     caveDesc = new CustomJTextArea(model.printCurrentLocation());
@@ -569,7 +578,7 @@ public class JFrameView extends JFrame implements IView {
   private BufferedImage[][] getDungeonImages() {
     int row = model.getSize()[0];
     int col = model.getSize()[1];
-    CaveImpl[][] caves = model.getDungeon();
+    ReadOnlyCave[][] caves = model.getDungeon();
 
     int[] current = model.getPos();
     int[] shadowPos = model.getShadowPos();
@@ -683,7 +692,7 @@ public class JFrameView extends JFrame implements IView {
     return combined;
   }
 
-  BufferedImage resize(BufferedImage starting, int scale) {
+  private BufferedImage resize(BufferedImage starting, int scale) {
     BufferedImage newImage = new BufferedImage(scale, scale,
         BufferedImage.TYPE_INT_ARGB);
     Graphics g = newImage.getGraphics();

@@ -123,7 +123,7 @@ public class InternalNewTests {
     fixedDungeon.movePlayer(Direction.WEST);
     fixedDungeon.movePlayer(Direction.SOUTH);
     assertTrue(fixedDungeon.pickTreasure());
-    assertEquals("[RUBY, SAPPHIRE, DIAMOND]",
+    assertEquals("[RUBY, EMERALD, DIAMOND]",
         fixedDungeon.getPlayer().getCollectedTreasure().toString());
   }
 

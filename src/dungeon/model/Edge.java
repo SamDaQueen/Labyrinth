@@ -5,8 +5,8 @@ package dungeon.model;
  */
 class Edge {
 
-  private final CaveImpl cave1;
-  private final CaveImpl cave2;
+  private final Cave cave1;
+  private final Cave cave2;
 
   /**
    * Constructor for creating an edge.
@@ -14,7 +14,7 @@ class Edge {
    * @param cave1 cave 1
    * @param cave2 cave 2
    */
-  Edge(CaveImpl cave1, CaveImpl cave2) {
+  Edge(Cave cave1, Cave cave2) {
     this.cave1 = cave1;
     this.cave2 = cave2;
   }
@@ -24,7 +24,7 @@ class Edge {
    *
    * @return the cave
    */
-  CaveImpl getCave1() {
+  Cave getCave1() {
     return cave1;
   }
 
@@ -33,7 +33,7 @@ class Edge {
    *
    * @return the cave
    */
-  CaveImpl getCave2() {
+  Cave getCave2() {
     return cave2;
   }
 

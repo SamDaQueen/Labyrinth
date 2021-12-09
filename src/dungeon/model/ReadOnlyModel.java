@@ -34,6 +34,13 @@ public interface ReadOnlyModel {
   int[] getStart();
 
   /**
+   * Returns the end point of the dungeon as an int array.
+   *
+   * @return the ending location
+   */
+  int[] getEnd();
+
+  /**
    * Returns the current position of the player as an int array.
    *
    * @return the current location
@@ -94,10 +101,12 @@ public interface ReadOnlyModel {
    *
    * @return the caves in the dungeon
    */
-  CaveImpl[][] getDungeon();
+  Cave[][] getDungeon();
 
-
-  int[] getEnd();
-
+  /**
+   * Returns the position of the Shadow monster as an int array.
+   *
+   * @return position of shadow
+   */
   int[] getShadowPos();
 }

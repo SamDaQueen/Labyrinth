@@ -98,7 +98,7 @@ public class InternalTest {
   @Test
   public void testWrapping() {
     dungeon = new DungeonImpl(new int[]{5, 5}, 0, true, 20, 1);
-    CaveImpl[][] cave = dungeon.getDungeon();
+    Cave[][] cave = dungeon.getDungeon();
     assertTrue(checkWrapping(cave));
 
     dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 20, 1);
@@ -143,13 +143,13 @@ public class InternalTest {
   public void printCurrentLocation() {
     dungeonFixed = new DungeonImpl(getCaves(), new int[]{4, 3}, new int[]{0, 1});
     assertEquals(
-        "Player is at location: [4,3]: CaveImpl Available directions: [NORTH, EAST, WEST]"
+        "Player is at location: [4,3]: Cave Available directions: [NORTH, EAST, WEST]"
         + " Treasures: []"
         + " Arrows: 0 \n",
         dungeonFixed.printCurrentLocation());
     dungeonFixed.movePlayer(Direction.EAST);
     assertEquals(
-        "Player is at location: [4,4]: CaveImpl Available directions: [WEST] Treasures:"
+        "Player is at location: [4,4]: Cave Available directions: [WEST] Treasures:"
         + " [RUBY, RUBY, SAPPHIRE]"
         + " Arrows: 0 \n",
         dungeonFixed.printCurrentLocation());
@@ -195,10 +195,10 @@ public class InternalTest {
 
   @Test
   public void traversal() {
-    CaveImpl[][] caves = new CaveImpl[3][4];
+    Cave[][] caves = new Cave[3][4];
     for (int row = 0; row < 3; row++) {
       for (int col = 0; col < 4; col++) {
-        caves[row][col] = new CaveImpl();
+        caves[row][col] = new Cave();
       }
     }
 
@@ -270,7 +270,7 @@ public class InternalTest {
 
   @Test
   public void downToUp() {
-    CaveImpl[][] caves = getCaves();
+    Cave[][] caves = getCaves();
     makeWrapping(caves);
     dungeonFixed = new DungeonImpl(caves, new int[]{4, 3}, new int[]{0, 1});
     dungeonFixed.movePlayer(Direction.WEST);
@@ -280,7 +280,7 @@ public class InternalTest {
 
   @Test
   public void upToDown() {
-    CaveImpl[][] caves = getCaves();
+    Cave[][] caves = getCaves();
     makeWrapping(caves);
     dungeonFixed = new DungeonImpl(caves, new int[]{4, 3}, new int[]{0, 1});
     dungeonFixed.movePlayer(Direction.NORTH);
@@ -294,7 +294,7 @@ public class InternalTest {
 
   @Test
   public void leftToRight() {
-    CaveImpl[][] caves = getCaves();
+    Cave[][] caves = getCaves();
     makeWrapping(caves);
     dungeonFixed = new DungeonImpl(caves, new int[]{4, 3}, new int[]{0, 1});
     dungeonFixed.movePlayer(Direction.WEST);
@@ -307,7 +307,7 @@ public class InternalTest {
 
   @Test
   public void rightToLeft() {
-    CaveImpl[][] caves = getCaves();
+    Cave[][] caves = getCaves();
     makeWrapping(caves);
     dungeonFixed = new DungeonImpl(caves, new int[]{4, 3}, new int[]{0, 1});
     dungeonFixed.movePlayer(Direction.NORTH);
@@ -337,7 +337,7 @@ public class InternalTest {
   }
 
 
-  private void makeWrapping(CaveImpl[][] caves) {
+  private void makeWrapping(Cave[][] caves) {
     caves[0][0].setOpenings(Direction.NORTH);
     caves[0][0].setOpenings(Direction.WEST);
     caves[0][1].setOpenings(Direction.NORTH);
@@ -355,7 +355,7 @@ public class InternalTest {
     caves[4][2].setOpenings(Direction.SOUTH);
   }
 
-  private boolean checkWrapping(CaveImpl[][] cave) {
+  private boolean checkWrapping(Cave[][] cave) {
     boolean wrapping = false;
     for (int row = 0; row < 5; row++) {
       if (cave[row][0].getOpenings().contains(Direction.WEST)) {
@@ -374,11 +374,11 @@ public class InternalTest {
     return wrapping;
   }
 
-  private CaveImpl[][] getCaves() {
-    CaveImpl[][] caves = new CaveImpl[5][5];
+  private Cave[][] getCaves() {
+    Cave[][] caves = new Cave[5][5];
     for (int row = 0; row < 5; row++) {
       for (int col = 0; col < 5; col++) {
-        caves[row][col] = new CaveImpl();
+        caves[row][col] = new Cave();
       }
     }
 

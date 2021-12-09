@@ -5,11 +5,21 @@ import dungeon.model.Direction;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Class to implement the functionality of getting the click position on the dungeon and attempting
+ * to move/pick according to it.
+ */
 public class ClickAdapter extends MouseAdapter {
 
   private final Features listener;
   private final IView view;
 
+  /**
+   * Constructor for the click adapter class.
+   *
+   * @param listener The controller used to call methods
+   * @param view     the view used for getting information
+   */
   public ClickAdapter(Features listener, IView view) {
     this.listener = listener;
     this.view = view;

@@ -20,7 +20,7 @@ public class DungeonImpl implements Dungeon {
   private final int[] size;
   private final int[] start;
   private final int[] end;
-  private final CaveImpl[][] dungeon;
+  private final Cave[][] dungeon;
   private final Player player;
   private final Random rand;
   private final Miscreant thief;
@@ -98,9 +98,9 @@ public class DungeonImpl implements Dungeon {
    * @param start the starting node
    * @param end   the ending node
    */
-  public DungeonImpl(CaveImpl[][] caves, int[] start, int[] end) {
+  public DungeonImpl(Cave[][] caves, int[] start, int[] end) {
     this.size = new int[]{caves.length, caves[0].length};
-    this.dungeon = new CaveImpl[this.size[0]][this.size[1]];
+    this.dungeon = new Cave[this.size[0]][this.size[1]];
 
     for (int i = 0; i < this.size[0]; i++) {
       for (int j = 0; j < this.size[1]; j++) {
@@ -141,13 +141,13 @@ public class DungeonImpl implements Dungeon {
   }
 
   private void setTreasureInCaves() {
-    Set<CaveImpl> withTreasure = new HashSet<>();
-    List<CaveImpl> caves = getCaves();
+    Set<Cave> withTreasure = new HashSet<>();
+    List<Cave> caves = getCaves();
 
     while (withTreasure.size() <= perOfCavesWTreasure * getNumberOfCaves() / 100) {
       if (caves.size() > 0) {
         int choose = rand.nextInt(caves.size());
-        CaveImpl cave = caves.get(choose);
+        Cave cave = caves.get(choose);
         if (cave.hasPit()) {
           continue;
         }
@@ -174,8 +174,8 @@ public class DungeonImpl implements Dungeon {
   }
 
   private void setOtyughsInCaves() {
-    Set<CaveImpl> withOtyugh = new HashSet<>();
-    List<CaveImpl> caves = getCaves();
+    Set<Cave> withOtyugh = new HashSet<>();
+    List<Cave> caves = getCaves();
 
     // add otyugh at the end
     dungeon[end[0]][end[1]].addOtyugh();
@@ -188,7 +188,7 @@ public class DungeonImpl implements Dungeon {
     while (withOtyugh.size() < Math.min(difficulty, getNumberOfCaves() - 2)) {
       if (caves.size() > 0) {
         int choose = rand.nextInt(caves.size());
-        CaveImpl cave = caves.get(choose);
+        Cave cave = caves.get(choose);
         if (cave.hasPit()) {
           continue;
         }
@@ -204,7 +204,7 @@ public class DungeonImpl implements Dungeon {
   }
 
   private void setPitInDungeon() {
-    List<CaveImpl> caves = getCaves();
+    List<Cave> caves = getCaves();
     // remove start and end from possible pit caves
     caves.remove(dungeon[end[0]][end[1]]);
     caves.remove(dungeon[start[0]][start[1]]);
@@ -212,7 +212,7 @@ public class DungeonImpl implements Dungeon {
   }
 
   private void setArrows() {
-    Set<CaveImpl> withArrows = new HashSet<>();
+    Set<Cave> withArrows = new HashSet<>();
 
     while (withArrows.size() <= perOfCavesWTreasure * size[0] * size[1] / 100) {
       int row = rand.nextInt(size[0]);
@@ -251,8 +251,8 @@ public class DungeonImpl implements Dungeon {
     return new Miscreant(row, col);
   }
 
-  private List<CaveImpl> getCaves() {
-    List<CaveImpl> caves = new ArrayList<>();
+  private List<Cave> getCaves() {
+    List<Cave> caves = new ArrayList<>();
     for (int i = 0; i < size[0]; i++) {
       for (int j = 0; j < size[1]; j++) {
         if (!dungeon[i][j].isTunnel()) {
@@ -263,12 +263,12 @@ public class DungeonImpl implements Dungeon {
     return caves;
   }
 
-  private CaveImpl[][] createDungeon() {
-    CaveImpl[][] dungeon = new CaveImpl[size[0]][size[1]];
+  private Cave[][] createDungeon() {
+    Cave[][] dungeon = new Cave[size[0]][size[1]];
 
     for (int i = 0; i < size[0]; i++) {
       for (int j = 0; j < size[1]; j++) {
-        dungeon[i][j] = new CaveImpl();
+        dungeon[i][j] = new Cave();
       }
     }
 
@@ -277,7 +277,7 @@ public class DungeonImpl implements Dungeon {
     return dungeon;
   }
 
-  private void createPaths(CaveImpl[][] dungeon) {
+  private void createPaths(Cave[][] dungeon) {
 
     List<Edge> potentialEdges = new ArrayList<>();
 
@@ -312,7 +312,7 @@ public class DungeonImpl implements Dungeon {
     kruskals(potentialEdges, dungeon);
   }
 
-  private void setCaveNeighbours(CaveImpl[][] dungeon) {
+  private void setCaveNeighbours(Cave[][] dungeon) {
 
     // add neighbors for caves
     for (int row = 0; row < size[0]; row++) {
@@ -363,28 +363,28 @@ public class DungeonImpl implements Dungeon {
     }
   }
 
-  private void kruskals(List<Edge> potentialEdges, CaveImpl[][] dungeon) {
+  private void kruskals(List<Edge> potentialEdges, Cave[][] dungeon) {
 
     // create set of all the caves
-    Set<Set<CaveImpl>> sets = new HashSet<>();
-    for (CaveImpl[] caves : dungeon) {
-      for (CaveImpl c : caves) {
-        Set<CaveImpl> set = new HashSet<>();
+    Set<Set<Cave>> sets = new HashSet<>();
+    for (Cave[] caves : dungeon) {
+      for (Cave c : caves) {
+        Set<Cave> set = new HashSet<>();
         set.add(c);
         sets.add(set);
       }
     }
 
-    Set<Set<CaveImpl>> newSetOfSets = new HashSet<>(sets);
+    Set<Set<Cave>> newSetOfSets = new HashSet<>(sets);
     List<Edge> leftovers = new ArrayList<>();
 
     while (newSetOfSets.size() > 1) {
       int random = rand.nextInt(potentialEdges.size());
       Edge edge = potentialEdges.get(random);
 
-      Set<CaveImpl> newSet = new HashSet<>();
+      Set<Cave> newSet = new HashSet<>();
 
-      for (Set<CaveImpl> set : sets) {
+      for (Set<Cave> set : sets) {
         if (set.contains(edge.getCave1()) && set.contains(edge.getCave2())) {
           leftovers.add(edge);
           potentialEdges.remove(edge);
@@ -684,7 +684,7 @@ public class DungeonImpl implements Dungeon {
     // move the miscreant with 50% probability
     if (rand.nextInt(2) == 1) {
       int[] current = miscreant.getCurrentPosition();
-      CaveImpl cave = dungeon[current[0]][current[1]];
+      Cave cave = dungeon[current[0]][current[1]];
       Direction d = new ArrayList<>(cave.getOpenings()).get(
           rand.nextInt(cave.getOpenings().size()));
       int[] next = getNextCave(current, d);
@@ -944,7 +944,7 @@ public class DungeonImpl implements Dungeon {
    *
    * @return copy of caves
    */
-  public CaveImpl[][] getDungeon() {
+  public Cave[][] getDungeon() {
     return Arrays.copyOf(dungeon, size[0]);
   }
 
@@ -971,11 +971,11 @@ public class DungeonImpl implements Dungeon {
    *
    * @return the dungeon
    */
-  private CaveImpl[][] getFixedDungeon() {
-    CaveImpl[][] caves = new CaveImpl[4][4];
+  private Cave[][] getFixedDungeon() {
+    Cave[][] caves = new Cave[4][4];
     for (int row = 0; row < 4; row++) {
       for (int col = 0; col < 4; col++) {
-        caves[row][col] = new CaveImpl();
+        caves[row][col] = new Cave();
       }
     }
 
