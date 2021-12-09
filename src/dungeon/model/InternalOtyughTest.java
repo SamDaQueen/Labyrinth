@@ -69,7 +69,7 @@ public class InternalOtyughTest {
     boolean inTunnel = false;
     for (int i = 0; i < 100; i++) {
       dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 20, 1);
-      Cave[][] caves = dungeon.getDungeon();
+      CaveImpl[][] caves = dungeon.getDungeon();
       for (int row = 0; row < 5; row++) {
         for (int col = 0; col < 5; col++) {
           if (caves[row][col].hasOtyugh()) {
@@ -85,7 +85,7 @@ public class InternalOtyughTest {
 
 
   private int countOtyughs(DungeonImpl dungeon) {
-    Cave[][] caves = dungeon.getDungeon();
+    CaveImpl[][] caves = dungeon.getDungeon();
     int otyughs = 0;
     for (int row = 0; row < 5; row++) {
       for (int col = 0; col < 5; col++) {

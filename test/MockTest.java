@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Class for isolating the TextController and then testing it using a mock model.
+ * Class for isolating the Controller and then testing it using a mock model.
  */
 public class MockTest {
 

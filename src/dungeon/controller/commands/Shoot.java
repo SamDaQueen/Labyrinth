@@ -1,6 +1,6 @@
 package dungeon.controller.commands;
 
-import dungeon.controller.TextController;
+import dungeon.controller.Controller;
 import dungeon.model.Direction;
 import dungeon.model.Dungeon;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.util.Locale;
  * Class for executing the shoot command to attempt shooting an arrow in a given direction for a
  * given distance.
  */
-public class Shoot implements TextController {
+public class Shoot implements Controller {
 
   private final int steps;
   private Direction direction;

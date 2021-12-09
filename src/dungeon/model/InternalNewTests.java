@@ -263,24 +263,24 @@ public class InternalNewTests {
   }
 
   @Test
-  public void singleMonster() {
+  public void singleNekker() {
     for (int i = 0; i < 100; i++) {
-      boolean monster = false;
+      boolean nekker = false;
 
       dungeon = new DungeonImpl(new int[]{5, 5}, 0, false, 10, 1);
       for (int row = 0; row < 5; row++) {
         for (int col = 0; col < 5; col++) {
           dungeon.getPlayer().setCurrentPosition(row, col);
-          if (dungeon.metMonster()) {
-            monster = true;
+          if (dungeon.metNekker()) {
+            nekker = true;
             break;
           }
         }
-        if (monster) {
+        if (nekker) {
           break;
         }
       }
-      assertTrue(monster);
+      assertTrue(nekker);
     }
   }
 

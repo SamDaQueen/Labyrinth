@@ -2,19 +2,7 @@ package dungeon.model;
 
 import java.util.List;
 
-/**
- * The dungeon interface represents a maze with caves and tunnels. Caves can have treasures. A
- * player can move around the dungeon to find the exit as well as collect the treasure along the
- * way.
- */
-public interface Dungeon extends ReadOnlyModel {
-
-  /**
-   * Moves the player in the given direction from among NORTH, EAST, SOUTH, WEST.
-   *
-   * @param d the direction
-   */
-  void movePlayer(Direction d);
+public interface ReadOnlyModel {
 
   /**
    * Print the player status including the treasure that the player has collected and the score.
@@ -30,16 +18,6 @@ public interface Dungeon extends ReadOnlyModel {
    * @return printable string
    */
   String printCurrentLocation();
-
-  /**
-   * Provides the player the functionality to pick up the treasure in the current location.
-   */
-  boolean pickTreasure();
-
-  /**
-   * Provides the player the functionality to pick up the arrows in the current location.
-   */
-  boolean pickArrows();
 
   /**
    * Returns the size of the dungeon as an int array.
@@ -61,7 +39,6 @@ public interface Dungeon extends ReadOnlyModel {
    * @return the current location
    */
   int[] getPos();
-
 
   /**
    * Return true if the dungeon is wrapping.
@@ -92,15 +69,6 @@ public interface Dungeon extends ReadOnlyModel {
   List<Direction> getPossibleMoves();
 
   /**
-   * Shoot the arrow in the given direction for the given distance.
-   *
-   * @param direction the direction
-   * @param steps     the distance
-   * @return whether an Otyugh was hit, 0 if no hit, 1 if first hit, 2 if second hit
-   */
-  int shoot(Direction direction, int steps);
-
-  /**
    * Know if the current location has a breeze, indicating a pit in any of the neighboring caves.
    *
    * @return true if breeze present
@@ -127,4 +95,6 @@ public interface Dungeon extends ReadOnlyModel {
    * @return the caves in the dungeon
    */
   CaveImpl[][] getDungeon();
+
+
 }

@@ -9,7 +9,7 @@ class Miscreant {
   }
 
   /**
-   * Get the current position of the monster in the dungeon.
+   * Get the current position of the miscreant in the dungeon.
    *
    * @return [row, col]
    */
@@ -18,7 +18,7 @@ class Miscreant {
   }
 
   /**
-   * Update the current position of the monster.
+   * Update the current position of the miscreant.
    *
    * @param row the new roe
    * @param col the new col

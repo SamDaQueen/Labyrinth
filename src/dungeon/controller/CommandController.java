@@ -13,7 +13,7 @@ import java.util.Scanner;
  * A command controller class for running the game based on the commands given by the user and
  * executing them accordingly. Has Readable and Appendable for the input and output.
  */
-public class CommandController implements TextController {
+public class CommandController implements Controller {
 
   private final Scanner scan;
 
@@ -39,7 +39,7 @@ public class CommandController implements TextController {
       throw new IllegalArgumentException("Model cannot be null!");
     }
 
-    TextController cmd = null;
+    Controller cmd = null;
 
     try {
       while (!(model.hasReachedGoal() || model.playerDead())) {
@@ -96,7 +96,7 @@ public class CommandController implements TextController {
       }
 
       if (model.playerDead()) {
-        if (model.metMonster()) {
+        if (model.metNekker()) {
           out.append(
               "\nSadly, you could not survive the combat and are dead."
               + " Video games and movies did not help... Your adventure ends :(");

@@ -1,4 +1,4 @@
-import dungeon.model.Cave;
+import dungeon.model.CaveImpl;
 import dungeon.model.Direction;
 import dungeon.model.Dungeon;
 import java.util.List;
@@ -38,13 +38,13 @@ public class MockDungeon implements Dungeon {
   }
 
   @Override
-  public boolean metMonster() {
+  public boolean metNekker() {
     return false;
   }
 
   @Override
-  public Cave[][] getDungeon() {
-    return new Cave[0][];
+  public CaveImpl[][] getDungeon() {
+    return new CaveImpl[0][];
   }
 
   @Override
