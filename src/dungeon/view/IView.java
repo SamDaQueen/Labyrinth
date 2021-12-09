@@ -18,7 +18,7 @@ public interface IView {
 
   void replay();
 
-  void showDialog(String message);
+  void showDialog(String message, String title);
 
   int[] getPlayerRowCol();
 

@@ -55,22 +55,16 @@ import javax.swing.border.EtchedBorder;
 public class JFrameView extends JFrame implements IView {
 
   private final int MAX_WIDTH = 1400;
-  private final int MAX_HEIGHT = 800;
   private final JPanel innerPane, outerPane;
   private final Map<String, BufferedImage> imageMap;
-  ReadOnlyModel model;
-  private JMenu menu;
+  private ReadOnlyModel model;
   private JMenuItem settingsMenu, quitMenu;
   private JTextArea caveDesc, playerDesc;
   private JButton resetBtn, restartBtn, quitBtn, helpButton;
   private JPanel dungeonView;
-  private boolean gameOver;
-  private boolean shootFlag;
-  private boolean shootDirectionFlag;
+  private boolean gameOver, shootFlag, shootDirectionFlag;
   private Direction shootDirection;
-  private int playerRow;
-  private int playerCol;
-  private int cellSize;
+  private int playerRow, playerCol, cellSize;
 
   public JFrameView(ReadOnlyModel model) {
     super("Labyrinth: The Game");
@@ -82,7 +76,7 @@ public class JFrameView extends JFrame implements IView {
     this.model = model;
 
     // set size and location
-    setSize(MAX_WIDTH, MAX_HEIGHT);
+    setSize(MAX_WIDTH, 800);
     setLocation(60, 10);
 
     // to avoid resizing
@@ -146,9 +140,7 @@ public class JFrameView extends JFrame implements IView {
         dungeonView.add(place);
       }
     }
-    if (!model.metShadow()) {
-      caveDesc.setText(model.printCurrentLocation());
-    }
+    caveDesc.setText(model.printCurrentLocation());
     if (!model.playerDead()) {
       playerDesc.setText(model.printPlayerStatus());
     } else {
@@ -177,8 +169,8 @@ public class JFrameView extends JFrame implements IView {
   }
 
   @Override
-  public void showDialog(String message) {
-    JOptionPane.showMessageDialog(this, message, "Shooting Result!",
+  public void showDialog(String message, String title) {
+    JOptionPane.showMessageDialog(this, message, title,
         JOptionPane.PLAIN_MESSAGE);
   }
 
@@ -562,7 +554,7 @@ public class JFrameView extends JFrame implements IView {
 
     JMenuBar menuBar = new JMenuBar();
 
-    menu = new JMenu("Menu");
+    JMenu menu = new JMenu("Menu");
 
     settingsMenu = new JMenuItem("Settings");
     quitMenu = new JMenuItem("Quit Game");

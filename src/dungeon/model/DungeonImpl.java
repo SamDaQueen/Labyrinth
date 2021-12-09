@@ -581,7 +581,7 @@ public class DungeonImpl implements Dungeon {
 
     while (playerHealth > 0 && shadowHealth > 0) {
 
-      builder.append("\n\nPlayer Health: ").append(playerHealth).append(" Shadow Health: ")
+      builder.append("\nPlayer Health: ").append(playerHealth).append(" Shadow Health: ")
           .append(shadowHealth);
 
       if (playerTurn) {
@@ -638,7 +638,7 @@ public class DungeonImpl implements Dungeon {
     if (playerHealth <= 0) {
       player.kill();
     } else {
-      builder.append("Video games and movies will be proud of you!\n"
+      builder.append("\nVideo games and movies will be proud of you!\n"
                      + "You successfully defeated the shadow and will not encounter it again :D");
       shadow = null;
     }

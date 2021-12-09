@@ -56,17 +56,18 @@ public class ViewController implements Features {
     } catch (IllegalStateException ise) {
       // ignore move
     }
+
+    // check results
     if (model.metShadow()) {
-      view.showDialog(model.printCurrentLocation());
-    }
-    if (model.playerDead()) {
-      if (model.metShadow()) {
-        view.endGame(
-            "Sadly, you could not survive the combat and are dead."
-            + " Video games and movies did not help... Your adventure ends :(");
-      } else {
-        view.endGame("Sadly, you were devoured by the hungry Otyugh!! Your adventure ends :( ");
+      String status = model.printCurrentLocation();
+      StringBuilder message = new StringBuilder(status.substring(status.indexOf("**********")));
+      if (model.playerDead()) {
+        message.append("Sadly, you could not survive the combat and are dead.");
       }
+      view.showDialog(message.toString(), "You have encountered the Shadow!");
+      view.endGame("Video games and movies did not help... Your adventure ends :(");
+    } else if (model.playerDead()) {
+      view.endGame("Sadly, you were devoured by the hungry Otyugh!! Your adventure ends :( ");
     } else if (model.hasReachedGoal()) {
       view.endGame("Hurray! You have found the exit of the dungeon!!");
     }
@@ -86,11 +87,13 @@ public class ViewController implements Features {
     try {
       int shot = model.shoot(d, distance);
       if (shot == 0) {
-        view.showDialog("Your arrow could not reach the Otyugh. What a waste!");
+        view.showDialog("Your arrow could not reach the Otyugh. What a waste!", "Shooting Result!");
       } else if (shot == 1) {
-        view.showDialog("Your arrow hit the Otyugh and you hear a piercing howl!");
+        view.showDialog("Your arrow hit the Otyugh and you hear a piercing howl!",
+            "Shooting Result!");
       } else {
-        view.showDialog("Your have successfully hit the Otyugh twice and it is now dead!");
+        view.showDialog("Your have successfully hit the Otyugh twice and it is now dead!",
+            "Shooting Result!");
       }
     } catch (IllegalStateException ise) {
       view.resetShoot();
