@@ -206,7 +206,7 @@ public class CaveImpl implements Cave {
 
   @Override
   public boolean visited() {
-    return false;
+    return visited;
   }
 
   void setVisited() {

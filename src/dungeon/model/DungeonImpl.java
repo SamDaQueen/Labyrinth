@@ -85,6 +85,7 @@ public class DungeonImpl implements Dungeon {
     this.nekker = addNekker();
     this.player = new Player(start[0], start[1]);
 
+    dungeon[start[0]][start[1]].setVisited();
   }
 
   /**
@@ -108,6 +109,8 @@ public class DungeonImpl implements Dungeon {
     this.thief = new Miscreant(1, 1);
     this.nekker = new Miscreant(1, 2);
     this.rand = new Random();
+
+    dungeon[start[0]][start[1]].setVisited();
   }
 
   /**
@@ -127,6 +130,8 @@ public class DungeonImpl implements Dungeon {
     this.thief = new Miscreant(1, 1);
     this.nekker = new Miscreant(1, 2);
     this.rand = new Random();
+
+    dungeon[start[0]][start[1]].setVisited();
 
   }
 

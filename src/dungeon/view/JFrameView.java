@@ -9,6 +9,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -217,7 +219,6 @@ public class JFrameView extends JFrame implements IView {
     // add the dungeon panel to the center
     JPanel dungeonView = new JPanel();
     dungeonView.setBorder(BorderFactory.createEtchedBorder());
-    outerArea.add(dungeonView);
 
     int row = model.getSize()[0];
     int col = model.getSize()[1];
@@ -227,6 +228,7 @@ public class JFrameView extends JFrame implements IView {
     // add grid layout for the dungeon
     GridLayout dungeonGrid = new GridLayout(row, col);
     dungeonView.setLayout(dungeonGrid);
+    dungeonView.setMaximumSize(new Dimension(550, 550));
 
     for (int i = 0; i < row; i++) {
       for (int j = 0; j < col; j++) {
@@ -264,13 +266,13 @@ public class JFrameView extends JFrame implements IView {
         }
       }
     }
+    outerArea.add(dungeonView);
 
     // add scroll controls
     JScrollPane dungeonScroll = new JScrollPane(outerArea,
         JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
         JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-    dungeonView.setMaximumSize(dungeonDim);
     dungeonScroll.setMaximumSize(new Dimension(600, 600));
 
     innerPane.add(dungeonScroll);
@@ -281,11 +283,40 @@ public class JFrameView extends JFrame implements IView {
   public void setFeatures(Features f) {
     quitBtn.addActionListener(l -> f.exitProgram());
     restartBtn.addActionListener(l -> f.restartGame());
+
+    this.addKeyListener(new KeyListener() {
+      @Override
+      public void keyTyped(KeyEvent e) {
+      }
+
+      @Override
+      public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyChar() == 'w') {
+          f.move(Direction.NORTH);
+        } else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyChar() == 's') {
+          f.move(Direction.SOUTH);
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyChar() == 'a') {
+          f.move(Direction.WEST);
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyChar() == 'd') {
+          f.move(Direction.EAST);
+        }
+      }
+
+      @Override
+      public void keyReleased(KeyEvent e) {
+      }
+    });
   }
 
   @Override
   public void refresh() {
     repaint();
+  }
+
+  @Override
+  public void resetFocus() {
+    setFocusable(true);
+    requestFocus();
   }
 }
 

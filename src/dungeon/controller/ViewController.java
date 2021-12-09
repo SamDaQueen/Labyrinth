@@ -1,5 +1,6 @@
 package dungeon.controller;
 
+import dungeon.model.Direction;
 import dungeon.model.Dungeon;
 import dungeon.view.IView;
 
@@ -18,11 +19,13 @@ public class ViewController implements Features {
     model = m;
     view = v;
     view.setFeatures(this);
+    view.resetFocus();
   }
 
   private void drawDungeon() {
     view.drawDungeon();
     view.refresh();
+    view.resetFocus();
   }
 
   @Override
@@ -33,5 +36,16 @@ public class ViewController implements Features {
   @Override
   public void restartGame() {
 
+  }
+
+  @Override
+  public void move(Direction d) {
+    System.out.println(d);
+    try {
+      model.movePlayer(d);
+    } catch (IllegalStateException ise) {
+      // ignore mode
+    }
+    view.refresh();
   }
 }

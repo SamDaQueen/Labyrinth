@@ -1,6 +1,6 @@
 package dungeon.controller;
 
-import dungeon.view.IView;
+import dungeon.model.Direction;
 
 public interface Features {
 
@@ -8,5 +8,5 @@ public interface Features {
 
   void restartGame();
 
-
+  void move(Direction north);
 }
