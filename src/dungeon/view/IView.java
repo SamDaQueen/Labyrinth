@@ -16,4 +16,6 @@ public interface IView {
   void endGame(String message);
 
   void showDialog(String message);
+
+  int[] getPlayerRowCol();
 }

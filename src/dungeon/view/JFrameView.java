@@ -19,6 +19,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -60,6 +61,8 @@ public class JFrameView extends JFrame implements IView {
   private boolean shootFlag;
   private boolean shootDirectionFlag;
   private Direction shootDirection;
+  private int playerRow;
+  private int playerCol;
 
   public JFrameView(ReadOnlyModel model) {
     super("Labyrinth: The Game");
@@ -148,11 +151,11 @@ public class JFrameView extends JFrame implements IView {
       // treasures
       int treasureSize = 10;
       imageMap.put("diamond",
-          resize(ImageIO.read(new File("icons/diamond.png")), treasureSize, treasureSize));
+          resize(ImageIO.read(new File("icons/diamond.png")), treasureSize));
       imageMap.put("emerald",
-          resize(ImageIO.read(new File("icons/emerald.png")), treasureSize, treasureSize));
+          resize(ImageIO.read(new File("icons/emerald.png")), treasureSize));
       imageMap.put("ruby",
-          resize(ImageIO.read(new File("icons/ruby.png")), treasureSize, treasureSize));
+          resize(ImageIO.read(new File("icons/ruby.png")), treasureSize));
 
       // monsters
       imageMap.put("otyugh", ImageIO.read(new File("icons/otyugh_small.png")));
@@ -209,14 +212,11 @@ public class JFrameView extends JFrame implements IView {
   }
 
   private void setUpDungeonView() {
-    // dungeon view dimensions
-    Dimension dungeonDim = new Dimension(900, 800);
 
     //innerPane.remove(1);
 
     // to wrap the dungeon
     JPanel outerArea = new JPanel();
-    outerArea.setMaximumSize(dungeonDim);
 
     outerArea.removeAll();
 
@@ -230,7 +230,6 @@ public class JFrameView extends JFrame implements IView {
     // add grid layout for the dungeon
     GridLayout dungeonGrid = new GridLayout(row, col);
     dungeonView.setLayout(dungeonGrid);
-    dungeonView.setMaximumSize(new Dimension(900, 800));
 
     BufferedImage[][] images = getDungeonImages();
 
@@ -241,8 +240,6 @@ public class JFrameView extends JFrame implements IView {
       }
     }
 
-    System.out.println(model);
-
     outerArea.add(dungeonView);
 
     // add scroll controls
@@ -250,7 +247,9 @@ public class JFrameView extends JFrame implements IView {
         JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
         JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-    dungeonScroll.setMaximumSize(new Dimension(900, 900));
+    dungeonView.setMaximumSize(new Dimension(700, 700));
+    outerArea.setMaximumSize(new Dimension(700, 900));
+    dungeonScroll.setPreferredSize(new Dimension(700, 900));
 
     innerPane.add(dungeonScroll);
     innerPane.add(Box.createRigidArea(new Dimension(10, 0)));
@@ -338,8 +337,14 @@ public class JFrameView extends JFrame implements IView {
     int col = model.getSize()[1];
     for (int i = 0; i < row; i++) {
       for (int j = 0; j < col; j++) {
+        int[] current = model.getPos();
         JLabel place = new JLabel(new ImageIcon(images[i][j]));
         dungeonView.add(place);
+        if (i == current[0] && j == current[1]) {
+          System.out.println(i + " " + j);
+          playerRow = i;
+          playerCol = j;
+        }
       }
     }
     caveDesc.setText(model.printCurrentLocation());
@@ -431,7 +436,15 @@ public class JFrameView extends JFrame implements IView {
           }
 
         }
-        images[i][j] = resize(image, 650 / row, 650 / col);
+        if (row < 8 || col < 8) {
+          if (row < col) {
+            images[i][j] = resize(image, 650 / row);
+          } else {
+            images[i][j] = resize(image, 650 / col);
+          }
+        } else {
+          images[i][j] = image;
+        }
       }
     }
     return images;
@@ -448,12 +461,12 @@ public class JFrameView extends JFrame implements IView {
     return combined;
   }
 
-  BufferedImage resize(BufferedImage starting, int width, int height) {
-    BufferedImage newImage = new BufferedImage(width, height,
+  BufferedImage resize(BufferedImage starting, int scale) {
+    BufferedImage newImage = new BufferedImage(scale, scale,
         BufferedImage.TYPE_INT_ARGB);
     Graphics g = newImage.getGraphics();
     g.drawImage(starting, 0, 0, null);
-    g.drawImage(starting, 0, 0, width, height, null);
+    g.drawImage(starting, 0, 0, scale, scale, null);
     return newImage;
   }
 
@@ -475,6 +488,12 @@ public class JFrameView extends JFrame implements IView {
     JOptionPane.showMessageDialog(this, message, "Shooting Result!",
         JOptionPane.PLAIN_MESSAGE);
   }
+
+  @Override
+  public int[] getPlayerRowCol() {
+    return new int[]{playerRow, playerCol};
+  }
+
 
   @Override
   public void setModel(Dungeon model) {
@@ -514,12 +533,10 @@ public class JFrameView extends JFrame implements IView {
       public void keyReleased(KeyEvent e) {
         if (!gameOver) {
           if (e.getKeyChar() == 'k') {
-            System.out.println("shoot");
             shootFlag = true;
           }
           if (shootFlag) {
             if (e.getKeyCode() == KeyEvent.VK_UP) {
-              System.out.println("shoot up");
               shootDirectionFlag = true;
               shootDirection = NORTH;
             } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
@@ -562,7 +579,13 @@ public class JFrameView extends JFrame implements IView {
         }
       }
     });
+
+    MouseAdapter mouseAdapter = new ClickAdapter(f, this);
+    System.out.println(dungeonView.getWidth() + " " + dungeonView.getHeight());
+    dungeonView.addMouseListener(mouseAdapter);
+
   }
+
 
 }
 

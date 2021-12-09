@@ -11,7 +11,7 @@ public class CustomJTextArea extends JTextArea {
     setEditable(false);
     setCursor(null);
     setOpaque(false);
-    setFont(new Font("Century Gothic", Font.PLAIN, 16));
+    setFont(new Font("Century Gothic", Font.PLAIN, 14));
     setFocusable(false);
     setWrapStyleWord(true);
     setLineWrap(true);
