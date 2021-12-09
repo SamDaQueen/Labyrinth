@@ -18,4 +18,6 @@ public interface IView {
   void showDialog(String message);
 
   int[] getPlayerRowCol();
+
+  int getCellSize();
 }

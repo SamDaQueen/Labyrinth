@@ -63,6 +63,7 @@ public class JFrameView extends JFrame implements IView {
   private Direction shootDirection;
   private int playerRow;
   private int playerCol;
+  private int cellSize;
 
   public JFrameView(ReadOnlyModel model) {
     super("Labyrinth: The Game");
@@ -337,14 +338,8 @@ public class JFrameView extends JFrame implements IView {
     int col = model.getSize()[1];
     for (int i = 0; i < row; i++) {
       for (int j = 0; j < col; j++) {
-        int[] current = model.getPos();
         JLabel place = new JLabel(new ImageIcon(images[i][j]));
         dungeonView.add(place);
-        if (i == current[0] && j == current[1]) {
-          System.out.println(i + " " + j);
-          playerRow = i;
-          playerCol = j;
-        }
       }
     }
     caveDesc.setText(model.printCurrentLocation());
@@ -393,6 +388,8 @@ public class JFrameView extends JFrame implements IView {
           // player's current location
           if (i == current[0] && j == current[1]) {
             image = overlay(image, imageMap.get("sam"), 12, 6);
+            playerRow = i;
+            playerCol = j;
           }
 
           // treasures
@@ -434,17 +431,18 @@ public class JFrameView extends JFrame implements IView {
           if (model.hasBreeze() && current[0] == i && current[1] == j) {
             image = overlay(image, imageMap.get("breeze"), 0, 0);
           }
-
         }
         if (row < 8 || col < 8) {
           if (row < col) {
             images[i][j] = resize(image, 650 / row);
+            cellSize = images[i][j].getWidth();
           } else {
             images[i][j] = resize(image, 650 / col);
           }
         } else {
           images[i][j] = image;
         }
+        cellSize = images[i][j].getWidth();
       }
     }
     return images;
@@ -494,6 +492,10 @@ public class JFrameView extends JFrame implements IView {
     return new int[]{playerRow, playerCol};
   }
 
+  @Override
+  public int getCellSize() {
+    return cellSize;
+  }
 
   @Override
   public void setModel(Dungeon model) {
@@ -540,7 +542,6 @@ public class JFrameView extends JFrame implements IView {
               shootDirectionFlag = true;
               shootDirection = NORTH;
             } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-              System.out.println("shoot right");
               shootDirectionFlag = true;
               shootDirection = EAST;
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
@@ -581,11 +582,7 @@ public class JFrameView extends JFrame implements IView {
     });
 
     MouseAdapter mouseAdapter = new ClickAdapter(f, this);
-    System.out.println(dungeonView.getWidth() + " " + dungeonView.getHeight());
     dungeonView.addMouseListener(mouseAdapter);
-
   }
-
-
 }
 

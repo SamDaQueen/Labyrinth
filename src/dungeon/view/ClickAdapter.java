@@ -1,6 +1,7 @@
 package dungeon.view;
 
 import dungeon.controller.Features;
+import dungeon.model.Direction;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -23,24 +24,22 @@ public class ClickAdapter extends MouseAdapter {
     int y = e.getY();
 
     // convert x and y to row and col
-
-
+    int clickRow = y / view.getCellSize();
+    int clickCol = x / view.getCellSize();
 
     // get player co-ordinates
     int playerRow = view.getPlayerRowCol()[0];
     int playerCol = view.getPlayerRowCol()[1];
 
-    System.out.println(x + " " + y + " " + playerRow + " " + playerCol);
-
-//    if (y > playerY && x > -y && x < y) {
-//      listener.move(Direction.NORTH);
-//    } else if (y < playerY && x > -y && x < y) {
-//      listener.move(Direction.SOUTH);
-//    } else if (x > playerX && y > -x && y < x) {
-//      listener.move(Direction.WEST);
-//    } else if (x < playerX && y > -x && y < x) {
-//      listener.move(Direction.EAST);
-//    }
+    if (clickRow < playerRow && clickCol == playerCol) {
+      listener.move(Direction.NORTH);
+    } else if (clickRow > playerRow && clickCol == playerCol) {
+      listener.move(Direction.SOUTH);
+    } else if (clickCol < playerCol && clickRow == playerRow) {
+      listener.move(Direction.WEST);
+    } else if (clickCol > playerCol && clickRow == playerRow) {
+      listener.move(Direction.EAST);
+    }
 
   }
 }
