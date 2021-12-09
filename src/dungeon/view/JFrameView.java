@@ -31,8 +31,10 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -40,8 +42,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
@@ -508,6 +512,7 @@ public class JFrameView extends JFrame implements IView {
     restartBtn.addActionListener(l -> f.restartGame(new int[]{5, 5}, 3, true, 25, 3));
     resetBtn.addActionListener(l -> f.resetGame());
     quitMenu.addActionListener(l -> f.exitProgram());
+    settingsMenu.addActionListener(l -> setUpSettings(f));
 
     this.addKeyListener(new KeyListener() {
       @Override
@@ -583,6 +588,65 @@ public class JFrameView extends JFrame implements IView {
 
     MouseAdapter mouseAdapter = new ClickAdapter(f, this);
     dungeonView.addMouseListener(mouseAdapter);
+  }
+
+  private void setUpSettings(Features f) {
+    JTextField rows = new JTextField();
+    JTextField cols = new JTextField();
+    JTextField interconnectivity = new JTextField();
+
+    JRadioButton wrappingTrue = new JRadioButton("true");
+    wrappingTrue.setSelected(true);
+    JRadioButton wrappingFalse = new JRadioButton("false");
+
+    ButtonGroup buttonGroup = new ButtonGroup();
+    buttonGroup.add(wrappingTrue);
+    buttonGroup.add(wrappingFalse);
+
+    JTextField treasure = new JTextField();
+    JTextField difficulty = new JTextField();
+
+    final JComponent[] fields = new JComponent[]{
+        new JLabel("Rows: "), rows,
+        new JLabel("Columns: "), cols,
+        new JLabel("Interconnectivity: "), interconnectivity,
+        new JLabel("Wrapping: "), wrappingTrue, wrappingFalse,
+        new JLabel("Treasure"), treasure,
+        new JLabel("Difficulty"), difficulty
+    };
+    int selected = JOptionPane.showConfirmDialog(this, fields, "Settings",
+        JOptionPane.OK_CANCEL_OPTION);
+
+    if (selected == JOptionPane.OK_OPTION) {
+      try {
+        int row = Integer.parseInt(rows.getText());
+        int col = Integer.parseInt(cols.getText());
+        int inter = Integer.parseInt(interconnectivity.getText());
+        boolean wrapping = wrappingTrue.isSelected();
+        int treas = Integer.parseInt(treasure.getText());
+        int diff = Integer.parseInt(difficulty.getText());
+
+        try {
+          f.restartGame(new int[]{row, col}, inter, wrapping, treas, diff);
+        } catch (IllegalArgumentException iae) {
+          JOptionPane.showMessageDialog(this, "Dungeon cannot be created"
+                                              + " with these values! Please try again!",
+              "Error",
+              JOptionPane.ERROR_MESSAGE);
+          setUpSettings(f);
+        }
+
+      } catch (NumberFormatException nfe) {
+        JOptionPane.showMessageDialog(this, "Invalid values entered!"
+                                            + " Please enter all valid numbers!",
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+        setUpSettings(f);
+      }
+
+    } else {
+      System.out.println("canceled");
+    }
   }
 }
 
