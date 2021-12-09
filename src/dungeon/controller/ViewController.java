@@ -35,6 +35,7 @@ public class ViewController implements Features {
       int difficulty) {
     model = new DungeonImpl(size, interconnectivity, wrapping, treasures, difficulty);
     view.setModel(model);
+    view.replay();
     view.resetFocus();
     view.refresh();
   }
@@ -43,6 +44,7 @@ public class ViewController implements Features {
   public void resetGame() {
     model = new DungeonImpl(dungeonCopy.getDungeon(), dungeonCopy.getStart(), dungeonCopy.getEnd());
     view.setModel(model);
+    view.replay();
     view.resetFocus();
     view.refresh();
   }
@@ -54,18 +56,21 @@ public class ViewController implements Features {
     } catch (IllegalStateException ise) {
       // ignore move
     }
-    // System.out.println(model.printCurrentLocation());
-//    if (model.playerDead()) {
-//      if (model.metShadow()) {
-//        view.endGame(
-//            "Sadly, you could not survive the combat and are dead."
-//            + " Video games and movies did not help... Your adventure ends :(");
-//      } else {
-//        view.endGame("Sadly, you were devoured by the hungry Otyugh!! Your adventure ends :( ");
-//      }
-//    } else if (model.hasReachedGoal()) {
-//      view.endGame("Hurray! You have found the exit of the dungeon and your status is: ");
-//    }
+    if (model.metShadow()) {
+      view.showDialog(model.printCurrentLocation());
+    }
+    if (model.playerDead()) {
+      if (model.metShadow()) {
+        view.endGame(
+            "Sadly, you could not survive the combat and are dead."
+            + " Video games and movies did not help... Your adventure ends :(");
+      } else {
+        view.endGame("Sadly, you were devoured by the hungry Otyugh!! Your adventure ends :( ");
+      }
+    } else if (model.hasReachedGoal()) {
+      view.endGame("Hurray! You have found the exit of the dungeon!!");
+    }
+    view.resetFocus();
     view.refresh();
   }
 
@@ -78,13 +83,17 @@ public class ViewController implements Features {
 
   @Override
   public void shoot(Direction d, int distance) {
-    int shot = model.shoot(d, distance);
-    if (shot == 0) {
-      view.showDialog("Your arrow could not reach the Otyugh. What a waste!");
-    } else if (shot == 1) {
-      view.showDialog("Your arrow hit the Otyugh and you hear a piercing howl!");
-    } else {
-      view.showDialog("Your have successfully hit the Otyugh twice and it is now dead!");
+    try {
+      int shot = model.shoot(d, distance);
+      if (shot == 0) {
+        view.showDialog("Your arrow could not reach the Otyugh. What a waste!");
+      } else if (shot == 1) {
+        view.showDialog("Your arrow hit the Otyugh and you hear a piercing howl!");
+      } else {
+        view.showDialog("Your have successfully hit the Otyugh twice and it is now dead!");
+      }
+    } catch (IllegalStateException ise) {
+      view.resetShoot();
     }
     view.resetFocus();
     view.refresh();

@@ -16,6 +16,8 @@ public interface IView {
 
   void endGame(String message);
 
+  void replay();
+
   void showDialog(String message);
 
   int[] getPlayerRowCol();
@@ -25,4 +27,6 @@ public interface IView {
   void setUpSettings(Features f);
 
   void showHelp();
+
+  void resetShoot();
 }

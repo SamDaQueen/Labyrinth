@@ -129,6 +129,237 @@ public class JFrameView extends JFrame implements IView {
     resetFocus();
   }
 
+  @Override
+  public void refresh() {
+
+    dungeonView.removeAll();
+
+    // add grid layout for the dungeon
+    GridLayout dungeonGrid = new GridLayout(model.getSize()[0], model.getSize()[1]);
+    dungeonView.setLayout(dungeonGrid);
+    BufferedImage[][] images = getDungeonImages();
+    int row = model.getSize()[0];
+    int col = model.getSize()[1];
+    for (int i = 0; i < row; i++) {
+      for (int j = 0; j < col; j++) {
+        JLabel place = new JLabel(new ImageIcon(images[i][j]));
+        dungeonView.add(place);
+      }
+    }
+    if (!model.metShadow()) {
+      caveDesc.setText(model.printCurrentLocation());
+    }
+    if (!model.playerDead()) {
+      playerDesc.setText(model.printPlayerStatus());
+    } else {
+      playerDesc.setText("You are dead :) Restart a new game or reset the same dungeon");
+    }
+    dungeonView.updateUI();
+    repaint();
+  }
+
+  @Override
+  public void resetFocus() {
+    setFocusable(true);
+    requestFocus();
+  }
+
+  @Override
+  public void endGame(String message) {
+    gameOver = true;
+    JOptionPane.showMessageDialog(this, message, "GAME OVER!",
+        JOptionPane.INFORMATION_MESSAGE);
+  }
+
+  @Override
+  public void replay() {
+    gameOver = false;
+  }
+
+  @Override
+  public void showDialog(String message) {
+    JOptionPane.showMessageDialog(this, message, "Shooting Result!",
+        JOptionPane.PLAIN_MESSAGE);
+  }
+
+  @Override
+  public int[] getPlayerRowCol() {
+    return new int[]{playerRow, playerCol};
+  }
+
+  @Override
+  public int getCellSize() {
+    return cellSize;
+  }
+
+  @Override
+  public void setModel(Dungeon model) {
+    this.model = model;
+  }
+
+  @Override
+  public void setFeatures(Features f) {
+    quitBtn.addActionListener(l -> f.exitProgram());
+    restartBtn.addActionListener(l -> f.restartGame(new int[]{5, 5}, 3, true, 25, 3));
+    resetBtn.addActionListener(l -> f.resetGame());
+    quitMenu.addActionListener(l -> f.exitProgram());
+    helpButton.addActionListener(l -> f.showHelp());
+    settingsMenu.addActionListener(l -> f.setUpSettings());
+
+    this.addKeyListener(new KeyListener() {
+      @Override
+      public void keyTyped(KeyEvent e) {
+      }
+
+      @Override
+      public void keyPressed(KeyEvent e) {
+        if (!gameOver && !shootFlag) {
+          if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyChar() == 'w') {
+            f.move(NORTH);
+          } else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyChar() == 's') {
+            f.move(Direction.SOUTH);
+          } else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyChar() == 'a') {
+            f.move(Direction.WEST);
+          } else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyChar() == 'd') {
+            f.move(Direction.EAST);
+          } else if (e.getKeyChar() == 'p') {
+            f.pick();
+          }
+        }
+      }
+
+      @Override
+      public void keyReleased(KeyEvent e) {
+        if (!gameOver) {
+          if (e.getKeyChar() == 'k') {
+            shootFlag = true;
+          }
+          if (shootFlag) {
+            if (e.getKeyCode() == KeyEvent.VK_UP) {
+              shootDirectionFlag = true;
+              shootDirection = NORTH;
+            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+              shootDirectionFlag = true;
+              shootDirection = EAST;
+            } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+              shootDirectionFlag = true;
+              shootDirection = SOUTH;
+            } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+              shootDirectionFlag = true;
+              shootDirection = WEST;
+            }
+          }
+          if (shootFlag && shootDirectionFlag) {
+            if (e.getKeyCode() == KeyEvent.VK_1 || e.getKeyCode() == KeyEvent.VK_NUMPAD1) {
+              resetShoot();
+              f.shoot(shootDirection, 1);
+            } else if (e.getKeyCode() == KeyEvent.VK_2 || e.getKeyCode() == KeyEvent.VK_NUMPAD2) {
+              resetShoot();
+              f.shoot(shootDirection, 2);
+            } else if (e.getKeyCode() == KeyEvent.VK_3 || e.getKeyCode() == KeyEvent.VK_NUMPAD3) {
+              resetShoot();
+              f.shoot(shootDirection, 1);
+            } else if (e.getKeyCode() == KeyEvent.VK_4 || e.getKeyCode() == KeyEvent.VK_NUMPAD4) {
+              resetShoot();
+              f.shoot(shootDirection, 1);
+            } else if (e.getKeyCode() == KeyEvent.VK_5 || e.getKeyCode() == KeyEvent.VK_NUMPAD5) {
+              resetShoot();
+              f.shoot(shootDirection, 1);
+            }
+          }
+        }
+      }
+    });
+
+    MouseAdapter mouseAdapter = new ClickAdapter(f, this);
+    dungeonView.addMouseListener(mouseAdapter);
+  }
+
+  @Override
+  public void showHelp() {
+    try {
+      BufferedReader bufferedReader = new BufferedReader(new FileReader("res/help.txt"));
+      String line;
+      StringBuilder stringBuilder = new StringBuilder();
+      while ((line = bufferedReader.readLine()) != null) {
+        stringBuilder.append(line);
+      }
+      JPanel panel = new JPanel();
+      JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+          JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+      JOptionPane.showMessageDialog(scrollPane, stringBuilder, "How To Play",
+          JOptionPane.PLAIN_MESSAGE);
+    } catch (FileNotFoundException fne) {
+      System.out.println("File not found!: " + fne);
+    } catch (IOException ioe) {
+      System.out.println("Could not read file!: " + ioe);
+    }
+
+  }
+
+  @Override
+  public void resetShoot() {
+    shootFlag = false;
+    shootDirectionFlag = false;
+  }
+
+  @Override
+  public void setUpSettings(Features f) {
+    JTextField rows = new JTextField();
+    JTextField cols = new JTextField();
+    JTextField interconnectivity = new JTextField();
+
+    JRadioButton wrappingTrue = new JRadioButton("true");
+    wrappingTrue.setSelected(true);
+    JRadioButton wrappingFalse = new JRadioButton("false");
+
+    ButtonGroup buttonGroup = new ButtonGroup();
+    buttonGroup.add(wrappingTrue);
+    buttonGroup.add(wrappingFalse);
+
+    JTextField treasure = new JTextField();
+    JTextField difficulty = new JTextField();
+
+    final JComponent[] fields = new JComponent[]{
+        new JLabel("Rows: "), rows,
+        new JLabel("Columns: "), cols,
+        new JLabel("Interconnectivity: "), interconnectivity,
+        new JLabel("Wrapping: "), wrappingTrue, wrappingFalse,
+        new JLabel("Treasure"), treasure,
+        new JLabel("Difficulty"), difficulty
+    };
+    int selected = JOptionPane.showConfirmDialog(this, fields, "Settings",
+        JOptionPane.OK_CANCEL_OPTION);
+
+    if (selected == JOptionPane.OK_OPTION) {
+      try {
+        int row = Integer.parseInt(rows.getText());
+        int col = Integer.parseInt(cols.getText());
+        int inter = Integer.parseInt(interconnectivity.getText());
+        boolean wrapping = wrappingTrue.isSelected();
+        int treas = Integer.parseInt(treasure.getText());
+        int diff = Integer.parseInt(difficulty.getText());
+
+        try {
+          f.restartGame(new int[]{row, col}, inter, wrapping, treas, diff);
+        } catch (IllegalArgumentException iae) {
+          JOptionPane.showMessageDialog(this, "Dungeon cannot be created"
+                                              + " with these values! Please try again!",
+              "Error",
+              JOptionPane.ERROR_MESSAGE);
+          setUpSettings(f);
+        }
+
+      } catch (NumberFormatException nfe) {
+        JOptionPane.showMessageDialog(this, "Invalid values entered!"
+                                            + " Please enter all valid numbers!",
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+        setUpSettings(f);
+      }
+    }
+  }
+
   private void setUpImageMap() {
     try {
 
@@ -151,6 +382,9 @@ public class JFrameView extends JFrame implements IView {
 
       // black image
       imageMap.put("black", ImageIO.read(new File("icons/black.png")));
+
+      // exit cave door
+      imageMap.put("door", ImageIO.read(new File("icons/door.png")));
 
       // arrow images
       imageMap.put("arrowB", ImageIO.read(new File("icons/arrow-black.png")));
@@ -340,29 +574,6 @@ public class JFrameView extends JFrame implements IView {
     setJMenuBar(menuBar);
   }
 
-  @Override
-  public void refresh() {
-
-    dungeonView.removeAll();
-
-    // add grid layout for the dungeon
-    GridLayout dungeonGrid = new GridLayout(model.getSize()[0], model.getSize()[1]);
-    dungeonView.setLayout(dungeonGrid);
-    BufferedImage[][] images = getDungeonImages();
-    int row = model.getSize()[0];
-    int col = model.getSize()[1];
-    for (int i = 0; i < row; i++) {
-      for (int j = 0; j < col; j++) {
-        JLabel place = new JLabel(new ImageIcon(images[i][j]));
-        dungeonView.add(place);
-      }
-    }
-    caveDesc.setText(model.printCurrentLocation());
-    playerDesc.setText(model.printPlayerStatus());
-    dungeonView.updateUI();
-    repaint();
-  }
-
   private BufferedImage[][] getDungeonImages() {
     int row = model.getSize()[0];
     int col = model.getSize()[1];
@@ -398,6 +609,11 @@ public class JFrameView extends JFrame implements IView {
           // pit
           if (caves[i][j].hasPit()) {
             image = overlay(image, imageMap.get("pit"), 5, 5);
+          }
+
+          // exit cave
+          if (model.getEnd()[0] == i && model.getEnd()[1] == j) {
+            image = overlay(image, imageMap.get("door"), 5, 5);
           }
 
           // player's current location
@@ -446,6 +662,7 @@ public class JFrameView extends JFrame implements IView {
           if (model.hasBreeze() && current[0] == i && current[1] == j) {
             image = overlay(image, imageMap.get("breeze"), 0, 0);
           }
+
         }
         if (row < 8 || col < 8) {
           if (row < col) {
@@ -481,207 +698,6 @@ public class JFrameView extends JFrame implements IView {
     g.drawImage(starting, 0, 0, null);
     g.drawImage(starting, 0, 0, scale, scale, null);
     return newImage;
-  }
-
-  @Override
-  public void resetFocus() {
-    setFocusable(true);
-    requestFocus();
-  }
-
-  @Override
-  public void endGame(String message) {
-    gameOver = true;
-    JOptionPane.showMessageDialog(this, message, "GAME OVER!",
-        JOptionPane.INFORMATION_MESSAGE);
-  }
-
-  @Override
-  public void showDialog(String message) {
-    JOptionPane.showMessageDialog(this, message, "Shooting Result!",
-        JOptionPane.PLAIN_MESSAGE);
-  }
-
-  @Override
-  public int[] getPlayerRowCol() {
-    return new int[]{playerRow, playerCol};
-  }
-
-  @Override
-  public int getCellSize() {
-    return cellSize;
-  }
-
-  @Override
-  public void setModel(Dungeon model) {
-    this.model = model;
-  }
-
-  @Override
-  public void setFeatures(Features f) {
-    quitBtn.addActionListener(l -> f.exitProgram());
-    restartBtn.addActionListener(l -> f.restartGame(new int[]{5, 5}, 3, true, 25, 3));
-    resetBtn.addActionListener(l -> f.resetGame());
-    quitMenu.addActionListener(l -> f.exitProgram());
-    helpButton.addActionListener(l -> f.showHelp());
-    settingsMenu.addActionListener(l -> f.setUpSettings());
-
-    this.addKeyListener(new KeyListener() {
-      @Override
-      public void keyTyped(KeyEvent e) {
-      }
-
-      @Override
-      public void keyPressed(KeyEvent e) {
-        if (!gameOver && !shootFlag) {
-          if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyChar() == 'w') {
-            f.move(NORTH);
-          } else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyChar() == 's') {
-            f.move(Direction.SOUTH);
-          } else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyChar() == 'a') {
-            f.move(Direction.WEST);
-          } else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyChar() == 'd') {
-            f.move(Direction.EAST);
-          } else if (e.getKeyChar() == 'p') {
-            f.pick();
-          }
-        }
-      }
-
-      @Override
-      public void keyReleased(KeyEvent e) {
-        if (!gameOver) {
-          if (e.getKeyChar() == 'k') {
-            shootFlag = true;
-          }
-          if (shootFlag) {
-            if (e.getKeyCode() == KeyEvent.VK_UP) {
-              shootDirectionFlag = true;
-              shootDirection = NORTH;
-            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-              shootDirectionFlag = true;
-              shootDirection = EAST;
-            } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-              System.out.println("shoot down");
-              shootDirectionFlag = true;
-              shootDirection = SOUTH;
-            } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-              System.out.println("shoot left");
-              shootDirectionFlag = true;
-              shootDirection = WEST;
-            }
-          }
-          if (shootFlag && shootDirectionFlag) {
-            if (e.getKeyCode() == KeyEvent.VK_1 || e.getKeyCode() == KeyEvent.VK_NUMPAD1) {
-              shootFlag = false;
-              shootDirectionFlag = false;
-              f.shoot(shootDirection, 1);
-            } else if (e.getKeyCode() == KeyEvent.VK_2 || e.getKeyCode() == KeyEvent.VK_NUMPAD2) {
-              shootFlag = false;
-              shootDirectionFlag = false;
-              f.shoot(shootDirection, 2);
-            } else if (e.getKeyCode() == KeyEvent.VK_3 || e.getKeyCode() == KeyEvent.VK_NUMPAD3) {
-              shootFlag = false;
-              shootDirectionFlag = false;
-              f.shoot(shootDirection, 1);
-            } else if (e.getKeyCode() == KeyEvent.VK_4 || e.getKeyCode() == KeyEvent.VK_NUMPAD4) {
-              shootFlag = false;
-              shootDirectionFlag = false;
-              f.shoot(shootDirection, 1);
-            } else if (e.getKeyCode() == KeyEvent.VK_5 || e.getKeyCode() == KeyEvent.VK_NUMPAD5) {
-              shootFlag = false;
-              shootDirectionFlag = false;
-              f.shoot(shootDirection, 1);
-            }
-          }
-        }
-      }
-    });
-
-    MouseAdapter mouseAdapter = new ClickAdapter(f, this);
-    dungeonView.addMouseListener(mouseAdapter);
-  }
-
-  @Override
-  public void showHelp() {
-    try {
-      BufferedReader bufferedReader = new BufferedReader(new FileReader("res/help.txt"));
-      String line;
-      StringBuilder stringBuilder = new StringBuilder();
-      while ((line = bufferedReader.readLine()) != null) {
-        stringBuilder.append(line);
-      }
-      JPanel panel = new JPanel();
-      JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-          JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-      JOptionPane.showMessageDialog(scrollPane, stringBuilder, "How To Play",
-          JOptionPane.PLAIN_MESSAGE);
-    } catch (FileNotFoundException fne) {
-      System.out.println("File not found!: " + fne);
-    } catch (IOException ioe) {
-      System.out.println("Could not read file!: " + ioe);
-    }
-
-  }
-
-  @Override
-  public void setUpSettings(Features f) {
-    JTextField rows = new JTextField();
-    JTextField cols = new JTextField();
-    JTextField interconnectivity = new JTextField();
-
-    JRadioButton wrappingTrue = new JRadioButton("true");
-    wrappingTrue.setSelected(true);
-    JRadioButton wrappingFalse = new JRadioButton("false");
-
-    ButtonGroup buttonGroup = new ButtonGroup();
-    buttonGroup.add(wrappingTrue);
-    buttonGroup.add(wrappingFalse);
-
-    JTextField treasure = new JTextField();
-    JTextField difficulty = new JTextField();
-
-    final JComponent[] fields = new JComponent[]{
-        new JLabel("Rows: "), rows,
-        new JLabel("Columns: "), cols,
-        new JLabel("Interconnectivity: "), interconnectivity,
-        new JLabel("Wrapping: "), wrappingTrue, wrappingFalse,
-        new JLabel("Treasure"), treasure,
-        new JLabel("Difficulty"), difficulty
-    };
-    int selected = JOptionPane.showConfirmDialog(this, fields, "Settings",
-        JOptionPane.OK_CANCEL_OPTION);
-
-    if (selected == JOptionPane.OK_OPTION) {
-      try {
-        int row = Integer.parseInt(rows.getText());
-        int col = Integer.parseInt(cols.getText());
-        int inter = Integer.parseInt(interconnectivity.getText());
-        boolean wrapping = wrappingTrue.isSelected();
-        int treas = Integer.parseInt(treasure.getText());
-        int diff = Integer.parseInt(difficulty.getText());
-
-        try {
-          f.restartGame(new int[]{row, col}, inter, wrapping, treas, diff);
-        } catch (IllegalArgumentException iae) {
-          JOptionPane.showMessageDialog(this, "Dungeon cannot be created"
-                                              + " with these values! Please try again!",
-              "Error",
-              JOptionPane.ERROR_MESSAGE);
-          setUpSettings(f);
-        }
-
-      } catch (NumberFormatException nfe) {
-        JOptionPane.showMessageDialog(this, "Invalid values entered!"
-                                            + " Please enter all valid numbers!",
-            "Error",
-            JOptionPane.ERROR_MESSAGE);
-        setUpSettings(f);
-      }
-
-    } else {
-      System.out.println("canceled");
-    }
   }
 }
 
