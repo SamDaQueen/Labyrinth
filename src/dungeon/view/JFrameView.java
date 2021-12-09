@@ -231,26 +231,29 @@ public class JFrameView extends JFrame implements IView {
     for (int i = 0; i < row; i++) {
       for (int j = 0; j < col; j++) {
         try {
-          Set<Direction> directionList = caves[i][j].getOpenings();
-          StringBuilder stringBuilder = new StringBuilder("icons/");
-          if (directionList.contains(Direction.NORTH)) {
-            stringBuilder.append("N");
-          }
-          if (directionList.contains(Direction.SOUTH)) {
-            stringBuilder.append("S");
-          }
-          if (directionList.contains(Direction.EAST)) {
-            stringBuilder.append("E");
-          }
-          if (directionList.contains(Direction.WEST)) {
-            stringBuilder.append("W");
-          }
+          BufferedImage image;
+          if (!caves[i][j].visited()) {
+            image = ImageIO.read(new File("icons/blank.png"));
+          } else {
+            Set<Direction> directionList = caves[i][j].getOpenings();
+            StringBuilder stringBuilder = new StringBuilder("icons/");
+            if (directionList.contains(Direction.NORTH)) {
+              stringBuilder.append("N");
+            }
+            if (directionList.contains(Direction.SOUTH)) {
+              stringBuilder.append("S");
+            }
+            if (directionList.contains(Direction.EAST)) {
+              stringBuilder.append("E");
+            }
+            if (directionList.contains(Direction.WEST)) {
+              stringBuilder.append("W");
+            }
 
-          stringBuilder.append(".png");
+            stringBuilder.append(".png");
 
-          System.out.println(stringBuilder);
-
-          BufferedImage image = ImageIO.read(new File(stringBuilder.toString()));
+            image = ImageIO.read(new File(stringBuilder.toString()));
+          }
 
           JLabel place = new JLabel(new ImageIcon(image));
           dungeonView.add(place);
