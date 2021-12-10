@@ -8,6 +8,9 @@ import dungeon.view.MockView;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Class fpr testing view controller using a mock model and a mock view.
+ */
 public class MockViewControllerTest {
 
   private StringBuilder log;
@@ -63,7 +66,8 @@ public class MockViewControllerTest {
   @Test
   public void pick() {
     controller.pick();
-    assertEquals("controller features added, focus reset, pick treasures, pick arrows, refresh, ",
+    assertEquals("controller features added, focus reset, "
+                 + "pick treasures, pick arrows, refresh, ",
         log.toString());
   }
 
@@ -99,7 +103,8 @@ public class MockViewControllerTest {
   public void restart() {
     controller.restartGame(new int[]{5, 5}, 5, true, 10, 10);
     assertEquals(
-        "controller features added, focus reset, model updated, game replayed, focus reset, refresh, ",
+        "controller features added, focus reset, model updated, "
+        + "game replayed, focus reset, refresh, ",
         log.toString());
   }
 
@@ -107,7 +112,8 @@ public class MockViewControllerTest {
   public void reset() {
     controller.resetGame();
     assertEquals(
-        "controller features added, focus reset, model updated, game replayed, focus reset, refresh, ",
+        "controller features added, focus reset, model updated, "
+        + "game replayed, focus reset, refresh, ",
         log.toString());
   }
 

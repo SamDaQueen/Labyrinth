@@ -45,7 +45,7 @@ public interface ReadOnlyCave {
   int getArrows();
 
   /**
-   * Checks if the cave was visited before
+   * Checks if the cave was visited before.
    *
    * @return true if visited
    */

@@ -56,16 +56,29 @@ import javax.swing.border.EtchedBorder;
 public class JFrameView extends JFrame implements IView {
 
   private final int MAX_WIDTH = 1400;
-  private final JPanel innerPane, outerPane;
+  private final JPanel innerPane;
+  private final JPanel outerPane;
   private final Map<String, BufferedImage> imageMap;
   private ReadOnlyModel model;
-  private JMenuItem settingsMenu, resetMenu, restartMenu, helpMenu, quitMenu;
-  private JTextArea caveDesc, playerDesc;
-  private JButton resetBtn, restartBtn, quitBtn, helpButton;
+  private JMenuItem settingsMenu;
+  private JMenuItem resetMenu;
+  private JMenuItem restartMenu;
+  private JMenuItem helpMenu;
+  private JMenuItem quitMenu;
+  private JTextArea caveDesc;
+  private JTextArea playerDesc;
+  private JButton resetBtn;
+  private JButton restartBtn;
+  private JButton quitBtn;
+  private JButton helpButton;
   private JPanel dungeonView;
-  private boolean gameOver, shootFlag, shootDirectionFlag;
+  private boolean gameOver;
+  private boolean shootFlag;
+  private boolean shootDirectionFlag;
   private Direction shootDirection;
-  private int playerRow, playerCol, cellSize;
+  private int playerRow;
+  private int playerCol;
+  private int cellSize;
 
   /**
    * Constructor for creating an instance of the JFrameView class with the given read-only model.
@@ -430,7 +443,7 @@ public class JFrameView extends JFrame implements IView {
 
     // add the cave description panel to the left
     JPanel caveDescView = new JPanel();
-    caveDescView.setBorder(BorderFactory.createTitledBorder("Current ReadOnlyCave Description"));
+    caveDescView.setBorder(BorderFactory.createTitledBorder("Current Cave Description"));
 
     // add the label heading field
     caveDesc = new CustomJTextArea(model.printCurrentLocation());

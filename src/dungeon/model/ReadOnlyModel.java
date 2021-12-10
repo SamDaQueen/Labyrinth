@@ -2,6 +2,9 @@ package dungeon.model;
 
 import java.util.List;
 
+/**
+ * A read-only version of the Dungeon interface used by the view up update.
+ */
 public interface ReadOnlyModel {
 
   /**
@@ -97,7 +100,7 @@ public interface ReadOnlyModel {
   boolean metShadow();
 
   /**
-   * Returns the dungeon
+   * Returns the dungeon.
    *
    * @return the caves in the dungeon
    */

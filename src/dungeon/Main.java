@@ -9,15 +9,23 @@ import dungeon.view.IView;
 import dungeon.view.JFrameView;
 import java.io.InputStreamReader;
 
+/**
+ * Class that works as a driver for both the GUI based game and the console based game.
+ */
 public class Main {
 
+  /**
+   * The starting point of the game.
+   *
+   * @param args may contain game configurations
+   */
   public static void main(String[] args) {
 
     if (args.length == 0) {
-      // View mode
+      // GUI mode
       Dungeon model = new DungeonImpl(new int[]{5, 5}, 10, true, 30, 1);
       IView view = new JFrameView(model);
-      Features controller = new ViewController(model, view);
+      new ViewController(model, view);
 
     } else if (args.length < 6) {
 

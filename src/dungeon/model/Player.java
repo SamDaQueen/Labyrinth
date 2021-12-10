@@ -33,21 +33,6 @@ class Player {
   }
 
   /**
-   * Copy constructor for the player
-   *
-   * @param player the player to be copied
-   */
-  Player(Player player) {
-    this.currentPosition = new int[2];
-    this.currentPosition[0] = player.getCurrentPosition()[0];
-    this.currentPosition[1] = player.getCurrentPosition()[1];
-    this.collectedTreasure = new ArrayList<>(player.collectedTreasure);
-    this.score = player.score;
-    this.arrows = player.getArrows();
-    this.alive = player.isAlive();
-  }
-
-  /**
    * Get the current position of the player in the dungeon.
    *
    * @return [row, col]

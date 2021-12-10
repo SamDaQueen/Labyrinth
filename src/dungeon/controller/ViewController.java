@@ -5,12 +5,22 @@ import dungeon.model.Dungeon;
 import dungeon.model.DungeonImpl;
 import dungeon.view.IView;
 
+/**
+ * Class for the controller to connect the model and the GUI view. Implements the Features interface
+ * and offers all the functionalities.
+ */
 public class ViewController implements Features {
 
   private final IView view;
   private Dungeon model;
   private Dungeon dungeonCopy;
 
+  /**
+   * Constructs an instance of the controller.
+   *
+   * @param m the model
+   * @param v the view
+   */
   public ViewController(Dungeon m, IView v) {
     if (m == null) {
       throw new IllegalArgumentException("Model cannot be null!");
