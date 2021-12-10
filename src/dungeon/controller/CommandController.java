@@ -44,7 +44,6 @@ public class CommandController implements Controller {
     try {
       while (!(model.hasReachedGoal() || model.playerDead())) {
         out.append("\n\n");
-        out.append(model.toString());
         out.append(model.printPlayerStatus());
         out.append(model.printCurrentLocation());
         if (model.playerDead()) {

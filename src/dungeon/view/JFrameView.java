@@ -211,6 +211,9 @@ public class JFrameView extends JFrame implements IView {
     this.addKeyListener(new KeyListener() {
       @Override
       public void keyTyped(KeyEvent e) {
+        if (e.getKeyChar() == 'p') {
+          f.pick();
+        }
       }
 
       @Override
@@ -224,8 +227,6 @@ public class JFrameView extends JFrame implements IView {
             f.move(Direction.WEST);
           } else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyChar() == 'd') {
             f.move(Direction.EAST);
-          } else if (e.getKeyChar() == 'p') {
-            f.pick();
           }
         }
       }

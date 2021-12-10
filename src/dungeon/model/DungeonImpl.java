@@ -98,7 +98,7 @@ public class DungeonImpl implements Dungeon {
    * @param start the starting node
    * @param end   the ending node
    */
-  public DungeonImpl(Cave[][] caves, int[] start, int[] end) {
+  public DungeonImpl(ReadOnlyCave[][] caves, int[] start, int[] end) {
     this.size = new int[]{caves.length, caves[0].length};
     this.dungeon = new Cave[this.size[0]][this.size[1]];
 
@@ -944,6 +944,7 @@ public class DungeonImpl implements Dungeon {
    *
    * @return copy of caves
    */
+  @Override
   public Cave[][] getDungeon() {
     return Arrays.copyOf(dungeon, size[0]);
   }
@@ -964,7 +965,6 @@ public class DungeonImpl implements Dungeon {
   Player getPlayer() {
     return player;
   }
-
 
   /**
    * Generate fake dungeon for empty constructor used for testing.

@@ -101,7 +101,7 @@ public interface ReadOnlyModel {
    *
    * @return the caves in the dungeon
    */
-  Cave[][] getDungeon();
+  ReadOnlyCave[][] getDungeon();
 
   /**
    * Returns the position of the Shadow monster as an int array.

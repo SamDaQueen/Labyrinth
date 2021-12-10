@@ -3,6 +3,10 @@ package dungeon.model;
 import java.util.List;
 import java.util.Set;
 
+
+/**
+ * Provides a read-only version of the package-private cave class for the view to update itself.
+ */
 public interface ReadOnlyCave {
 
   /**
@@ -47,4 +51,10 @@ public interface ReadOnlyCave {
    */
   boolean visited();
 
+  /**
+   * Create and return a copy of the given cave.
+   *
+   * @return cave copy
+   */
+  Cave copy();
 }
