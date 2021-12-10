@@ -1,7 +1,6 @@
 package dungeon;
 
 import dungeon.controller.CommandController;
-import dungeon.controller.Features;
 import dungeon.controller.ViewController;
 import dungeon.model.Dungeon;
 import dungeon.model.DungeonImpl;

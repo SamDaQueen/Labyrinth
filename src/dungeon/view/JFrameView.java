@@ -429,8 +429,7 @@ public class JFrameView extends JFrame implements IView {
       imageMap.put("thief", ImageIO.read(getClass().getResourceAsStream("/images/thief.png")));
 
 
-    } catch (
-        IOException e) {
+    } catch (IOException e) {
       System.out.println("Could not set up dungeon view: " + e.getMessage());
     }
 

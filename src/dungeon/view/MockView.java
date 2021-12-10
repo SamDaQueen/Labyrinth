@@ -3,9 +3,12 @@ package dungeon.view;
 import dungeon.controller.Features;
 import dungeon.model.ReadOnlyModel;
 
+/**
+ * Mock view for testing the functionality of the controller.
+ */
 public class MockView implements IView {
 
-  private StringBuilder log;
+  private final StringBuilder log;
 
   public MockView(StringBuilder log) {
     this.log = log;
