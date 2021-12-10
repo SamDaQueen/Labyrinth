@@ -71,9 +71,11 @@ public class ViewController implements Features {
       StringBuilder message = new StringBuilder(status.substring(status.indexOf("**********")));
       if (model.playerDead()) {
         message.append("Sadly, you could not survive the combat and are dead.");
-        view.endGame("Video games and movies did not help... Your adventure ends :(");
       }
       view.showDialog(message.toString(), "You have encountered the Shadow!");
+      if (model.playerDead()) {
+        view.endGame("Video games and movies did not help... Your adventure ends :(");
+      }
     } else if (model.playerDead()) {
       view.endGame("Sadly, you were devoured by the hungry Otyugh!! Your adventure ends :( ");
     } else if (model.hasReachedGoal()) {
