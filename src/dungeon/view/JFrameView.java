@@ -62,7 +62,7 @@ public class JFrameView extends JFrame implements IView {
   private final JPanel innerPane, outerPane;
   private final Map<String, BufferedImage> imageMap;
   private ReadOnlyModel model;
-  private JMenuItem settingsMenu, quitMenu;
+  private JMenuItem settingsMenu, resetMenu, restartMenu, helpMenu, quitMenu;
   private JTextArea caveDesc, playerDesc;
   private JButton resetBtn, restartBtn, quitBtn, helpButton;
   private JPanel dungeonView;
@@ -149,10 +149,11 @@ public class JFrameView extends JFrame implements IView {
         dungeonView.add(place);
       }
     }
-    caveDesc.setText(model.printCurrentLocation());
     if (!model.playerDead()) {
+      caveDesc.setText(model.printCurrentLocation());
       playerDesc.setText(model.printPlayerStatus());
     } else {
+      caveDesc.setText("Nothing to show here, you died. Treasures and weapons mean nothing now :)");
       playerDesc.setText("You are dead :) Restart a new game or reset the same dungeon");
     }
     dungeonView.updateUI();
@@ -203,6 +204,9 @@ public class JFrameView extends JFrame implements IView {
     quitBtn.addActionListener(l -> f.exitProgram());
     restartBtn.addActionListener(l -> f.restartGame(new int[]{5, 5}, 3, true, 25, 3));
     resetBtn.addActionListener(l -> f.resetGame());
+    resetMenu.addActionListener(l -> f.resetGame());
+    restartMenu.addActionListener(l -> f.restartGame(new int[]{5, 5}, 3, true, 25, 3));
+    helpMenu.addActionListener(l -> f.showHelp());
     quitMenu.addActionListener(l -> f.exitProgram());
     helpButton.addActionListener(l -> f.showHelp());
     settingsMenu.addActionListener(l -> f.setUpSettings());
@@ -448,7 +452,7 @@ public class JFrameView extends JFrame implements IView {
 
     caveDesc.setPreferredSize(caveDim);
     caveDescView.setMaximumSize(caveDim);
-    caveScroll.setMaximumSize(new Dimension(300, 800));
+    caveScroll.setPreferredSize(new Dimension(250, 800));
 
     innerPane.add(caveScroll);
     innerPane.add(Box.createRigidArea(new Dimension(10, 0)));
@@ -563,15 +567,25 @@ public class JFrameView extends JFrame implements IView {
 
     JMenuBar menuBar = new JMenuBar();
 
-    JMenu menu = new JMenu("Menu");
-
+    JMenu configure = new JMenu("Menu");
     settingsMenu = new JMenuItem("Settings");
-    quitMenu = new JMenuItem("Quit Game");
+    resetMenu = new JMenuItem("Reset Dungeon");
+    restartMenu = new JMenuItem("Restart Game");
 
-    menu.add(settingsMenu);
-    menu.add(quitMenu);
+    configure.add(settingsMenu);
+    configure.add(resetMenu);
+    configure.add(restartMenu);
 
-    menuBar.add(menu);
+    JMenu options = new JMenu("Options");
+    helpMenu = new JMenuItem("Help");
+    quitMenu = new JMenuItem("Quit");
+
+    options.add(helpMenu);
+    options.add(quitMenu);
+
+    menuBar.add(configure);
+    menuBar.add(options);
+
     setJMenuBar(menuBar);
   }
 

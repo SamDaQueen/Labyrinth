@@ -286,7 +286,6 @@ public class InternalNewTests {
 
   @Test
   public void shadowCombat() {
-    System.out.println(fixedDungeon);
     fixedDungeon.movePlayer(Direction.EAST);
     fixedDungeon.movePlayer(Direction.EAST);
     fixedDungeon.movePlayer(Direction.SOUTH);

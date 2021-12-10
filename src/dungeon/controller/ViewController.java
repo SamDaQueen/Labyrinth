@@ -36,6 +36,9 @@ public class ViewController implements Features {
   public void restartGame(int[] size, int interconnectivity, boolean wrapping, int treasures,
       int difficulty) {
     model = new DungeonImpl(size, interconnectivity, wrapping, treasures, difficulty);
+    if (model.getDungeon().length > 0) {
+      dungeonCopy = new DungeonImpl(model.getDungeon(), model.getStart(), model.getEnd());
+    }
     view.setModel(model);
     view.replay();
     view.resetFocus();
