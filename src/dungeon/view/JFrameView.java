@@ -20,14 +20,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -282,24 +279,14 @@ public class JFrameView extends JFrame implements IView {
 
   @Override
   public void showHelp() {
-    try {
-      BufferedReader bufferedReader = new BufferedReader(new FileReader("res/help.txt"));
-      String line;
-      StringBuilder stringBuilder = new StringBuilder();
-      while ((line = bufferedReader.readLine()) != null) {
-        stringBuilder.append(line);
-      }
-      JPanel panel = new JPanel();
-      JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-          JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-      JOptionPane.showMessageDialog(scrollPane, stringBuilder, "How To Play",
-          JOptionPane.PLAIN_MESSAGE);
-    } catch (FileNotFoundException fne) {
-      System.out.println("File not found!: " + fne);
-    } catch (IOException ioe) {
-      System.out.println("Could not read file!: " + ioe);
+    Scanner scanner = new Scanner(getClass().getResourceAsStream("/help.txt"));
+    StringBuilder stringBuilder = new StringBuilder();
+    while (scanner.hasNextLine()) {
+      stringBuilder.append(scanner.nextLine());
     }
-
+    JOptionPane.showMessageDialog(this, stringBuilder, "How To Play",
+        JOptionPane.PLAIN_MESSAGE);
+    resetFocus();
   }
 
   @Override
@@ -369,60 +356,63 @@ public class JFrameView extends JFrame implements IView {
     try {
 
       // directions
-      imageMap.put("N", ImageIO.read(new File("icons/N.png")));
-      imageMap.put("E", ImageIO.read(new File("icons/E.png")));
-      imageMap.put("S", ImageIO.read(new File("icons/S.png")));
-      imageMap.put("W", ImageIO.read(new File("icons/W.png")));
-      imageMap.put("NE", ImageIO.read(new File("icons/NE.png")));
-      imageMap.put("NS", ImageIO.read(new File("icons/NS.png")));
-      imageMap.put("NW", ImageIO.read(new File("icons/NW.png")));
-      imageMap.put("SE", ImageIO.read(new File("icons/SE.png")));
-      imageMap.put("SW", ImageIO.read(new File("icons/SW.png")));
-      imageMap.put("EW", ImageIO.read(new File("icons/EW.png")));
-      imageMap.put("NSE", ImageIO.read(new File("icons/NSE.png")));
-      imageMap.put("NEW", ImageIO.read(new File("icons/NEW.png")));
-      imageMap.put("NSW", ImageIO.read(new File("icons/NSW.png")));
-      imageMap.put("SEW", ImageIO.read(new File("icons/SEW.png")));
-      imageMap.put("NSEW", ImageIO.read(new File("icons/NSEW.png")));
+      imageMap.put("N", ImageIO.read(getClass().getResourceAsStream("/images/N.png")));
+      imageMap.put("E", ImageIO.read(getClass().getResourceAsStream("/images/E.png")));
+      imageMap.put("S", ImageIO.read(getClass().getResourceAsStream("/images/S.png")));
+      imageMap.put("W", ImageIO.read(getClass().getResourceAsStream("/images/W.png")));
+      imageMap.put("NE", ImageIO.read(getClass().getResourceAsStream("/images/NE.png")));
+      imageMap.put("NS", ImageIO.read(getClass().getResourceAsStream("/images/NS.png")));
+      imageMap.put("NW", ImageIO.read(getClass().getResourceAsStream("/images/NW.png")));
+      imageMap.put("SE", ImageIO.read(getClass().getResourceAsStream("/images/SE.png")));
+      imageMap.put("SW", ImageIO.read(getClass().getResourceAsStream("/images/SW.png")));
+      imageMap.put("EW", ImageIO.read(getClass().getResourceAsStream("/images/EW.png")));
+      imageMap.put("NSE", ImageIO.read(getClass().getResourceAsStream("/images/NSE.png")));
+      imageMap.put("NEW", ImageIO.read(getClass().getResourceAsStream("/images/NEW.png")));
+      imageMap.put("NSW", ImageIO.read(getClass().getResourceAsStream("/images/NSW.png")));
+      imageMap.put("SEW", ImageIO.read(getClass().getResourceAsStream("/images/SEW.png")));
+      imageMap.put("NSEW", ImageIO.read(getClass().getResourceAsStream("/images/NSEW.png")));
 
       // black image
-      imageMap.put("black", ImageIO.read(new File("icons/black.png")));
+      imageMap.put("black", ImageIO.read(getClass().getResourceAsStream("/images/black.png")));
 
       // exit cave door
-      imageMap.put("door", ImageIO.read(new File("icons/door.png")));
+      imageMap.put("door", ImageIO.read(getClass().getResourceAsStream("/images/door.png")));
 
-      // arrow images
-      imageMap.put("arrowB", ImageIO.read(new File("icons/arrow-black.png")));
-      imageMap.put("arrowW", ImageIO.read(new File("icons/arrow-white_small.png")));
+      // arrow image
+      imageMap.put("arrow", ImageIO.read(getClass().getResourceAsStream("/images/arrow.png")));
 
       // treasures
       int treasureSize = 10;
       imageMap.put("diamond",
-          resize(ImageIO.read(new File("icons/diamond.png")), treasureSize));
+          resize(ImageIO.read(getClass().getResourceAsStream("/images/diamond.png")),
+              treasureSize));
       imageMap.put("emerald",
-          resize(ImageIO.read(new File("icons/emerald.png")), treasureSize));
+          resize(ImageIO.read(getClass().getResourceAsStream("/images/emerald.png")),
+              treasureSize));
       imageMap.put("ruby",
-          resize(ImageIO.read(new File("icons/ruby.png")), treasureSize));
+          resize(ImageIO.read(getClass().getResourceAsStream("/images/ruby.png")), treasureSize));
 
       // monsters
-      imageMap.put("otyugh", ImageIO.read(new File("icons/otyugh_small.png")));
-      imageMap.put("shadow", ImageIO.read(new File("icons/shadow.png")));
+      imageMap.put("otyugh", ImageIO.read(getClass().getResourceAsStream("/images/otyugh.png")));
+      imageMap.put("shadow", ImageIO.read(getClass().getResourceAsStream("/images/shadow.png")));
 
       // stench
-      imageMap.put("weakStench", ImageIO.read(new File("icons/stench01.png")));
-      imageMap.put("strongStench", ImageIO.read(new File("icons/stench02.png")));
+      imageMap.put("weakStench",
+          ImageIO.read(getClass().getResourceAsStream("/images/stench01.png")));
+      imageMap.put("strongStench",
+          ImageIO.read(getClass().getResourceAsStream("/images/stench02.png")));
 
       // player
-      imageMap.put("sam", ImageIO.read(new File("icons/sam.png")));
+      imageMap.put("sam", ImageIO.read(getClass().getResourceAsStream("/images/sam.png")));
 
       // breeze
-      imageMap.put("breeze", ImageIO.read(new File("icons/breeze.png")));
+      imageMap.put("breeze", ImageIO.read(getClass().getResourceAsStream("/images/breeze.png")));
 
       // pit
-      imageMap.put("pit", ImageIO.read(new File("icons/pit.png")));
+      imageMap.put("pit", ImageIO.read(getClass().getResourceAsStream("/images/pit.png")));
 
       // thief
-      imageMap.put("thief", ImageIO.read(new File("icons/thief.png")));
+      imageMap.put("thief", ImageIO.read(getClass().getResourceAsStream("/images/thief.png")));
 
 
     } catch (
@@ -650,7 +640,7 @@ public class JFrameView extends JFrame implements IView {
             image = overlay(image, imageMap.get("emerald"), 15, 40);
           }
           if (caves[i][j].getArrows() > 0) {
-            image = overlay(image, imageMap.get("arrowW"), 15, 55);
+            image = overlay(image, imageMap.get("arrow"), 15, 55);
           }
 
           // check for monsters
