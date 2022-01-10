@@ -4,6 +4,12 @@
 
 ##### Programming Design Paradigm
 
+*Snapshots of the game:*
+
+![](res/screenshots/pick.jpg)
+
+![](res/screenshots/stench1.jpg)
+
 1. **About:** The Labyrinth Dungeon MVC represents a maze game where we have a player navigating through the maze. There is a start and an exit to the maze. It is a user-driven program and the user can guide the player to the exit by choosing each step of the player. Users can either play in GUI mode or console mode.
 
 2. **List of features**:
